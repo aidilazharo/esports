@@ -116,7 +116,6 @@ require 'includes/header.php';
                     novalidate
                 >
                     <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
-                    <input type="hidden" name="verification_bypass" id="verificationBypass" value="1">
 
                     <div class="col-lg-5 col-md-6">
                         <label class="form-label" for="schoolSearch">Search School</label>
@@ -208,90 +207,14 @@ require 'includes/header.php';
                                 required
                             >
                             <div class="form-text">
-                                Used automatically if SMS delivery fails.
+                                You will receive an email verification link after registration.
                             </div>
                         </div>
 
                         <div class="col-lg-4 col-md-7">
-                            <label class="form-label required" for="teacherPhone">
-                                Mobile Number
-                            </label>
-                            <div class="input-group">
-                                <input
-                                    class="form-control"
-                                    id="teacherPhone"
-                                    name="phone"
-                                    placeholder="60123456789"
-                                    inputmode="tel"
-                                    required
-                                >
-                                <button
-                                    class="btn btn-outline-primary"
-                                    type="button"
-                                    id="sendSmsCodeButton"
-                                    disabled
-                                >
-                                    <i class="bi bi-chat-dots me-1"></i>
-                                    Send Code
-                                </button>
-                            </div>
-                            <div class="form-text" id="smsCodeStatus">
-                                MOBILE VERIFICATION IS SKIPPED BY DEFAULT.
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 col-md-5">
-                            <label
-                                class="form-label"
-                                for="smsCode"
-                                id="smsCodeLabel"
-                            >
-                                Verification Code (Optional)
-                            </label>
-                            <input
-                                class="form-control"
-                                id="smsCode"
-                                name="sms_code"
-                                placeholder="Verify later"
-                                inputmode="numeric"
-                                autocomplete="one-time-code"
-                                maxlength="6"
-                                pattern="[0-9]{6}"
-                                disabled
-                            >
-                            <div class="form-text" id="smsCodeHelp">
-                                Mobile verification is skipped by default.
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="form-check">
-                                <input
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value="1"
-                                    name="skip_mobile_verification"
-                                    id="skipMobileVerification"
-                                    checked
-                                >
-                                <label
-                                    class="form-check-label fw-semibold"
-                                    for="skipMobileVerification"
-                                >
-                                    SKIP MOBILE NUMBER VERIFICATION
-                                </label>
-                                <div class="form-text">
-                                    CHECKED BY DEFAULT. UNCHECK TO VERIFY THE MOBILE NUMBER NOW.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 d-none" id="verificationBypassNotice">
-                            <div class="alert alert-warning mb-0 py-2">
-                                <i class="bi bi-exclamation-triangle me-2"></i>
-                                <strong>Verification pending.</strong>
-                                Contact verification can be completed later.
-                            </div>
+                            <label class="form-label required" for="teacherPhone">Mobile Number (contact only)</label>
+                            <input class="form-control" id="teacherPhone" name="phone" placeholder="60123456789" inputmode="tel" required>
+                            <div class="form-text">No SMS code is required. Your email address is verified using a link.</div>
                         </div>
 
                         <div class="col-12">

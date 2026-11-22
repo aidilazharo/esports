@@ -19,3 +19,14 @@
 - Generated `html/` must be **emptied** after every successful new-code server pull, then recreated as an empty directory. Do not remove PHP source files or `download/` / `uploads/` runtime content.
 - Supported SSH pull: `bash scripts/safe-pull.sh`. For ordinary server `git pull`, install `bash scripts/install-server-html-hook.sh` once on Hostinger. Hostinger hPanel deployments that bypass Git hooks use the first-request `VERSION`-based fallback from `config.php`.
 - Do not enable migration execution automatically on Git pull. Use `php scripts/migrate.php` with an explicit backup and validation; refer to `docs/mysql-migrations.md`.
+
+## Registration verification policy (email-only)
+- School, student, teacher, coach, parent and guardian registration and login must never require or send an SMS verification code.
+- Student accounts: parent/guardian email verification link in `register_student.php?verify=...`; verifying the link must not mark `phone_verified_at`.
+- Teachers and coaches: email verification links (`verify_email`) using token hashes and expiry; `phone_verified_at` stays NULL for new registrations.
+- Standalone parents/guardians: six-digit email code sent using Brevo Transactional Email, bound to PHP session and email address; no SMS fallback or verify-later bypass; `email_verified_at` is set only after a correct code is submitted.
+- Mobile numbers remain contact details only and may be stored, but must not serve as evidence of verified identity.
+- Changing an already verified email requires a new email verification. Never preserve `email_verified_at` for a different email address.
+- Environment configuration must require `BREVO_API_KEY`, `BREVO_SENDER_EMAIL`, and `APP_URL`, not `BREVO_SMS_SENDER`.
+- Keep existing login email OTP and PSN TOTP features, which are distinct from SMS.
+- Run PHP lint, JavaScript syntax checks and `tests/email_verification_test.php` before merging into main; continue normal website version increments.

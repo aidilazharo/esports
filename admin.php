@@ -931,9 +931,7 @@ require 'includes/header.php';
                 <div class="col-md-6">
                     <label class="form-label required">Mobile Number</label>
                     <input class="form-control" name="phone" maxlength="30" inputmode="tel" value="<?= e($editRecord['phone']) ?>" required>
-                    <?php if ($guardianHasPhoneVerification): ?>
-                        <div class="form-text">Changing this number resets phone verification.</div>
-                    <?php endif; ?>
+                    
                 </div>
                 <div class="col-md-6">
                     <label class="form-label required">Email</label>
@@ -946,17 +944,13 @@ require 'includes/header.php';
                     <div class="alert alert-light border mb-0">
                         <div class="fw-semibold mb-2">Verification Status</div>
                         <div class="d-flex flex-wrap gap-2">
-                            <?php if ($guardianHasPhoneVerification): ?>
-                                <span class="badge text-bg-<?= !empty($editRecord['phone_verified_at']) ? 'success' : 'secondary' ?>">
-                                    SMS <?= !empty($editRecord['phone_verified_at']) ? 'Verified' : 'Not Verified' ?>
-                                </span>
-                            <?php endif; ?>
+                            
                             <?php if ($guardianHasEmailVerification): ?>
                                 <span class="badge text-bg-<?= !empty($editRecord['email_verified_at']) ? 'success' : 'secondary' ?>">
                                     Email <?= !empty($editRecord['email_verified_at']) ? 'Verified' : 'Not Verified' ?>
                                 </span>
                             <?php endif; ?>
-                            <?php if (!$guardianHasPhoneVerification && !$guardianHasEmailVerification): ?>
+                            <?php if (!$guardianHasEmailVerification): ?>
                                 <span class="text-secondary small">Verification fields are not available in the current database schema.</span>
                             <?php endif; ?>
                         </div>
@@ -997,11 +991,7 @@ require 'includes/header.php';
                         <div class="alert alert-light border mb-0">
                             <div class="fw-semibold mb-2">Verification Status</div>
                             <div class="d-flex flex-wrap gap-2">
-                                <?php if ($teacherHasPhoneVerification): ?>
-                                    <span class="badge text-bg-<?= !empty($editRecord['phone_verified_at']) ? 'success' : 'secondary' ?>">
-                                        Phone <?= !empty($editRecord['phone_verified_at']) ? 'Verified' : 'Pending' ?>
-                                    </span>
-                                <?php endif; ?>
+                                
                                 <?php if ($teacherHasEmailVerification): ?>
                                     <span class="badge text-bg-<?= !empty($editRecord['email_verified_at']) ? 'success' : 'secondary' ?>">
                                         Email <?= !empty($editRecord['email_verified_at']) ? 'Verified' : 'Pending' ?>
@@ -1024,11 +1014,7 @@ require 'includes/header.php';
                         <div class="alert alert-light border mb-0">
                             <div class="fw-semibold mb-2">Verification Status</div>
                             <div class="d-flex flex-wrap gap-2">
-                                <?php if ($coachHasPhoneVerification): ?>
-                                    <span class="badge text-bg-<?= !empty($editRecord['phone_verified_at']) ? 'success' : 'secondary' ?>">
-                                        Phone <?= !empty($editRecord['phone_verified_at']) ? 'Verified' : 'Pending' ?>
-                                    </span>
-                                <?php endif; ?>
+                                
                                 <?php if ($coachHasEmailVerification): ?>
                                     <span class="badge text-bg-<?= !empty($editRecord['email_verified_at']) ? 'success' : 'secondary' ?>">
                                         Email <?= !empty($editRecord['email_verified_at']) ? 'Verified' : 'Pending' ?>
@@ -1192,17 +1178,13 @@ require 'includes/header.php';
                             <td><?= e($record['phone'] ?: '-') ?><br><small class="text-secondary"><?= e($record['email']) ?></small></td>
                             <td>
                                 <div class="d-flex flex-column align-items-start gap-1">
-                                    <?php if ($teacherHasPhoneVerification): ?>
-                                        <span class="badge text-bg-<?= !empty($record['phone_verified_at']) ? 'success' : 'secondary' ?>">
-                                            Phone <?= !empty($record['phone_verified_at']) ? 'Verified' : 'Pending' ?>
-                                        </span>
-                                    <?php endif; ?>
+                                    
                                     <?php if ($teacherHasEmailVerification): ?>
                                         <span class="badge text-bg-<?= !empty($record['email_verified_at']) ? 'success' : 'secondary' ?>">
                                             Email <?= !empty($record['email_verified_at']) ? 'Verified' : 'Pending' ?>
                                         </span>
                                     <?php endif; ?>
-                                    <?php if (!$teacherHasPhoneVerification && !$teacherHasEmailVerification): ?>
+                                    <?php if (!$teacherHasEmailVerification): ?>
                                         <span class="text-secondary">-</span>
                                     <?php endif; ?>
                                 </div>
@@ -1226,13 +1208,11 @@ require 'includes/header.php';
                             <td><?= e($record['phone'] ?: '-') ?><br><small class="text-secondary"><?= e($record['email']) ?></small></td>
                             <td>
                                 <div class="d-flex flex-column align-items-start gap-1">
-                                    <?php if ($guardianHasPhoneVerification): ?>
-                                        <span class="badge text-bg-<?= !empty($record['phone_verified_at']) ? 'success' : 'secondary' ?>">SMS <?= !empty($record['phone_verified_at']) ? 'Verified' : 'Not Verified' ?></span>
-                                    <?php endif; ?>
+                                    
                                     <?php if ($guardianHasEmailVerification): ?>
                                         <span class="badge text-bg-<?= !empty($record['email_verified_at']) ? 'success' : 'secondary' ?>">Email <?= !empty($record['email_verified_at']) ? 'Verified' : 'Not Verified' ?></span>
                                     <?php endif; ?>
-                                    <?php if (!$guardianHasPhoneVerification && !$guardianHasEmailVerification): ?><span class="text-secondary">-</span><?php endif; ?>
+                                    <?php if (!$guardianHasEmailVerification): ?><span class="text-secondary">-</span><?php endif; ?>
                                 </div>
                             </td>
                             <td>
@@ -1273,17 +1253,13 @@ require 'includes/header.php';
                             <td><?= e($record['phone'] ?: '-') ?><br><small class="text-secondary"><?= e($record['email']) ?></small></td>
                             <td>
                                 <div class="d-flex flex-column align-items-start gap-1">
-                                    <?php if ($coachHasPhoneVerification): ?>
-                                        <span class="badge text-bg-<?= !empty($record['phone_verified_at']) ? 'success' : 'secondary' ?>">
-                                            Phone <?= !empty($record['phone_verified_at']) ? 'Verified' : 'Pending' ?>
-                                        </span>
-                                    <?php endif; ?>
+                                    
                                     <?php if ($coachHasEmailVerification): ?>
                                         <span class="badge text-bg-<?= !empty($record['email_verified_at']) ? 'success' : 'secondary' ?>">
                                             Email <?= !empty($record['email_verified_at']) ? 'Verified' : 'Pending' ?>
                                         </span>
                                     <?php endif; ?>
-                                    <?php if (!$coachHasPhoneVerification && !$coachHasEmailVerification): ?>
+                                    <?php if (!$coachHasEmailVerification): ?>
                                         <span class="text-secondary">-</span>
                                     <?php endif; ?>
                                 </div>

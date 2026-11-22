@@ -69,16 +69,6 @@ try {
         (string)($_POST['guardian_email'] ?? '')
     );
 
-    $guardianSmsCode = preg_replace(
-        '/\D+/',
-        '',
-        (string)($_POST['guardian_sms_code'] ?? '')
-    ) ?? '';
-
-    $verificationBypassRequested =
-        isset($_POST['skip_phone_verification']) ||
-        (string)($_POST['verification_bypass'] ?? '') === '1';
-
     $guardianConsent =
         isset($_POST['guardian_consent']) &&
         (string)$_POST['guardian_consent'] === '1';
@@ -319,57 +309,6 @@ try {
                 'Parent / guardian consent is required.';
         }
 
-        $verificationBypassed = false;
-
-        if ($existingGuardianPhoneVerified) {
-            $verificationBypassed = false;
-        } elseif ($verificationBypassRequested) {
-            $verificationBypassed = true;
-        } else {
-            $verification = $_SESSION[
-                'guardian_sms_verification'
-            ] ?? null;
-
-            if (!is_array($verification)) {
-                $errors[] =
-                    'Please send and verify the parent / guardian SMS code.';
-            } elseif (
-                !hash_equals(
-                    (string)($verification['phone'] ?? ''),
-                    $guardianPhone
-                )
-            ) {
-                $errors[] =
-                    'The SMS code was sent to a different mobile number.';
-            } elseif (
-                (int)($verification['expires_at'] ?? 0) < time()
-            ) {
-                $errors[] =
-                    'The SMS verification code has expired.';
-            } elseif (
-                (int)($verification['attempts'] ?? 0) >= 5
-            ) {
-                $errors[] =
-                    'Too many incorrect SMS verification attempts.';
-            } elseif (!preg_match('/^\d{6}$/', $guardianSmsCode)) {
-                $errors[] =
-                    'Enter the 6-digit SMS verification code.';
-            } elseif (
-                !hash_equals(
-                    (string)($verification['code_hash'] ?? ''),
-                    hash('sha256', $guardianSmsCode)
-                )
-            ) {
-                $_SESSION[
-                    'guardian_sms_verification'
-                ]['attempts'] =
-                    ((int)($verification['attempts'] ?? 0)) + 1;
-
-                $errors[] =
-                    'The SMS verification code is incorrect.';
-            }
-        }
-
         if ($couponCode !== '') {
             if (
                 !preg_match(
@@ -397,8 +336,6 @@ try {
                 }
             }
         }
-    } else {
-        $verificationBypassed = false;
     }
 
     if ($errors) {
@@ -461,20 +398,12 @@ try {
                             THEN email
                         ELSE ?
                     END,
-                    phone_verified_at = CASE
-                        WHEN phone_verified_at IS NOT NULL
-                            THEN phone_verified_at
-                        WHEN ? = 1
-                            THEN phone_verified_at
-                        ELSE COALESCE(phone_verified_at, NOW())
-                    END,
                     updated_at = CURRENT_TIMESTAMP
                  WHERE id = ?'
             )->execute([
                 $guardianFullName,
                 $guardianPhone,
                 $guardianEmail,
-                $verificationBypassed ? 1 : 0,
                 $guardianId,
             ]);
 
@@ -512,16 +441,12 @@ try {
                     email,
                     phone_verified_at
                  )
-                 VALUES (NULL, ?, ?, ?, ?, ?)'
+                 VALUES (NULL, ?, ?, ?, ?, NULL)'
             )->execute([
                 $guardianFullName,
                 $guardianIdentityNumber,
                 $guardianPhone,
                 $guardianEmail,
-                $verificationBypassed
-                    ? null
-                    : (new DateTimeImmutable('now'))
-                        ->format('Y-m-d H:i:s'),
             ]);
 
             $guardianId = (int)$pdo->lastInsertId();
@@ -657,8 +582,6 @@ try {
             $guardianIdentityNumber
         );
 
-        unset($_SESSION['guardian_sms_verification']);
-
         $service =
             registrationVerificationServiceStatus();
 
@@ -688,7 +611,7 @@ try {
             );
 
             setFlash(
-                $verificationBypassed || !$emailResult['success']
+                !$emailResult['success']
                     ? 'warning'
                     : 'success',
                 'Student '
@@ -699,13 +622,6 @@ try {
                 . $expiry
                 . '.'
             );
-        } elseif ($verificationBypassed) {
-            setFlash(
-                'warning',
-                'Student '
-                . $studentNumber
-                . ' registered successfully with contact verification pending.'
-            );
         } else {
             setFlash(
                 $emailResult['success']
@@ -713,7 +629,7 @@ try {
                     : 'warning',
                 'Student '
                 . $studentNumber
-                . ' registered successfully.'
+                . ' registered successfully. Verify the parent / guardian email using the link sent after registration.'
             );
         }
 

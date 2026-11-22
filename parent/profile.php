@@ -13,7 +13,13 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if($name==='')throw new RuntimeException('Full name is required.');
         if($phone==='')throw new RuntimeException('Phone is required.');
         if(!filter_var($email,FILTER_VALIDATE_EMAIL))throw new RuntimeException('A valid email is required.');
-        $stmt=$pdo->prepare('UPDATE guardians SET full_name=?,phone=?,email=? WHERE id=?'); $stmt->execute([$name,$phone,$email,$guardianId]);
+        $stmt=$pdo->prepare('SELECT email FROM guardians WHERE id=?');
+        $stmt->execute([$guardianId]);
+        $verifiedEmail=(string)($stmt->fetchColumn() ?: '');
+        if(strcasecmp($email,$verifiedEmail)!==0){
+            throw new RuntimeException('Changing a verified email requires fresh email verification. Contact support to update your email address.');
+        }
+        $stmt=$pdo->prepare('UPDATE guardians SET full_name=?,phone=? WHERE id=?'); $stmt->execute([$name,$phone,$guardianId]);
         $_SESSION['parent_name']=$name; $_SESSION['parent_email']=$email;
         setFlash('success','Parent / guardian profile updated.'); redirect('/parent/profile.php');
     }catch(Throwable $e){setFlash('danger',$e->getMessage()); redirect('/parent/profile.php');}
@@ -34,7 +40,7 @@ portalPageStart('parent','profile','Profile');
 <div class="col-md-4"><label class="form-label">Phone *</label><input class="form-control" name="phone" value="<?=e((string)($parent['phone']??''))?>" required></div>
 <div class="col-md-4"><label class="form-label">Email *</label><input type="email" class="form-control" name="email" value="<?=e((string)($parent['email']??''))?>" required></div>
 <div class="col-md-6"><label class="form-label">Email Verified</label><input class="form-control" value="<?=!empty($parent['email_verified_at'])?e((string)$parent['email_verified_at']):'Pending'?>" disabled></div>
-<div class="col-md-6"><label class="form-label">Phone Verified</label><input class="form-control" value="<?=!empty($parent['phone_verified_at'])?e((string)$parent['phone_verified_at']):'Pending'?>" disabled></div>
+
 <div class="col-12"><button class="btn btn-primary"><i class="bi bi-save me-1"></i>Save Profile</button></div>
 </form></div></div>
 <?php portalPageEnd(); ?>

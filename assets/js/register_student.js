@@ -34,17 +34,6 @@
     const guardianPhone = document.getElementById('guardianPhone');
     const guardianPhoneVerifiedNotice = document.getElementById('guardianPhoneVerifiedNotice');
 
-    const guardianSmsGroup = document.getElementById('guardianSmsGroup');
-    const guardianSmsCode = document.getElementById('guardianSmsCode');
-    const guardianSmsCodeLabel = document.getElementById('guardianSmsCodeLabel');
-    const guardianSmsCodeHelp = document.getElementById('guardianSmsCodeHelp');
-    const sendSmsCodeButton = document.getElementById('sendSmsCodeButton');
-    const smsCodeStatus = document.getElementById('smsCodeStatus');
-    const skipPhoneVerification = document.getElementById('skipPhoneVerification');
-    const skipPhoneVerificationGroup = document.getElementById('skipPhoneVerificationGroup');
-    const verificationBypass = document.getElementById('verificationBypass');
-    const verificationBypassNotice = document.getElementById('verificationBypassNotice');
-
     const couponCode = document.getElementById('couponCode');
     const validateCouponButton = document.getElementById('validateCouponButton');
     const couponValidationStatus = document.getElementById('couponValidationStatus');
@@ -705,9 +694,6 @@
 
         guardianPhoneGroup.classList.remove('d-none');
         guardianEmailGroup.classList.remove('d-none');
-        guardianSmsGroup.classList.remove('d-none');
-        skipPhoneVerificationGroup.classList.remove('d-none');
-
         guardianPhoneVerifiedNotice.classList.add('d-none');
         guardianEmailVerifiedNotice.classList.add('d-none');
 
@@ -767,25 +753,12 @@
 
         if (guardianPhoneVerified) {
             guardianPhoneGroup.classList.add('d-none');
-            guardianSmsGroup.classList.add('d-none');
-            skipPhoneVerificationGroup.classList.add('d-none');
             guardianPhoneVerifiedNotice.classList.remove('d-none');
-
             guardianPhone.value = '';
             guardianPhone.required = false;
             guardianPhone.disabled = true;
-
-            guardianSmsCode.value = '';
-            guardianSmsCode.required = false;
-            guardianSmsCode.disabled = true;
-
-            verificationBypass.value = '0';
         } else {
-            guardianPhone.value =
-                String(data.phone || '');
-
-            skipPhoneVerification.checked = true;
-            setVerificationMode(true);
+            guardianPhone.value = String(data.phone || '');
         }
 
         if (guardianEmailVerified) {
@@ -854,8 +827,7 @@
                     'form-text text-info';
             } else {
                 clearGuardian();
-                setVerificationMode(true);
-
+    
                 guardianIdentityStatus.textContent =
                     'NEW PARENT / GUARDIAN. ENTER DETAILS.';
                 guardianIdentityStatus.className =
@@ -930,174 +902,6 @@
             checkGuardianIdentity();
         }
     });
-
-    const setVerificationMode = (skip) => {
-        if (guardianPhoneVerified) {
-            verificationBypass.value = '0';
-            return;
-        }
-
-        const bypass = Boolean(skip);
-
-        verificationBypass.value = bypass ? '1' : '0';
-        verificationBypassNotice.classList.toggle(
-            'd-none',
-            !bypass
-        );
-
-        guardianSmsCode.required = !bypass;
-        guardianSmsCode.disabled = bypass;
-        guardianSmsCode.placeholder =
-            bypass
-                ? 'VERIFY LATER'
-                : '6-DIGIT CODE';
-
-        guardianSmsCodeLabel.classList.toggle(
-            'required',
-            !bypass
-        );
-
-        guardianSmsCodeLabel.textContent =
-            bypass
-                ? 'SMS Verification Code (Optional)'
-                : 'SMS Verification Code';
-
-        guardianSmsCodeHelp.textContent =
-            bypass
-                ? 'VERIFICATION CODE IS DISABLED. YOU MAY VERIFY LATER.'
-                : 'ENTER THE 6-DIGIT CODE. VALID FOR 10 MINUTES.';
-
-        sendSmsCodeButton.disabled = bypass;
-        sendSmsCodeButton.innerHTML =
-            bypass
-                ? '<i class="bi bi-skip-forward me-1"></i>Skipped'
-                : '<i class="bi bi-chat-dots me-1"></i>Send Code';
-    };
-
-    skipPhoneVerification.addEventListener(
-        'change',
-        () => {
-            setVerificationMode(
-                skipPhoneVerification.checked
-            );
-
-            smsCodeStatus.textContent =
-                skipPhoneVerification.checked
-                    ? 'PHONE VERIFICATION WILL BE SKIPPED.'
-                    : 'PHONE VERIFICATION ENABLED. CLICK SEND CODE.';
-
-            smsCodeStatus.className =
-                skipPhoneVerification.checked
-                    ? 'form-text text-secondary'
-                    : 'form-text text-primary';
-        }
-    );
-
-    sendSmsCodeButton.addEventListener(
-        'click',
-        async () => {
-            if (skipPhoneVerification.checked) {
-                return;
-            }
-
-            if (
-                !guardianPhone.value.trim() ||
-                (
-                    !guardianEmailVerified &&
-                    !guardianEmail.checkValidity()
-                )
-            ) {
-                smsCodeStatus.textContent =
-                    'ENTER A VALID MOBILE NUMBER AND EMAIL FIRST.';
-
-                smsCodeStatus.className =
-                    'form-text text-danger';
-                return;
-            }
-
-            sendSmsCodeButton.disabled = true;
-            sendSmsCodeButton.innerHTML =
-                '<span class="spinner-border spinner-border-sm me-1"></span>SENDING...';
-
-            try {
-                const body = new URLSearchParams({
-                    csrf_token: csrf,
-                    guardian_phone:
-                        guardianPhone.value.trim(),
-                    guardian_email:
-                        guardianEmailVerified
-                            ? ''
-                            : guardianEmail.value.trim(),
-                    guardian_identity_number:
-                        guardianIdentity.value.trim(),
-                });
-
-                const data = await fetchJson(
-                    'api/registration/guardian_send_code.php',
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type':
-                                'application/x-www-form-urlencoded;charset=UTF-8',
-                            'Accept': 'application/json',
-                        },
-                        body: body.toString(),
-                        cache: 'no-store',
-                    }
-                );
-
-                guardianSmsCode.disabled = false;
-                guardianSmsCode.required = true;
-                guardianSmsCode.value = '';
-                guardianSmsCode.focus();
-
-                smsCodeStatus.textContent =
-                    upper(data.message || 'CODE SENT.');
-
-                smsCodeStatus.className =
-                    'form-text text-success';
-
-                sendSmsCodeButton.innerHTML =
-                    '<i class="bi bi-chat-dots me-1"></i>Resend Code';
-
-                setTimeout(() => {
-                    if (!skipPhoneVerification.checked) {
-                        sendSmsCodeButton.disabled = false;
-                    }
-                }, Number(data.retry_after || 60) * 1000);
-            } catch (error) {
-                const bypassAllowed =
-                    Boolean(error?.data?.bypass_allowed);
-
-                if (bypassAllowed) {
-                    skipPhoneVerification.checked = true;
-                    setVerificationMode(true);
-
-                    smsCodeStatus.textContent =
-                        upper(
-                            error.message ||
-                            'VERIFICATION UNAVAILABLE. VERIFY LATER.'
-                        );
-
-                    smsCodeStatus.className =
-                        'form-text text-warning';
-                } else {
-                    smsCodeStatus.textContent =
-                        upper(
-                            error.message ||
-                            'UNABLE TO SEND CODE.'
-                        );
-
-                    smsCodeStatus.className =
-                        'form-text text-danger';
-
-                    sendSmsCodeButton.disabled = false;
-                    sendSmsCodeButton.innerHTML =
-                        '<i class="bi bi-chat-dots me-1"></i>Send Code';
-                }
-            }
-        }
-    );
 
     couponCode.addEventListener('input', () => {
         couponCode.value =
@@ -1266,5 +1070,4 @@
 
     setStudentGate(false);
     setGuardianGate(false);
-    setVerificationMode(true);
 })();

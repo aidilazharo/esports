@@ -18,8 +18,14 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         if($full==='')throw new RuntimeException('Full name is required.');
         if($email!==''&&!filter_var($email,FILTER_VALIDATE_EMAIL))throw new RuntimeException('Email is invalid.');
 
-        $q=$pdo->prepare('UPDATE teachers SET full_name=?,position=?,phone=?,email=? WHERE id=? AND school_id=?');
-        $q->execute([$full,$position?:null,$phone?:null,$email?:null,$teacherId,$schoolId]);
+        $q=$pdo->prepare('SELECT email FROM teachers WHERE id=? AND school_id=?');
+        $q->execute([$teacherId,$schoolId]);
+        $verifiedEmail=(string)($q->fetchColumn() ?: '');
+        if(strcasecmp($email,$verifiedEmail)!==0){
+            throw new RuntimeException('Changing a verified email requires a new email verification link. Contact support to update your email.');
+        }
+        $q=$pdo->prepare('UPDATE teachers SET full_name=?,position=?,phone=? WHERE id=? AND school_id=?');
+        $q->execute([$full,$position?:null,$phone?:null,$teacherId,$schoolId]);
 
         $_SESSION['teacher_name']=$full;
         $_SESSION['teacher_email']=$email;
