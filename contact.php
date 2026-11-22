@@ -851,7 +851,7 @@ require 'includes/header.php';
                             </button>
 
                             <a
-                                href="index"
+                                href="/index.php"
                                 class="btn btn-outline-secondary"
                             >
                                 Cancel

@@ -722,7 +722,7 @@ portalRenderVideoGallery(
     </div>
 
     <div class="mt-4">
-        <a href="learning_modules" class="btn btn-outline-primary">
+        <a href="/learning_modules.php" class="btn btn-outline-primary">
             <i class="bi bi-journal-check me-2"></i>View Learning Modules
         </a>
     </div>
@@ -867,7 +867,7 @@ portalRenderVideoGallery(
             <h2 class="h3 mb-1">Frequently Asked Questions</h2>
             <div class="small text-secondary">Updated with the latest programme participation, fee, equipment and certificate information.</div>
         </div>
-        <a href="faq" class="btn btn-sm btn-outline-primary">View Full FAQ</a>
+        <a href="#programme-faq" class="btn btn-sm btn-outline-primary">Browse FAQs</a>
     </div>
 
     <div class="card border-0 shadow-sm">

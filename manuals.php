@@ -44,7 +44,7 @@ require 'includes/header.php';
                     <strong>Coming Soon</strong>
                 </div>
 
-                <a href="about-programme" class="btn btn-primary">
+                <a href="/about-programme.php" class="btn btn-primary">
                     <i class="bi bi-info-circle me-2"></i>
                     About Programme
                 </a>

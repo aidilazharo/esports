@@ -4,7 +4,8 @@ on:
   pull_request:
   push:
     branches:
-      - fix/email-only-registration-verification
+      - main
+      - fix/public-navigation-404
 
 permissions:
   contents: read
@@ -25,6 +26,8 @@ jobs:
       - name: Check JavaScript syntax
         run: |
           find assets/js api -type f -name '*.js' -print0 | xargs -0 -n1 node --check
+      - name: Verify public navigation routes
+        run: php tests/public_navigation_test.php
       - name: Check email code verification
         run: php tests/email_verification_test.php
       - name: Prohibit registration SMS transport

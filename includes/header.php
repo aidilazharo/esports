@@ -696,17 +696,17 @@ $eventsCompetitionPages = ['events-competitions.php','events-competitions-paymen
 // Public mobile navigation: primary links in header; secondary links in footer.
 // Preserve the existing desktop Programme dropdown and routes.
 $mobilePublicPrimary = [
-    ['Home', 'index', 'bi-house-door', $currentPage === 'index.php'],
-    ['Programme', 'about-programme', 'bi-journal-richtext', $currentPage === 'about-programme.php'],
-    ['Events & Competitions', 'events-competitions', 'bi-calendar-event', in_array($currentPage, $eventsCompetitionPages, true)],
-    ['Login', 'login', 'bi-person-circle', $currentPage === 'login.php'],
+    ['Home', '/index.php', 'bi-house-door', $currentPage === 'index.php'],
+    ['Programme', '/about-programme.php', 'bi-journal-richtext', $currentPage === 'about-programme.php'],
+    ['Events & Competitions', '/events-competitions.php', 'bi-calendar-event', in_array($currentPage, $eventsCompetitionPages, true)],
+    ['Login', '/login.php', 'bi-person-circle', $currentPage === 'login.php'],
 ];
 $mobilePublicSecondary = [
-    ['Register School', 'register_school', 'bi-building-add', $currentPage === 'register_school.php'],
-    ['Register Student', 'register_student', 'bi-person-plus', $currentPage === 'register_student.php'],
-    ['Register Teacher', 'register_teacher', 'bi-person-badge', $currentPage === 'register_teacher.php'],
-    ['Manuals', 'manuals', 'bi-book', $currentPage === 'manuals.php'],
-    ['Contact Us', 'contact', 'bi-envelope', $currentPage === 'contact.php'],
+    ['Register School', '/register_school.php', 'bi-building-add', $currentPage === 'register_school.php'],
+    ['Register Student', '/register_student.php', 'bi-person-plus', $currentPage === 'register_student.php'],
+    ['Register Teacher', '/register_teacher.php', 'bi-person-badge', $currentPage === 'register_teacher.php'],
+    ['Manuals', '/manuals.php', 'bi-book', $currentPage === 'manuals.php'],
+    ['Contact Us', '/contact.php', 'bi-envelope', $currentPage === 'contact.php'],
 ];
 
 $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','certificates.php','events-competitions-report.php'];
@@ -953,7 +953,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
 </script>
 <nav class="navbar navbar-expand-xl navbar-dark bg-primary shadow-sm sticky-top">
 <div class="container">
-    <a class="navbar-brand portal-navbar-brand" href="index" aria-label="<?= e(APP_NAME) ?> home">
+    <a class="navbar-brand portal-navbar-brand" href="/index.php" aria-label="<?= e(APP_NAME) ?> home">
         <img src="assets/images/logo.svg" alt="Metadata Berhad" class="portal-navbar-logo" width="180" height="44">
         <span class="visually-hidden"><?= e(APP_NAME) ?></span>
     </a>
@@ -962,7 +962,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
 
     <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav ms-auto align-items-xl-center">
-            <li class="nav-item"><a class="nav-link <?= $currentPage === 'index.php' ? 'active' : '' ?>" href="index">Home</a></li>
+            <li class="nav-item"><a class="nav-link <?= $currentPage === 'index.php' ? 'active' : '' ?>" href="/index.php">Home</a></li>
 
             <!--
                 This header is only rendered for guests.
@@ -999,7 +999,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                     <li>
                         <a
                             class="dropdown-item"
-                            href="about-programme"
+                            href="/about-programme.php"
                         >
                             <i class="bi bi-info-circle me-2"></i>
                             About Programme
@@ -1009,7 +1009,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                     <li>
                         <a
                             class="dropdown-item"
-                            href="events-competitions"
+                            href="/events-competitions.php"
                         >
                             <i class="bi bi-calendar-event me-2"></i>
                             Events &amp; Competitions
@@ -1023,7 +1023,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                     <li>
                         <a
                             class="dropdown-item"
-                            href="register_school"
+                            href="/register_school.php"
                         >
                             <i class="bi bi-building-add me-2"></i>
                             Register School
@@ -1033,7 +1033,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                     <li>
                         <a
                             class="dropdown-item"
-                            href="register_student"
+                            href="/register_student.php"
                         >
                             <i class="bi bi-person-plus me-2"></i>
                             Register Student
@@ -1043,7 +1043,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                     <li>
                         <a
                             class="dropdown-item"
-                            href="register_teacher"
+                            href="/register_teacher.php"
                         >
                             <i class="bi bi-person-badge me-2"></i>
                             Register Teacher
@@ -1057,7 +1057,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                     <li>
                         <a
                             class="dropdown-item <?= $currentPage === 'manuals.php' ? 'active' : '' ?>"
-                            href="manuals"
+                            href="/manuals.php"
                         >
                             <i class="bi bi-book me-2"></i>
                             Manuals
@@ -1067,7 +1067,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                     <li>
                         <a
                             class="dropdown-item <?= $currentPage === 'contact.php' ? 'active' : '' ?>"
-                            href="contact"
+                            href="/contact.php"
                         >
                             <i class="bi bi-envelope me-2"></i>
                             Contact Us
@@ -1079,7 +1079,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
             <li class="nav-item ms-xl-2">
                 <a
                     class="nav-link px-2 <?= $currentPage === 'login.php' ? 'active' : '' ?>"
-                    href="login"
+                    href="/login.php"
                     title="Login"
                     aria-label="Login"
                 >
