@@ -32,6 +32,8 @@ jobs:
         run: php tests/directory_snapshot_test.php
       - name: Test nationwide school import and email-suppression safeguards
         run: php tests/school_directory_import_test.php
+      - name: Check Johor school SQL import coverage and email safeguards
+        run: php tests/johor_school_sql_test.php
       - name: Check email code verification
         run: php tests/email_verification_test.php
       - name: Prohibit registration SMS transport

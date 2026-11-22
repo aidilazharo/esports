@@ -62,3 +62,10 @@
 - A self-submitted school profile does not clear suppression. Only a verified, authorized administrator can activate school email access; never bulk-enable it.
 - Use `scripts/import-school-directory.php` for reviewed official CSV data outside the web root; dry-run first, back up MySQL and apply the migration before importing. No live production database updates occur from repository commits alone.
 - Run `tests/school_directory_import_test.php` and PHP lint before committing directly to main. See `docs/malaysia-school-directory-import.md`.
+
+## Johor school email SQL import
+- `database/imports/johor_schools_with_email.sql` contains 1,192 historical KPM-derived Johor school records with email addresses, with seven contact sources supplemented and documented in `docs/johor-school-sql-import.md`.
+- Do not mistake these June-2022 records for a certified exhaustive 2026 directory: a newer listing reports 1,198 Johor schools.
+- Never enable emails for newly imported schools: always set `suppress_school_email=1`, `unsubscribed=1`, `jpn=0`. Never edit existing school records during bulk import.
+- SQL imports must require a database backup and the existing email-suppression migration; never automatically run imports on GitHub deploy.
+- Run `php tests/johor_school_sql_test.php` before changing Johor data; commit directly to main.
