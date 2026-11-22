@@ -1,0 +1,50 @@
+name: Update website version on main push
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+# Serialize changes to VERSION, so concurrent main pushes cannot race.
+concurrency:
+  group: esports-version-main
+  cancel-in-progress: false
+
+jobs:
+  update-version:
+    # Do not bump this feature's initial baseline or a bot-produced version commit.
+    if: >-
+      github.actor != 'github-actions[bot]' &&
+      !contains(github.event.head_commit.message, '[skip-version]')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Bump and commit on main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Retry if a developer pushes while the version workflow runs.
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git checkout -B version-bump origin/main
+            bash scripts/bump-version.sh
+            git add VERSION
+            git commit -m "chore: bump website version to v$(cat VERSION) [skip-version]"
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "Another push updated main; retrying ($attempt/5)"
+            sleep 2
+          done
+          echo "Could not push VERSION after 5 attempts" >&2
+          exit 1
