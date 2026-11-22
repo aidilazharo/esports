@@ -62,7 +62,7 @@ function esportsInvalidateHtmlCacheForVersion(string $root): void
     }
 
     $version = trim((string) @file_get_contents($versionFile));
-    if (preg_match('/^[0-9]+\\.[0-9]+\\.[0-9]+$/D', $version) !== 1) {
+    if (preg_match('/^[0-9]+\.[0-9]+\.[0-9]+$/D', $version) !== 1) {
         return;
     }
 

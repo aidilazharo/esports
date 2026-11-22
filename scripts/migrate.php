@@ -29,7 +29,7 @@ sort($files, SORT_STRING);
 $pending = [];
 foreach ($files as $file) {
     $name = basename($file);
-    if (!preg_match('/^[0-9]{8}_[0-9]{6}_[a-z0-9_]+\\.php$/D', $name)) {
+    if (!preg_match('/^[0-9]{8}_[0-9]{6}_[a-z0-9_]+\.php$/D', $name)) {
         throw new RuntimeException('Invalid migration filename: ' . $name);
     }
     $pending[$name] = ['path' => $file, 'checksum' => hash_file('sha256', $file)];
