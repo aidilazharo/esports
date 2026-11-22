@@ -3,6 +3,10 @@ require_once 'config.php';
 require_once __DIR__ . '/registration_api_cache.php';
 require_once __DIR__ . '/registration_contact_verification.php';
 
+$errors = [];
+$verificationSchemaReady = staffContactVerificationSchemaReady($pdo, 'coach');
+$verificationServiceAvailable = (bool) (registrationVerificationServiceStatus()['available'] ?? false);
+
 $verificationView = null;
 if (isset($_GET['verify_email'])) {
     if (staffContactVerificationSchemaReady($pdo, 'coach')) {

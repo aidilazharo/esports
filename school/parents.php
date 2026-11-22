@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                 $number='PG-'.str_pad((string)$guardianId,6,'0',STR_PAD_LEFT);
                 $pdo->prepare('UPDATE guardians SET guardian_number=? WHERE id=?')->execute([$number,$guardianId]);
             }else{
-                $pdo->prepare('UPDATE guardians SET full_name=?,phone=?,email=? WHERE id=?')->execute([$full,$phone,$email,$guardianId]);
+                $pdo->prepare('UPDATE guardians SET full_name=?,phone=?,email=?,email_verified_at=IF(LOWER(email)=LOWER(?),email_verified_at,NULL) WHERE id=?')->execute([$full,$phone,$email,$email,$guardianId]);
             }
             $link=$pdo->prepare('INSERT INTO student_guardians (student_id,guardian_id,relationship,is_primary) VALUES (?,?,?,1) ON DUPLICATE KEY UPDATE relationship=VALUES(relationship)');
             $link->execute([$studentId,$guardianId,$relationship?:'Guardian']);
