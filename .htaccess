@@ -1,0 +1,6 @@
+# Keep executable uploads blocked without tracking files inside uploads/.
+# Apache only; configure equivalent restrictions for Nginx or other servers.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^uploads/.*\.(?:php[0-9]?|phtml|phar|cgi|pl|py|sh)$ - [F,NC,L]
+</IfModule>
