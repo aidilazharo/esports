@@ -119,6 +119,13 @@ if ($slowRequestThresholdMs > 0) {
     );
 }
 
+/* Hostinger deployment fallback: expire generated HTML when VERSION changes.
+ * Git post-merge hooks (if installed) perform the same cleanup immediately.
+ * Requests do not need MySQL or an admin session to invalidate this cache.
+ */
+require_once __DIR__ . '/includes/html_cache_deploy.php';
+esportsInvalidateHtmlCacheForVersion(__DIR__);
+
 /* Session */
 if (session_status() === PHP_SESSION_NONE) {
     ini_set('session.use_strict_mode', envBool('SESSION_USE_STRICT_MODE', true) ? '1' : '0');

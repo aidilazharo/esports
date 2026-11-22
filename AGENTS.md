@@ -14,3 +14,8 @@
 - Ensure GitHub Actions permissions allow `contents: write`; if direct push protection disallows bots, adjust repository settings or change to a PR-based workflow.
 - Hostinger Git auto-deployment can deploy pushes to `main` automatically. Since a regular code push is followed by an automated VERSION commit, Hostinger may deploy twice per code update. Verify the second deployment finishes.
 - Retain local-only `html/`, `download/`, `uploads/`. Git ignoring these paths does NOT guarantee Hostinger will preserve them during full-directory redeployments: store persistent data outside the deployment destination or use a deploy process that excludes these directories.
+
+## Deployment HTML cache rule
+- Generated `html/` must be **emptied** after every successful new-code server pull, then recreated as an empty directory. Do not remove PHP source files or `download/` / `uploads/` runtime content.
+- Supported SSH pull: `bash scripts/safe-pull.sh`. For ordinary server `git pull`, install `bash scripts/install-server-html-hook.sh` once on Hostinger. Hostinger hPanel deployments that bypass Git hooks use the first-request `VERSION`-based fallback from `config.php`.
+- Do not enable migration execution automatically on Git pull. Use `php scripts/migrate.php` with an explicit backup and validation; refer to `docs/mysql-migrations.md`.

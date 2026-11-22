@@ -32,3 +32,19 @@ A new checkout does **not** contain the three directories or their contents. Pro
 - Back up these three local folders separately from source code and before deployments.
 - Do not use `git clean -fdx` or other aggressive cleanup commands in production: those may delete ignored runtime folders.
 - `git fetch` alone is safe and does not replace working-tree files; the critical operation is the first checkout, merge, rebase, or pull that removes old tracked files.
+
+## New behavior: generated html/ is reset after deployment
+
+**Policy:** for each successful server code pull, clear *only* the generated contents under `html/`, leaving the folder itself present and empty. Never delete or overwrite `uploads/` or `download/`. The PHP public header regenerates static HTML after the next normal request.
+
+For SSH-based server pulls, use `bash scripts/safe-pull.sh`. This script now backs up/restores **only** the two persistent folders and empties `html/` when the commit changes. Alternatively, in an existing server Git checkout on `main`, run **once**:
+
+```bash
+bash scripts/install-server-html-hook.sh
+```
+
+The installed Git `post-merge` hook calls `scripts/reset-html-cache.sh` after a successful `git pull`. Installation refuses to overwrite an existing hook or custom hooks path. No hook is installed automatically on developers' computers.
+
+**Hostinger caveat:** hPanel's Git auto-deployment may copy files without executing checkout-local Git hooks, depending on the deployment mechanism. Therefore `config.php` also loads a PHP **first-request fallback**: when the root `VERSION` changes, it empties `html/` once and records the observed version in a locked marker under the PHP temporary directory. It checks symlinks, uses a process lock and retries on errors. There is no destructive work if the version is unchanged. The fallback runs at the first request after deployment, not necessarily at the instant hPanel finishes copying files. If GitHub's version-bump workflow fails to advance `VERSION`, this fallback cannot identify that code-only update, so use the Git hook/server pull script for immediate cleanup.
+
+`git fetch` without merge does not run post-merge hooks or change application files. Do not use `git clean -fdx` for deployment. Also protect `download/` and `uploads/` using external persistent storage or exclusion-aware deployment; Git ignore rules alone cannot protect them from a Hostinger full-directory replacement.

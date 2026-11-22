@@ -2,5 +2,6 @@
 # Apache only; configure equivalent restrictions for Nginx or other servers.
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteRule ^(?:database|scripts)/ - [F,NC,L]
     RewriteRule ^uploads/.*\.(?:php[0-9]?|phtml|phar|cgi|pl|py|sh)$ - [F,NC,L]
 </IfModule>
