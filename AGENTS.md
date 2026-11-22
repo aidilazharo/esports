@@ -33,7 +33,8 @@
 
 ## Public URL and routing stability
 - Public navigation must always point directly to real PHP filenames, e.g. `/register_student.php` (never depend on extensionless routes).
-- `.htaccess` retains Apache rewrite compatibility for older clean URLs such as `/register_student` and blocks direct access to `scripts/`, `database/`, and executable files under `uploads/`.
+- Do not overwrite or invent the original Hostinger `.htaccess`. Its original contents were never committed to this repository; preserve it from the live server. The tracked Git copy provides security rules only, not verified clean-URL rewrites.
+- `scripts/safe-pull.sh` backs up and restores server `.htaccess`, `uploads/` and `download/`, while clearing `html/`. Hostinger hPanel auto-deployment needs its own preservation/exclusion for the original `.htaccess`.
 - When changing pages or navigation, run `php tests/public_navigation_test.php`; check real target files exist and keep desktop/mobile links aligned.
 - If a page is removed, change its links to an existing page/section instead of leaving a 404.
 - The generated `html/` cache is invalidated after deployment as configured. Live PHP and generated HTML must both use working root-relative menu links.

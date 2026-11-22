@@ -81,10 +81,7 @@ foreach ($pages as $page) {
     }
 }
 
-if (!str_contains($apache, 'RewriteCond %{REQUEST_FILENAME}.php -f')
-    || !str_contains($apache, 'RewriteRule ^([A-Za-z0-9_-]+)$ $1.php')) {
-    $errors[] = 'Apache clean-URL compatibility rule missing.';
-}
+// Explicit .php links work without Apache clean-URL rewrite rules.
 if (!str_contains($apache, 'RewriteRule ^uploads/')
     || !str_contains($apache, 'RewriteRule ^(?:database|scripts)/')) {
     $errors[] = 'Apache security restrictions missing.';
@@ -94,4 +91,4 @@ if ($errors) {
     fwrite(STDERR, implode("\n", $errors) . "\n");
     exit(1);
 }
-echo "Public navigation and clean-URL compatibility checks passed.\n";
+echo "Public navigation target checks passed.\n";

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Server-safe fast-forward pull: preserve uploads/ and download/ and
+# Server-safe fast-forward pull: preserve uploads/, download/, and server .htaccess;
 # replace generated html/ with an empty directory after code changes.
 set -Eeuo pipefail
 root="$(git rev-parse --show-toplevel)"
@@ -19,6 +19,9 @@ restore() {
       cp -a -- "$backup/$directory/." "$directory/" || return 1
     fi
   done
+  if [[ -f "$backup/.htaccess" ]]; then
+    cp -p -- "$backup/.htaccess" "$root/.htaccess" || return 1
+  fi
 }
 for directory in "${directories[@]}"; do
   if [[ -L "$directory" ]]; then
@@ -30,6 +33,13 @@ for directory in "${directories[@]}"; do
     cp -a -- "$directory/." "$backup/$directory/"
   fi
 done
+if [[ -L "$root/.htaccess" ]]; then
+  echo "Refusing to deploy: .htaccess is a symlink" >&2
+  exit 1
+fi
+if [[ -f "$root/.htaccess" ]]; then
+  cp -p -- "$root/.htaccess" "$backup/.htaccess"
+fi
 echo "Runtime backup: $backup"
 if ! git pull --ff-only origin main; then
   echo "Git pull failed. Restoring local data from $backup." >&2

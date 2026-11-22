@@ -1,18 +1,7 @@
-# Root-level Apache routes for the school esports PHP application.
-# Preserve protection for private server folders and executable uploads.
-# Explicit .php navigation works even when Apache rewrite is unavailable.
+# Keep executable uploads blocked without tracking files inside uploads/.
+# Apache only; configure equivalent restrictions for Nginx or other servers.
 <IfModule mod_rewrite.c>
     RewriteEngine On
-
-    # Never serve internal migration/scripts or executable uploaded files.
     RewriteRule ^(?:database|scripts)/ - [F,NC,L]
     RewriteRule ^uploads/.*\.(?:php[0-9]?|phtml|phar|cgi|pl|py|sh)$ - [F,NC,L]
-
-    # Backwards compatibility for bookmarks and older pages using clean URLs,
-    # e.g. /register_student -> /register_student.php.
-    # Do not alter existing files, directories or assets.
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME}.php -f
-    RewriteRule ^([A-Za-z0-9_-]+)$ $1.php [L,NC,QSA]
 </IfModule>

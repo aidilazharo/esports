@@ -1,15 +1,20 @@
 # Public navigation and 404 prevention
 
-## Root cause fixed
-Earlier cleanup replaced `.htaccess` with security-only rules, but the public navbar still linked to extensionless routes such as `register_student`. On Apache configurations without implicit extension mapping, these URLs returned HTTP 404.
+## Root cause
+The menu linked to extensionless URLs (such as `register_student`) even though the repository contains `register_student.php`. Some Apache configurations return 404 without explicit rewrite rules.
 
-## Routing policy
-- Public header and both mobile navigation menus use root-relative PHP links, e.g. `/register_student.php`.
-- Apache additionally rewrites *existing* root-level extensionless PHP endpoints for old bookmarks (e.g. `/register_student`), while preserving existing static files, directories, and upload/script restrictions.
-- The manual page, school-registration cancellation and FAQ navigation also point to existing destinations.
-- The static `html/` cache inserts `<base href="../">`. Root-relative links remain valid when pages are served from `/html/`.
-- `php tests/public_navigation_test.php` verifies target files, public page links, desktop/mobile menu targets and the required Apache rules. CI runs it for PRs and main pushes.
+The repository history **does not contain the original Hostinger .htaccess**: it first appeared in Git in commit `9151f659` during the repository cleanup. It would be unsafe to invent or overwrite the original hosting rules.
 
-Hostinger should deploy the new root `.htaccess` together with PHP source. If the live site still returns 404 on the explicit `.php` URLs, verify domain document-root configuration, deployment history and that `.htaccess` is applied on the active server. The PHP navigation fix does not depend on Apache rewrite to function.
+## Fix
+- Public desktop and mobile navigation now use direct, root-relative PHP links (e.g. `/register_student.php`), independent of URL rewriting.
+- Fixed orphaned links on Manuals, school registration and the FAQ section.
+- The tracked `.htaccess` was **not modified** by this fix. It retains the current Git security rules, not a recovered Hostinger-original configuration.
+- The `html/` cache's `<base href="../">` remains compatible with the new root-relative public menu links.
+- The PHP navigation CI test checks menu destinations, linked files and existing security directives, **not** clean-URL rewrite rules.
 
-The live URL was not accessible to the audit's public web fetch, so check these paths after deployment: `/index.php`, `/about-programme.php`, `/events-competitions.php`, `/register_school.php`, `/register_student.php`, `/register_teacher.php`, `/manuals.php`, `/contact.php`, `/login.php`, and legacy `/register_student`.
+## Protect the original server .htaccess
+For a manually managed Git checkout use `bash scripts/safe-pull.sh`: it backs up and restores server `.htaccess`, `uploads/` and `download/`, and clears only generated `html/` after a successful revision change. A plain `git pull` does not provide the same `.htaccess` backup protection.
+
+For Hostinger hPanel auto-deployment, Git deployment behaviour may overwrite `.htaccess` because it is still a tracked file. Back up the actual server-original file and configure a deployment exclusion or post-deployment restore according to Hostinger's deployment mechanism **before** deploying. The original Hostinger file cannot be reproduced from this Git repository.
+
+After deployment, test `/index.php`, `/about-programme.php`, `/events-competitions.php`, `/register_school.php`, `/register_student.php`, `/register_teacher.php`, `/manuals.php`, `/contact.php` and `/login.php`. Older extensionless bookmarks such as `/register_student` might still need a separate host-approved rewrite rule, but the website menu no longer relies on one.
