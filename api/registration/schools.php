@@ -1,6 +1,20 @@
 <?php
 declare(strict_types=1);
 
+// Use a generated public snapshot for broad searches without opening MySQL.
+// Full exact registration details still come from the current database.
+require_once __DIR__ . '/../../includes/directory_snapshot.php';
+$directorySchoolSnapshot = null;
+if (!(($_GET['exact'] ?? '') === '1' && ($_GET['details'] ?? '') === '1')) {
+    try {
+        $directorySchoolSnapshot = esportsDirectorySnapshotRead('schools');
+    } catch (Throwable $e) {
+        error_log('School snapshot unavailable: ' . $e->getMessage());
+    }
+}
+if (is_array($directorySchoolSnapshot)) {
+    define('ESPORTS_DIRECTORY_SNAPSHOT_ONLY', true);
+}
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../registration_api_cache.php';
 
@@ -120,7 +134,9 @@ try {
         ], 200, 30);
     }
 
-    $allSchools = registrationApiCacheGet('registration-schools-v4', 300);
+    $allSchools = is_array($directorySchoolSnapshot)
+        ? $directorySchoolSnapshot['rows']
+        : registrationApiCacheGet('registration-schools-v4', 300);
 
     if (!is_array($allSchools)) {
         $stmt = $pdo->query(

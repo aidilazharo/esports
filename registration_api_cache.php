@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/includes/directory_snapshot.php';
+
 function registrationUppercaseInput(?string $value): string
 {
     $value = trim((string)$value);
@@ -72,11 +74,18 @@ function registrationApiCacheSet(string $key, mixed $value): void
 
 function registrationSchoolCacheInvalidate(string $schoolCode = ''): void
 {
-    @unlink(registrationApiCachePath('registration-schools-v3'));
+    @unlink(registrationApiCachePath('registration-schools-v4'));
 
     $schoolCode = registrationUppercaseInput($schoolCode);
     if ($schoolCode !== '') {
-        @unlink(registrationApiCachePath('registration-school-exact-v3:' . $schoolCode));
+        @unlink(registrationApiCachePath('registration-school-exact-v4:' . $schoolCode));
+    }
+    // Make newly updated schools visible immediately via the MySQL fallback.
+    try {
+        esportsDirectorySnapshotInvalidate('schools');
+        esportsDirectorySnapshotInvalidate('schools_admin');
+    } catch (Throwable $e) {
+        error_log('School directory invalidation failed: ' . $e->getMessage());
     }
 }
 

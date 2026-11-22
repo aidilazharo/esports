@@ -79,7 +79,7 @@ function portalPageStart(string $role, string $activeKey, string $title): void
     $e = static fn($v) => htmlspecialchars((string)$v, ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8');
     echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
     echo '<title>'.$e($title).' | '.$e($portalTitle).'</title>';
-    echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"><link href="/assets/css/mobile-icon-links.css?v=2" rel="stylesheet"><link href="/assets/css/mobile-split-navigation.css?v=1" rel="stylesheet">';
+    echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"><link href="/assets/css/mobile-icon-links.css?v=2" rel="stylesheet"><link href="/assets/css/mobile-split-navigation.css?v=2" rel="stylesheet">';
     echo '<style>
         body{background:#f5f7fb;color:#1f2937}
         .portal-sidebar{min-height:calc(100vh - 58px)}

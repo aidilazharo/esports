@@ -45,3 +45,12 @@
 - When changing pages or navigation, run `php tests/public_navigation_test.php`; check real target files exist and keep desktop/mobile links aligned.
 - If a page is removed, change its links to an existing page/section instead of leaving a 404.
 - The generated `html/` cache is invalidated after deployment as configured. Live PHP and generated HTML must both use working root-relative menu links.
+
+## Nightly directory JSON snapshots
+- The mobile public/footer navigation uses Bootstrap primary blue `#0d6efd` to match the mobile header, with white text/icons. Desktop footer remains white.
+- Generate private searchable JSON snapshots of schools, teachers, students and parents/guardians at midnight Malaysia time using `cron/build_directory_snapshots.php --run`; Hostinger cron setup is required separately.
+- Store snapshots outside the web root with directory mode 0700 and files mode 0600. Never commit them or publish sensitive users' names/contacts as static JSON assets.
+- Use `/api/directory.php` for read-only, authenticated/scoped filtering without opening MySQL; the public schools dataset is deliberately minimal. School/teacher scope comes from session, never user input.
+- MySQL remains authoritative for CRUD, account verification, access control, membership, payments and any live business decision. Snapshot data may be stale for up to 24 hours.
+- The public school registration search can use snapshots and falls back to live MySQL when missing or invalidated. Other existing CRUD pages retain their live MySQL workflows until carefully migrated.
+- Always run `php tests/directory_snapshot_test.php` for snapshot code changes and follow the mandatory commit-directly-to-main workflow.

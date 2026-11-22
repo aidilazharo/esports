@@ -165,6 +165,9 @@ define('DB_PASS', envString('DB_PASS'));
 define('DB_CONNECT_TIMEOUT', max(1, envInt('DB_CONNECT_TIMEOUT', 5)));
 define('DB_PERSISTENT', envBool('DB_PERSISTENT', true));
 
+// The read-only JSON snapshot API can work without opening MySQL.
+// Only that dedicated endpoint sets this flag before loading this file.
+if (!defined('ESPORTS_DIRECTORY_SNAPSHOT_ONLY') || ESPORTS_DIRECTORY_SNAPSHOT_ONLY !== true) {
 try {
     $pdo = new PDO(
         'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8mb4',
@@ -192,6 +195,8 @@ try {
         . '<p class="mb-0">Unable to connect to the database. Please try again shortly.</p>'
         . '</div></div></body></html>';
     exit;
+}
+
 }
 
 /* External services / application settings */

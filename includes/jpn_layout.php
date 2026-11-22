@@ -35,7 +35,7 @@ function jpnPageStart(
     echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">';
     echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">';
     echo '<link href="/assets/css/mobile-icon-links.css?v=2" rel="stylesheet">';
-    echo '<link href="/assets/css/mobile-split-navigation.css?v=1" rel="stylesheet">';
+    echo '<link href="/assets/css/mobile-split-navigation.css?v=2" rel="stylesheet">';
     echo '<style>
         body{background:#f5f7fb;color:#1f2937}
         .jpn-sidebar{min-height:calc(100vh - 58px)}

@@ -783,7 +783,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/mobile-icon-links.css?v=2" rel="stylesheet">
-    <link href="assets/css/mobile-split-navigation.css?v=1" rel="stylesheet">
+    <link href="assets/css/mobile-split-navigation.css?v=2" rel="stylesheet">
 
     <style>
         .portal-navbar-brand{display:inline-flex;align-items:center;min-height:52px;padding-top:.25rem;padding-bottom:.25rem}
