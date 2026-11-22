@@ -46,7 +46,6 @@ loadStudentRegistrationEnv(__DIR__ . '/.env');
 
 const GUARDIAN_CONSENT_VERSION = '2026-08-09';
 const VERIFICATION_EXPIRY_HOURS = 24;
-const BREVO_SMS_ENDPOINT = 'https://api.brevo.com/v3/transactionalSMS/send';
 
 function normalizeIdentityNumber(string $value): string
 {
@@ -79,107 +78,6 @@ function studentAppBaseUrl(): string
     return $env !== '' ? rtrim($env, '/') : 'https://esports.metadata.technology';
 }
 
-/**
- * Send a direct Brevo Transactional SMS. No SMS template is required.
- *
- * First child / unverified guardian:
- *   verifies parent/guardian + student.
- * Additional child under an already verified guardian:
- *   verifies the new student only.
- */
-function sendBrevoSmsVerification(
-    string $recipient,
-    bool $verifyGuardian,
-    string $guardianNumber,
-    string $studentNumber,
-    string $verifyUrl
-): array {
-    $apiKey = trim((string) (getenv('BREVO_API_KEY') ?: ''));
-    $sender = trim((string) (getenv('BREVO_SMS_SENDER') ?: 'Metadata'));
-    $recipient = normalizeSmsNumber($recipient);
-
-    if ($apiKey === '') {
-        return ['success' => false, 'message' => 'BREVO_API_KEY is not configured.'];
-    }
-
-    // Brevo allows up to 11 alphanumeric characters for an alphanumeric sender.
-    if ($sender === '' || strlen($sender) > 11 || !preg_match('/^[A-Za-z0-9]+$/', $sender)) {
-        return [
-            'success' => false,
-            'message' => 'BREVO_SMS_SENDER must be 1-11 alphanumeric characters, e.g. Metadata.',
-        ];
-    }
-
-    if ($recipient === '' || strlen($recipient) < 6 || strlen($recipient) > 15) {
-        return ['success' => false, 'message' => 'Parent/guardian mobile number is invalid.'];
-    }
-
-    if (!function_exists('curl_init')) {
-        return ['success' => false, 'message' => 'PHP cURL is required for Brevo Transactional SMS.'];
-    }
-
-    // Keep the copy concise so the verification URL is more likely to fit in one SMS segment.
-    $content = $verifyGuardian
-        ? 'Metadata: Verify parent ' . $guardianNumber . ' and student ' . $studentNumber . ': ' . $verifyUrl
-        : 'Metadata: Verify student ' . $studentNumber . ': ' . $verifyUrl;
-
-    $payload = [
-        'sender' => $sender,
-        'recipient' => $recipient,
-        'content' => $content,
-        'type' => 'transactional',
-        'tag' => 'account-verification',
-        'unicodeEnabled' => false,
-    ];
-
-    $webhookUrl = trim((string) (getenv('BREVO_SMS_WEBHOOK_URL') ?: ''));
-    if ($webhookUrl !== '' && filter_var($webhookUrl, FILTER_VALIDATE_URL)) {
-        $payload['webUrl'] = $webhookUrl;
-    }
-
-    $ch = curl_init(BREVO_SMS_ENDPOINT);
-    curl_setopt_array($ch, [
-        CURLOPT_POST => true,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CONNECTTIMEOUT => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTPHEADER => [
-            'accept: application/json',
-            'content-type: application/json',
-            'api-key: ' . $apiKey,
-        ],
-        CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
-    ]);
-
-    $body = curl_exec($ch);
-    $error = curl_error($ch);
-    $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    if ($body === false || $error !== '') {
-        return ['success' => false, 'message' => 'Brevo SMS connection error: ' . $error];
-    }
-
-    $decoded = json_decode((string) $body, true);
-
-    if ($httpCode < 200 || $httpCode >= 300) {
-        $apiMessage = is_array($decoded)
-            ? (string) ($decoded['message'] ?? $decoded['code'] ?? 'Unknown Brevo error')
-            : 'Unknown Brevo error';
-
-        return [
-            'success' => false,
-            'message' => 'Brevo SMS HTTP ' . $httpCode . ': ' . $apiMessage,
-        ];
-    }
-
-    return [
-        'success' => true,
-        'messageId' => is_array($decoded) ? (string) ($decoded['messageId'] ?? '') : '',
-        'content' => $content,
-    ];
-}
-
 function createAccountVerification(PDO $pdo, int $studentId, int $guardianId, bool $verifyGuardian): array
 {
     $invalidate = $pdo->prepare(
@@ -189,7 +87,7 @@ function createAccountVerification(PDO $pdo, int $studentId, int $guardianId, bo
     );
     $invalidate->execute([$studentId]);
 
-    // 128-bit one-time random token; shorter than the old token to reduce SMS length.
+    // One-time random token for the email confirmation link.
     $token = bin2hex(random_bytes(16));
     $hash = hash('sha256', $token);
     $expiresAt = (new DateTimeImmutable('now'))
@@ -278,15 +176,6 @@ function handleStudentGuardianVerification(PDO $pdo, string $rawToken): array
                  WHERE id = ?'
             );
             $guardianEmailVerify->execute([(int) $row['guardian_id']]);
-        }
-
-        if ((int) $row['verify_guardian'] === 1) {
-            $guardianVerify = $pdo->prepare(
-                'UPDATE guardians
-                 SET phone_verified_at = COALESCE(phone_verified_at, NOW())
-                 WHERE id = ?'
-            );
-            $guardianVerify->execute([(int) $row['guardian_id']]);
         }
 
         $mark = $pdo->prepare(

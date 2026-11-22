@@ -93,19 +93,7 @@ try {
         (string)($_POST['phone'] ?? '')
     );
 
-    $smsCode = preg_replace(
-        '/\D+/',
-        '',
-        (string)($_POST['sms_code'] ?? '')
-    ) ?? '';
-
-    $email = trim(
-        (string)($_POST['email'] ?? '')
-    );
-
-    $skipMobile =
-        isset($_POST['skip_mobile_verification'])
-        || (string)($_POST['verification_bypass'] ?? '') === '1';
+    $email = trim((string)($_POST['email'] ?? ''));
 
     if (!staffContactVerificationSchemaReady($pdo, 'teacher')) {
         $errors[] =
@@ -168,27 +156,9 @@ try {
             'A valid email address is required.';
     }
 
-    $service =
-        registrationVerificationServiceStatus();
-
-    $verificationBypassed =
-        $skipMobile
-        || empty($service['available']);
-
-    if (
-        !$verificationBypassed
-        && $phone !== ''
-        && $email !== ''
-    ) {
-        $check = registrationVerifyStaffCode(
-            'teacher_sms_verification',
-            $phone,
-            $smsCode
-        );
-
-        if (!$check['success']) {
-            $errors[] = (string)$check['message'];
-        }
+    $service = registrationVerificationServiceStatus();
+    if (empty($service['available'])) {
+        $errors[] = 'Email verification is currently unavailable. Please try again later.';
     }
 
     if ($errors) {
@@ -232,7 +202,7 @@ try {
                 email_verification_token_hash,
                 email_verification_expires_at
              )
-             VALUES (?, ?, ?, ?, ?, ?, ?, NULL, ?, ?)'
+             VALUES (?, ?, ?, ?, ?, ?, NULL, NULL, ?, ?)'
         );
 
         $stmt->execute([
@@ -242,17 +212,11 @@ try {
             $position,
             $phone,
             $email,
-            $verificationBypassed
-                ? null
-                : (new DateTimeImmutable())
-                    ->format('Y-m-d H:i:s'),
             $emailVerification['token_hash'],
             $emailVerification['expires_at'],
         ]);
 
         $pdo->commit();
-
-        unset($_SESSION['teacher_sms_verification']);
 
         $verifyUrl =
             registrationAppBaseUrl()
@@ -275,20 +239,12 @@ try {
                     'Verification service configuration is unavailable.',
             ];
 
-        if ($verificationBypassed) {
-            setFlash(
-                'warning',
-                'School Team Teacher registered successfully '
-                . 'with mobile verification pending.'
-            );
-        } else {
-            setFlash(
-                $emailResult['success']
-                    ? 'success'
-                    : 'warning',
-                'School Team Teacher registered successfully.'
-            );
-        }
+        setFlash(
+            $emailResult['success'] ? 'success' : 'warning',
+            $emailResult['success']
+                ? 'Teacher registered. Please check your email to verify the account.'
+                : 'Teacher registered, but the verification email could not be delivered. Contact support to request another link.'
+        );
 
         lightweightRegistrationJson([
             'success' => true,

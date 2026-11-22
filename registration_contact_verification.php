@@ -70,7 +70,7 @@ function registrationLoadEnvFile(string $file): array
 $GLOBALS['registration_env_load_status'] = registrationLoadEnvFile(__DIR__ . '/.env');
 
 /**
- * Validate the local values required for SMS + email verification.
+ * Validate the local values required for email-only verification.
  *
  * This is intentionally a local configuration check only; no external API
  * call is made during page load.
@@ -86,14 +86,9 @@ function registrationVerificationServiceStatus(): array
 
     $apiKey = trim((string) (getenv('BREVO_API_KEY') ?: ''));
     $senderEmail = trim((string) (getenv('BREVO_SENDER_EMAIL') ?: ''));
-    $smsSender = trim((string) (getenv('BREVO_SMS_SENDER') ?: ''));
     $appUrl = trim((string) (getenv('APP_URL') ?: ''));
 
     $problems = [];
-
-    if (empty($envStatus['loaded'])) {
-        $problems[] = (string) ($envStatus['message'] ?? '.env could not be loaded.');
-    }
 
     if ($apiKey === '') {
         $problems[] = 'BREVO_API_KEY is missing.';
@@ -101,10 +96,6 @@ function registrationVerificationServiceStatus(): array
 
     if ($senderEmail === '' || !filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
         $problems[] = 'BREVO_SENDER_EMAIL is missing or invalid.';
-    }
-
-    if ($smsSender === '' || strlen($smsSender) > 11 || !preg_match('/^[A-Za-z0-9]+$/', $smsSender)) {
-        $problems[] = 'BREVO_SMS_SENDER is missing or invalid.';
     }
 
     if ($appUrl === '' || !filter_var($appUrl, FILTER_VALIDATE_URL)) {
@@ -120,34 +111,30 @@ function registrationVerificationServiceStatus(): array
         'env_loaded' => !empty($envStatus['loaded']),
         'problems' => $problems,
         'message' => $problems === []
-            ? 'SMS and email verification services are configured.'
-            : 'Verification service configuration is unavailable. Registration can continue with verification pending.',
+            ? 'Email verification service is configured.'
+            : 'Email verification is currently unavailable. Please try again later.',
     ];
 }
 
 /**
- * Shared SMS-code, email-code fallback + email-link verification helpers for registration pages.
+ * Shared email-code and email-link verification helpers for registration pages.
  *
  * Requires .env values:
  *   BREVO_API_KEY
- *   BREVO_SMS_SENDER=Metadata
  *   BREVO_SENDER_EMAIL
  *   BREVO_SENDER_NAME=Metadata Berhad (optional)
  *   BREVO_REPLY_TO_EMAIL (optional)
  *   APP_URL=https://esports.metadata.technology
  */
 
-if (!defined('REGISTRATION_SMS_CODE_EXPIRY_SECONDS')) {
-    define('REGISTRATION_SMS_CODE_EXPIRY_SECONDS', 600);
+if (!defined('REGISTRATION_EMAIL_CODE_EXPIRY_SECONDS')) {
+    define('REGISTRATION_EMAIL_CODE_EXPIRY_SECONDS', 600);
 }
-if (!defined('REGISTRATION_SMS_CODE_RESEND_SECONDS')) {
-    define('REGISTRATION_SMS_CODE_RESEND_SECONDS', 60);
+if (!defined('REGISTRATION_EMAIL_CODE_RESEND_SECONDS')) {
+    define('REGISTRATION_EMAIL_CODE_RESEND_SECONDS', 60);
 }
 if (!defined('REGISTRATION_EMAIL_VERIFY_EXPIRY_HOURS')) {
     define('REGISTRATION_EMAIL_VERIFY_EXPIRY_HOURS', 24);
-}
-if (!defined('REGISTRATION_BREVO_SMS_ENDPOINT')) {
-    define('REGISTRATION_BREVO_SMS_ENDPOINT', 'https://api.brevo.com/v3/transactionalSMS/send');
 }
 if (!defined('REGISTRATION_BREVO_EMAIL_ENDPOINT')) {
     define('REGISTRATION_BREVO_EMAIL_ENDPOINT', 'https://api.brevo.com/v3/smtp/email');
@@ -177,77 +164,6 @@ function registrationNormalizeSmsNumber(string $value): string
     return $digits;
 }
 
-function registrationSendSmsCode(string $recipient, string $code, string $tag): array
-{
-    $apiKey = trim((string) (getenv('BREVO_API_KEY') ?: ''));
-    $sender = trim((string) (getenv('BREVO_SMS_SENDER') ?: 'Metadata'));
-    $recipient = registrationNormalizeSmsNumber($recipient);
-
-    if ($apiKey === '') {
-        return ['success' => false, 'message' => 'BREVO_API_KEY is not configured.'];
-    }
-    if ($sender === '' || strlen($sender) > 11 || !preg_match('/^[A-Za-z0-9]+$/', $sender)) {
-        return ['success' => false, 'message' => 'BREVO_SMS_SENDER must be 1-11 alphanumeric characters, e.g. Metadata.'];
-    }
-    if ($recipient === '' || strlen($recipient) < 10 || strlen($recipient) > 15) {
-        return ['success' => false, 'message' => 'Enter a valid Malaysian mobile number.'];
-    }
-    if (!preg_match('/^\\d{6}$/', $code)) {
-        return ['success' => false, 'message' => 'Unable to generate a valid SMS verification code.'];
-    }
-    if (!function_exists('curl_init')) {
-        return ['success' => false, 'message' => 'PHP cURL is required for Brevo Transactional SMS.'];
-    }
-
-    $payload = [
-        'sender' => $sender,
-        'recipient' => $recipient,
-        'content' => 'Metadata verification code: ' . $code . '. Valid for 10 minutes. Do not share this code.',
-        'type' => 'transactional',
-        'tag' => preg_replace('/[^A-Za-z0-9_-]+/', '-', $tag) ?: 'registration-verification',
-        'unicodeEnabled' => false,
-    ];
-
-    $webhookUrl = trim((string) (getenv('BREVO_SMS_WEBHOOK_URL') ?: ''));
-    if ($webhookUrl !== '' && filter_var($webhookUrl, FILTER_VALIDATE_URL)) {
-        $payload['webUrl'] = $webhookUrl;
-    }
-
-    $ch = curl_init(REGISTRATION_BREVO_SMS_ENDPOINT);
-    curl_setopt_array($ch, [
-        CURLOPT_POST => true,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CONNECTTIMEOUT => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTPHEADER => [
-            'accept: application/json',
-            'content-type: application/json',
-            'api-key: ' . $apiKey,
-        ],
-        CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
-    ]);
-
-    $body = curl_exec($ch);
-    $error = curl_error($ch);
-    $httpCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    if ($body === false || $error !== '') {
-        return ['success' => false, 'message' => 'Brevo SMS connection error: ' . $error];
-    }
-
-    $decoded = json_decode((string) $body, true);
-    if ($httpCode < 200 || $httpCode >= 300) {
-        $apiMessage = is_array($decoded)
-            ? (string) ($decoded['message'] ?? $decoded['code'] ?? 'Unknown Brevo error')
-            : 'Unknown Brevo error';
-        return ['success' => false, 'message' => 'Brevo SMS HTTP ' . $httpCode . ': ' . $apiMessage];
-    }
-
-    return ['success' => true, 'messageId' => is_array($decoded) ? (string) ($decoded['messageId'] ?? '') : ''];
-}
-
-
 function registrationSendCodeEmail(
     string $recipientEmail,
     string $recipientName,
@@ -267,7 +183,7 @@ function registrationSendCodeEmail(
         return ['success' => false, 'message' => 'BREVO_API_KEY or BREVO_SENDER_EMAIL is not configured.'];
     }
     if (!filter_var($recipientEmail, FILTER_VALIDATE_EMAIL)) {
-        return ['success' => false, 'message' => 'Enter a valid email address for the verification-code fallback.'];
+        return ['success' => false, 'message' => 'Enter a valid email address to receive the verification code.'];
     }
     if (!filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
         return ['success' => false, 'message' => 'BREVO_SENDER_EMAIL is invalid.'];
@@ -296,7 +212,7 @@ function registrationSendCodeEmail(
 <h1 style="font-size:22px;margin:0 0 14px 0;">Your verification code</h1>
 <p style="font-size:15px;line-height:1.6;margin:0 0 12px 0;">Hi {$safeName},</p>
 <p style="font-size:15px;line-height:1.6;margin:0 0 18px 0;">
-We could not deliver the verification code by SMS for your {$safeAccountType} registration, so the code has been sent by email instead.
+Use this email verification code to continue your {$safeAccountType} registration.
 </p>
 <div style="font-size:30px;letter-spacing:8px;font-weight:700;text-align:center;background:#f8f9fa;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin:20px 0;">{$safeCode}</div>
 <p style="font-size:13px;line-height:1.6;color:#6c757d;margin:18px 0 0 0;">
@@ -311,9 +227,9 @@ This code is valid for 10 minutes. Do not share this code with anyone.
 HTML;
 
     $text = "Hi " . ($recipientName !== '' ? $recipientName : 'there')
-        . ",\n\nWe could not deliver the verification code by SMS for your "
+        . ",\n\nUse this email verification code to continue your "
         . ($accountType !== '' ? $accountType : 'registration')
-        . " registration, so the code has been sent by email instead.\n\n"
+        . " registration.\n\n"
         . "Verification code: {$code}\n\nThis code is valid for 10 minutes. Do not share this code.";
 
     $payload = [
@@ -325,7 +241,7 @@ HTML;
         'subject' => $subject,
         'htmlContent' => $html,
         'textContent' => $text,
-        'tags' => ['registration-code-email-fallback'],
+        'tags' => ['registration-code-email'],
     ];
 
     if ($replyTo !== '' && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
@@ -370,262 +286,82 @@ HTML;
     ];
 }
 
-function registrationRequestSmsCodeWithEmailFallback(
+/**
+ * Email is the only registration verification channel. Codes are scoped to
+ * the current PHP session and recipient, expire after 10 minutes, and are
+ * limited to five guesses. There is no SMS or verify-later bypass.
+ */
+function registrationRequestEmailCode(
     string $sessionKey,
-    string $phone,
     string $email,
     string $recipientName,
-    string $tag,
     string $accountType
 ): array {
-    $phone = registrationNormalizeSmsNumber($phone);
-    $email = trim($email);
-
-    if ($phone === '' || strlen($phone) < 10 || strlen($phone) > 15) {
-        return ['success' => false, 'status' => 422, 'message' => 'Enter a valid mobile number before requesting a code.'];
+    $email = strtolower(trim($email));
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        return ['success' => false, 'status' => 422, 'message' => 'Enter a valid email address.'];
     }
-    if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        return ['success' => false, 'status' => 422, 'message' => 'Enter a valid email address before requesting a code.'];
+    if (empty(registrationVerificationServiceStatus()['available'])) {
+        return ['success' => false, 'status' => 503, 'message' => 'Email verification is unavailable. Please try again later.'];
     }
 
     $existing = $_SESSION[$sessionKey] ?? null;
-    $lastSentAt = is_array($existing) ? (int) ($existing['sent_at'] ?? 0) : 0;
-    $secondsSinceLastSend = time() - $lastSentAt;
-
-    if ($lastSentAt > 0 && $secondsSinceLastSend < REGISTRATION_SMS_CODE_RESEND_SECONDS) {
-        $wait = REGISTRATION_SMS_CODE_RESEND_SECONDS - $secondsSinceLastSend;
+    $previousEmail = is_array($existing) ? (string) ($existing['email'] ?? '') : '';
+    $lastSent = is_array($existing) ? (int) ($existing['sent_at'] ?? 0) : 0;
+    $wait = REGISTRATION_EMAIL_CODE_RESEND_SECONDS - (time() - $lastSent);
+    if ($previousEmail === $email && $lastSent > 0 && $wait > 0) {
         return [
-            'success' => false,
-            'status' => 429,
-            'message' => 'Please wait ' . $wait . ' seconds before requesting another verification code.',
+            'success' => false, 'status' => 429,
+            'message' => 'Please wait ' . $wait . ' seconds before requesting another email code.',
             'retry_after' => $wait,
         ];
     }
 
     $code = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-
-    $smsResult = registrationSendSmsCode($phone, $code, $tag);
-    $deliveryChannel = 'sms';
-    $deliveryMessage = 'A 6-digit verification code has been sent by SMS.';
-
-    if (!$smsResult['success']) {
-        error_log(
-            'Registration SMS failed for ' . $phone . '; attempting email fallback. Error: '
-            . (string) ($smsResult['message'] ?? 'Unknown SMS error')
-        );
-
-        $emailResult = registrationSendCodeEmail(
-            $email,
-            $recipientName,
-            $code,
-            $accountType
-        );
-
-        if (!$emailResult['success']) {
-            error_log(
-                'Registration email-code fallback failed for ' . $email . '. Error: '
-                . (string) ($emailResult['message'] ?? 'Unknown email error')
-            );
-
-            // Allow the registration form to continue only after the server has
-            // confirmed that BOTH delivery methods failed. The form cannot
-            // enable this bypass by itself because the phone/email/session must
-            // match this server-side failure record.
-            $_SESSION[$sessionKey] = [
-                'phone' => $phone,
-                'email' => $email,
-                'code_hash' => '',
-                'expires_at' => time() + REGISTRATION_SMS_CODE_EXPIRY_SECONDS,
-                'sent_at' => time(),
-                'attempts' => 0,
-                'delivery_channel' => 'failed',
-                'bypass_allowed' => true,
-                'failure_at' => time(),
-            ];
-
-            return [
-                'success' => false,
-                'status' => 502,
-                'message' => 'Unable to send the verification code by SMS or email. You may continue registration now and verify your contact details later.',
-                'bypass_allowed' => true,
-                'retry_after' => REGISTRATION_SMS_CODE_RESEND_SECONDS,
-            ];
-        }
-
-        $deliveryChannel = 'email';
-        $deliveryMessage = 'SMS delivery failed, so the 6-digit verification code was sent to ' . $email . ' by email instead.';
+    $delivery = registrationSendCodeEmail($email, $recipientName, $code, $accountType);
+    if (empty($delivery['success'])) {
+        error_log('Email verification code delivery failed: ' . (string) ($delivery['message'] ?? 'unknown'));
+        return ['success' => false, 'status' => 502, 'message' => 'Unable to send verification email. Please try again later.'];
     }
 
     $_SESSION[$sessionKey] = [
-        'phone' => $phone,
         'email' => $email,
         'code_hash' => hash('sha256', $code),
-        'expires_at' => time() + REGISTRATION_SMS_CODE_EXPIRY_SECONDS,
         'sent_at' => time(),
-        'attempts' => 0,
-        'delivery_channel' => $deliveryChannel,
-        'bypass_allowed' => false,
-    ];
-
-    return [
-        'success' => true,
-        'status' => 200,
-        'message' => $deliveryMessage,
-        'delivery_channel' => $deliveryChannel,
-        'retry_after' => REGISTRATION_SMS_CODE_RESEND_SECONDS,
-    ];
-}
-
-
-function registrationCanBypassStaffVerification(
-    string $sessionKey,
-    string $phone,
-    string $email
-): array {
-    $phone = registrationNormalizeSmsNumber($phone);
-    $email = trim($email);
-    $verification = $_SESSION[$sessionKey] ?? null;
-
-    if (!is_array($verification) || empty($verification['bypass_allowed'])) {
-        return [
-            'success' => false,
-            'message' => 'Contact verification can only be bypassed after both SMS and email delivery have failed.',
-        ];
-    }
-
-    if (!hash_equals((string) ($verification['phone'] ?? ''), $phone)) {
-        return [
-            'success' => false,
-            'message' => 'The mobile number changed after the delivery failure. Please try sending the verification code again.',
-        ];
-    }
-
-    if (strcasecmp(trim((string) ($verification['email'] ?? '')), $email) !== 0) {
-        return [
-            'success' => false,
-            'message' => 'The email address changed after the delivery failure. Please try sending the verification code again.',
-        ];
-    }
-
-    $failureAt = (int) ($verification['failure_at'] ?? 0);
-    if ($failureAt < 1 || $failureAt + REGISTRATION_SMS_CODE_EXPIRY_SECONDS < time()) {
-        return [
-            'success' => false,
-            'message' => 'The verify-later option has expired. Please try sending the verification code again.',
-        ];
-    }
-
-    return [
-        'success' => true,
-        'message' => 'Registration may continue with contact verification pending.',
-        'delivery_channel' => 'bypass',
-    ];
-}
-
-function registrationVerifyStaffCode(string $sessionKey, string $phone, string $code): array
-{
-    $phone = registrationNormalizeSmsNumber($phone);
-    $code = preg_replace('/\D+/', '', $code) ?? '';
-    $verification = $_SESSION[$sessionKey] ?? null;
-
-    if (!is_array($verification)) {
-        return ['success' => false, 'message' => 'Please request a verification code first.'];
-    }
-    if (!hash_equals((string) ($verification['phone'] ?? ''), $phone)) {
-        return ['success' => false, 'message' => 'The verification code is linked to a different mobile number. Please request a new code.'];
-    }
-    if ((int) ($verification['expires_at'] ?? 0) < time()) {
-        return ['success' => false, 'message' => 'The verification code has expired. Please request a new code.'];
-    }
-    if ((int) ($verification['attempts'] ?? 0) >= 5) {
-        return ['success' => false, 'message' => 'Too many incorrect verification attempts. Please request a new code.'];
-    }
-    if (!preg_match('/^\d{6}$/', $code)) {
-        return ['success' => false, 'message' => 'Enter the 6-digit verification code.'];
-    }
-    if (!hash_equals((string) ($verification['code_hash'] ?? ''), hash('sha256', $code))) {
-        $_SESSION[$sessionKey]['attempts'] = ((int) ($verification['attempts'] ?? 0)) + 1;
-        return ['success' => false, 'message' => 'The verification code is incorrect.'];
-    }
-
-    return [
-        'success' => true,
-        'message' => 'Verification code confirmed.',
-        'delivery_channel' => (string) ($verification['delivery_channel'] ?? 'sms'),
-    ];
-}
-
-
-function registrationRequestSmsCode(string $sessionKey, string $phone, string $tag): array
-{
-    $phone = registrationNormalizeSmsNumber($phone);
-    if ($phone === '' || strlen($phone) < 10 || strlen($phone) > 15) {
-        return ['success' => false, 'status' => 422, 'message' => 'Enter a valid mobile number before requesting a code.'];
-    }
-
-    $existing = $_SESSION[$sessionKey] ?? null;
-    $lastSentAt = is_array($existing) ? (int) ($existing['sent_at'] ?? 0) : 0;
-    $secondsSinceLastSend = time() - $lastSentAt;
-
-    if ($lastSentAt > 0 && $secondsSinceLastSend < REGISTRATION_SMS_CODE_RESEND_SECONDS) {
-        $wait = REGISTRATION_SMS_CODE_RESEND_SECONDS - $secondsSinceLastSend;
-        return [
-            'success' => false,
-            'status' => 429,
-            'message' => 'Please wait ' . $wait . ' seconds before requesting another SMS code.',
-            'retry_after' => $wait,
-        ];
-    }
-
-    $code = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-    $result = registrationSendSmsCode($phone, $code, $tag);
-    if (!$result['success']) {
-        return ['success' => false, 'status' => 502, 'message' => (string) ($result['message'] ?? 'Unable to send SMS verification code.')];
-    }
-
-    $_SESSION[$sessionKey] = [
-        'phone' => $phone,
-        'code_hash' => hash('sha256', $code),
-        'expires_at' => time() + REGISTRATION_SMS_CODE_EXPIRY_SECONDS,
-        'sent_at' => time(),
+        'expires_at' => time() + REGISTRATION_EMAIL_CODE_EXPIRY_SECONDS,
         'attempts' => 0,
     ];
 
     return [
-        'success' => true,
-        'status' => 200,
-        'message' => 'A 6-digit verification code has been sent by SMS.',
-        'retry_after' => REGISTRATION_SMS_CODE_RESEND_SECONDS,
+        'success' => true, 'status' => 200,
+        'message' => 'A 6-digit verification code was sent to your email address.',
+        'delivery_channel' => 'email',
+        'retry_after' => REGISTRATION_EMAIL_CODE_RESEND_SECONDS,
     ];
 }
 
-function registrationVerifySmsCode(string $sessionKey, string $phone, string $code): array
+function registrationVerifyEmailCode(string $sessionKey, string $email, string $code): array
 {
-    $phone = registrationNormalizeSmsNumber($phone);
-    $code = preg_replace('/\\D+/', '', $code) ?? '';
+    $email = strtolower(trim($email));
     $verification = $_SESSION[$sessionKey] ?? null;
-
     if (!is_array($verification)) {
-        return ['success' => false, 'message' => 'Please click Send SMS Code and verify the mobile number.'];
+        return ['success' => false, 'message' => 'Please request an email verification code first.'];
     }
-    if (!hash_equals((string) ($verification['phone'] ?? ''), $phone)) {
-        return ['success' => false, 'message' => 'The SMS code was sent to a different mobile number. Please request a new code.'];
+    if (!hash_equals((string) ($verification['email'] ?? ''), $email)) {
+        return ['success' => false, 'message' => 'The verification code belongs to a different email address.'];
     }
     if ((int) ($verification['expires_at'] ?? 0) < time()) {
-        return ['success' => false, 'message' => 'The SMS verification code has expired. Please request a new code.'];
+        return ['success' => false, 'message' => 'The email verification code expired. Please request another.'];
     }
     if ((int) ($verification['attempts'] ?? 0) >= 5) {
-        return ['success' => false, 'message' => 'Too many incorrect SMS verification attempts. Please request a new code.'];
+        return ['success' => false, 'message' => 'Too many incorrect attempts. Please request a new email code.'];
     }
-    if (!preg_match('/^\\d{6}$/', $code)) {
-        return ['success' => false, 'message' => 'Enter the 6-digit SMS verification code.'];
-    }
-    if (!hash_equals((string) ($verification['code_hash'] ?? ''), hash('sha256', $code))) {
+    if (!preg_match('/^[0-9]{6}$/D', $code) ||
+        !hash_equals((string) ($verification['code_hash'] ?? ''), hash('sha256', $code))) {
         $_SESSION[$sessionKey]['attempts'] = ((int) ($verification['attempts'] ?? 0)) + 1;
-        return ['success' => false, 'message' => 'The SMS verification code is incorrect.'];
+        return ['success' => false, 'message' => 'The email verification code is incorrect.'];
     }
-
-    return ['success' => true, 'message' => 'Mobile number verified.'];
+    return ['success' => true, 'message' => 'Email address verified.'];
 }
 
 function registrationSendVerificationEmail(

@@ -136,7 +136,6 @@ require 'includes/header.php';
                     novalidate
                 >
                     <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
-                    <input type="hidden" name="verification_bypass" id="verificationBypass" value="1">
 
                     <div class="registration-section student-section">
                         <div class="row g-2 g-lg-3 align-items-start">
@@ -368,79 +367,9 @@ require 'includes/header.php';
                                 </div>
 
                                 <div class="col-xl-7 col-lg-7 col-md-6" id="guardianPhoneGroup">
-                                    <label class="form-label required" for="guardianPhone">
-                                        Mobile Number
-                                    </label>
-                                    <div class="input-group">
-                                        <input
-                                            class="form-control"
-                                            id="guardianPhone"
-                                            name="guardian_phone"
-                                            placeholder="60123456789"
-                                            inputmode="tel"
-                                            required
-                                        >
-                                        <button
-                                            class="btn btn-outline-primary"
-                                            type="button"
-                                            id="sendSmsCodeButton"
-                                            disabled
-                                        >
-                                            <i class="bi bi-chat-dots me-1"></i>Send Code
-                                        </button>
-                                    </div>
-                                    <div class="form-text" id="smsCodeStatus">
-                                        PHONE VERIFICATION IS SKIPPED BY DEFAULT.
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-6" id="guardianSmsGroup">
-                                    <label
-                                        class="form-label"
-                                        for="guardianSmsCode"
-                                        id="guardianSmsCodeLabel"
-                                    >
-                                        SMS Verification Code (Optional)
-                                    </label>
-                                    <input
-                                        class="form-control"
-                                        id="guardianSmsCode"
-                                        name="guardian_sms_code"
-                                        placeholder="VERIFY LATER"
-                                        inputmode="numeric"
-                                        autocomplete="one-time-code"
-                                        maxlength="6"
-                                        pattern="[0-9]{6}"
-                                        disabled
-                                    >
-                                    <div class="form-text" id="guardianSmsCodeHelp">
-                                        VERIFICATION CODE IS DISABLED. YOU MAY VERIFY LATER.
-                                    </div>
-                                </div>
-
-                                <div
-                                    class="col-xl-8 col-lg-8 col-md-6 d-flex align-items-center"
-                                    id="skipPhoneVerificationGroup"
-                                >
-                                    <div class="form-check pt-lg-4">
-                                        <input
-                                            class="form-check-input"
-                                            type="checkbox"
-                                            value="1"
-                                            name="skip_phone_verification"
-                                            id="skipPhoneVerification"
-                                            checked
-                                        >
-                                        <label
-                                            class="form-check-label fw-semibold"
-                                            for="skipPhoneVerification"
-                                        >
-                                            SKIP PHONE NUMBER VERIFICATION
-                                        </label>
-                                        <div class="form-text">
-                                            CHECKED BY DEFAULT. UNCHECK TO VERIFY NOW.
-                                        </div>
-                                    </div>
+                                    <label class="form-label required" for="guardianPhone">Mobile Number (contact only)</label>
+                                    <input class="form-control" id="guardianPhone" name="guardian_phone" placeholder="60123456789" inputmode="tel" required>
+                                    <div class="form-text">An email link verifies the student and guardian account. No phone verification code is required.</div>
                                 </div>
 
                                 <div class="col-12 d-none" id="guardianPhoneVerifiedNotice">
@@ -459,13 +388,6 @@ require 'includes/header.php';
                                     </div>
                                 </div>
 
-                                <div class="col-12 d-none" id="verificationBypassNotice">
-                                    <div class="alert alert-warning py-2 px-3 mb-0">
-                                        <i class="bi bi-exclamation-triangle me-2"></i>
-                                        <strong>Verification pending.</strong>
-                                        Contact verification may be completed later.
-                                    </div>
-                                </div>
                             </fieldset>
                         </div>
                     </div>

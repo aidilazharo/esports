@@ -16,43 +16,6 @@ if (isset($_GET['verify_email'])) {
     }
 }
 
-// AJAX endpoint for the Send SMS Code button.
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'send_coach_sms_code') {
-    header('Content-Type: application/json; charset=utf-8');
-    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-
-    try {
-        verifyCsrf();
-
-        $serviceStatus = registrationVerificationServiceStatus();
-        if (empty($serviceStatus['available'])) {
-            http_response_code(503);
-            echo json_encode([
-                'success' => false,
-                'bypass_allowed' => true,
-                'config_unavailable' => true,
-                'message' => 'SMS/email verification is currently unavailable. You may continue registration and verify later.',
-            ]);
-            exit;
-        }
-
-        $result = registrationRequestSmsCodeWithEmailFallback(
-            'coach_sms_verification',
-            (string) ($_POST['phone'] ?? ''),
-            (string) ($_POST['email'] ?? ''),
-            (string) ($_POST['full_name'] ?? ''),
-            'coach-registration-verification',
-            'Esports Coach'
-        );
-        http_response_code((int) ($result['status'] ?? 200));
-        echo json_encode($result);
-    } catch (Throwable $e) {
-        http_response_code(500);
-        echo json_encode(['success' => false, 'message' => 'Unable to send the verification code at this time.']);
-    }
-    exit;
-}
-
 $schoolCount = (int) $pdo->query('SELECT COUNT(*) FROM schools')->fetchColumn();
 $schoolsAvailable = $schoolCount > 0;
 
@@ -70,7 +33,7 @@ function normalizeCoachIdentityNumber(string $value): string
 $requestedSchoolCode = registrationUppercaseInput((string) ($_GET['code'] ?? ''));
 $requestedSchoolId = (int) ($_POST['school_id_1'] ?? 0);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') !== 'send_coach_sms_code') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verifyCsrf();
 
     $schoolId1 = (int) ($_POST['school_id_1'] ?? 0);
@@ -80,10 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') !== 'send_
     $organization = registrationUppercaseInput((string) ($_POST['organization'] ?? ''));
     $certification = registrationUppercaseInput((string) ($_POST['certification'] ?? ''));
     $phone = registrationNormalizeSmsNumber((string) ($_POST['phone'] ?? ''));
-    $smsCode = preg_replace('/\D+/', '', (string) ($_POST['sms_code'] ?? '')) ?? '';
     $email = registrationUppercaseInput((string) ($_POST['email'] ?? ''));
-    $verificationBypassRequested = isset($_POST['skip_phone_verification']) || (string) ($_POST['verification_bypass'] ?? '') === '1';
-    $verificationBypassed = false;
 
     if (!$verificationSchemaReady) {
         $errors[] = 'Run add_staff_contact_verification.sql before registering a coach.';
@@ -102,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') !== 'send_
         $errors[] = 'NRIC / Passport is required to enforce the maximum of 2 school registrations per coach.';
     }
     if ($phone === '' || strlen($phone) < 10 || strlen($phone) > 15) {
-        $errors[] = 'A valid mobile number is required for contact verification.';
+        $errors[] = 'A valid mobile contact number is required.';
     }
     if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = 'A valid email address is required for email verification.';
@@ -217,23 +177,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') !== 'send_
         }
     }
 
-    if ($phone !== '' && $email !== '') {
-        if (!$verificationServiceAvailable) {
-            $verificationBypassed = true;
-        } elseif ($verificationBypassRequested) {
-            // Default option: skip phone verification and keep it pending.
-            $verificationBypassed = true;
-        } else {
-            $smsCheck = registrationVerifyStaffCode('coach_sms_verification', $phone, $smsCode);
-            if (!$smsCheck['success']) {
-                $errors[] = (string) $smsCheck['message'];
-            }
-        }
+    if (!$verificationServiceAvailable) {
+        $errors[] = 'Email verification is currently unavailable. Please try again later.';
     }
-
-    $verificationChannel = $verificationBypassed
-        ? 'bypass'
-        : (string) ($_SESSION['coach_sms_verification']['delivery_channel'] ?? 'sms');
 
     if (!$errors) {
         try {
@@ -313,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') !== 'send_
                  (school_id, full_name, identity_number, organization, certification, phone, email,
                   phone_verified_at, email_verified_at,
                   email_verification_token_hash, email_verification_expires_at)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL, ?, ?)'
+                 VALUES (?, ?, ?, ?, ?, ?, ?, NULL, NULL, ?, ?)'
             );
 
             foreach ($selectedSchoolIds as $selectedSchoolId) {
@@ -325,7 +271,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') !== 'send_
                     $certification,
                     $phone,
                     $email,
-                    $verificationBypassed ? null : (new DateTimeImmutable('now'))->format('Y-m-d H:i:s'),
                     $emailVerification['token_hash'],
                     $emailVerification['expires_at'],
                 ]);
@@ -334,7 +279,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') !== 'send_
             $pdo->commit();
             registrationIdentityCacheInvalidate($identityNumber);
             registrationSchoolCacheInvalidate();
-            unset($_SESSION['coach_sms_verification']);
 
             $verifyUrl = registrationAppBaseUrl()
                 . '/register_coach.php?verify_email='
@@ -363,41 +307,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') !== 'send_
             $schoolCount = count($selectedSchoolIds);
             $schoolWord = $schoolCount === 1 ? 'school' : 'schools';
 
-            if ($verificationBypassed) {
-                if ($emailResult['success']) {
-                    setFlash(
-                        'warning',
-                        'Esports Coach registered successfully for ' . $schoolCount . ' ' . $schoolWord
-                        . ' with contact verification pending because SMS and email code delivery failed. '
-                        . 'A new email verification link was sent to ' . $email . '. Please complete verification later.'
-                    );
-                } else {
-                    setFlash(
-                        'warning',
-                        'Esports Coach registered successfully for ' . $schoolCount . ' ' . $schoolWord
-                        . ' with contact verification pending. SMS and email delivery are currently unavailable, so verification can be completed later.'
-                    );
-                }
-            } else {
-                $codeDeliveryText = $verificationChannel === 'email'
-                    ? 'The verification code was confirmed using the email fallback'
-                    : 'The verification code was confirmed by SMS';
-
-                if ($emailResult['success']) {
-                    setFlash(
-                        'success',
-                        'Esports Coach registered successfully for ' . $schoolCount . ' ' . $schoolWord
-                        . '. ' . $codeDeliveryText . ' and an email verification link has been sent to '
-                        . $email . '.'
-                    );
-                } else {
-                    setFlash(
-                        'warning',
-                        'Esports Coach registered for ' . $schoolCount . ' ' . $schoolWord
-                        . '. ' . $codeDeliveryText . ', but the final verification email could not be sent. Verification can be completed later.'
-                    );
-                }
-            }
+            setFlash(
+                $emailResult['success'] ? 'success' : 'warning',
+                $emailResult['success']
+                    ? 'Esports Coach registered for ' . $schoolCount . ' ' . $schoolWord . '. Verify your email using the link sent to ' . $email . '.'
+                    : 'Esports Coach registered for ' . $schoolCount . ' ' . $schoolWord . ', but email delivery failed. Contact support to request another verification link.'
+            );
 
             if (!$emailResult['success']) {
                 error_log('Esports Coach verification email failed for ' . $email . ': ' . (string) ($emailResult['message'] ?? 'Unknown error'));
@@ -451,8 +366,8 @@ require 'includes/header.php';
                     Register as the coach responsible for developing and guiding the school's esports team.
                 </p>
                 <p class="text-secondary mb-2">
-                    Select one or two eligible schools, enter your email and mobile number, request a verification code
-                    (SMS first with email fallback), complete the registration, then verify your email using the link sent after registration.
+                    Select one or two eligible schools, register with a valid email address and mobile contact number,
+                    then verify your email using the link sent after registration. No SMS verification is required.
                 </p>
                 <div class="alert alert-info mb-4">
                     <strong>Coach school limit:</strong> One coach may register with a maximum of <strong>2 schools</strong>.
@@ -462,7 +377,7 @@ require 'includes/header.php';
 
                 <?php if (!$verificationSchemaReady): ?>
                     <div class="alert alert-warning">
-                        Run <code>add_staff_contact_verification.sql</code> once before using SMS + email verification for coaches.
+                        Run <code>add_staff_contact_verification.sql</code> once before using email verification for coaches.
                     </div>
                 <?php endif; ?>
 
@@ -597,42 +512,12 @@ require 'includes/header.php';
                     <div class="col-md-12">
                         <label class="form-label required" for="coachEmail">Email</label>
                         <input type="email" class="form-control" id="coachEmail" name="email" value="<?= e($_POST['email'] ?? '') ?>" required>
-                        <div class="form-text">Enter email before requesting a code. It is used automatically if SMS delivery fails.</div>
+                        <div class="form-text">An email verification link is sent here after registration.</div>
                     </div>
 
                     <div class="col-md-7">
-                        <label class="form-label required" for="coachPhone">Mobile Number</label>
-                        <div class="input-group">
-                            <input class="form-control" id="coachPhone" name="phone" value="<?= e($_POST['phone'] ?? '') ?>" placeholder="Example: 60123456789" inputmode="tel" required>
-                            <button class="btn btn-outline-primary" type="button" id="sendSmsCodeButton" <?= !$verificationServiceAvailable ? 'disabled' : '' ?>>
-                                <i class="bi bi-chat-dots me-1"></i>Send Code
-                            </button>
-                        </div>
-                        <div class="form-text" id="smsCodeStatus">SMS is attempted first; email is used automatically if SMS fails.</div>
-                    </div>
-
-                    <div class="col-md-5">
-                        <label class="form-label required" for="smsCode" id="smsCodeLabel">Verification Code</label>
-                        <input class="form-control" id="smsCode" name="sms_code" value="<?= e($_POST['sms_code'] ?? '') ?>" placeholder="<?= $verificationServiceAvailable ? '6-digit code' : 'Verify later' ?>" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" <?= $verificationServiceAvailable ? 'required' : 'disabled' ?>>
-                        <div class="form-text" id="smsCodeHelp">Enter the code received by SMS or email. Code is valid for 10 minutes.</div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="1" name="skip_phone_verification" id="skipPhoneVerification" <?= $_SERVER['REQUEST_METHOD'] !== 'POST' || isset($_POST['skip_phone_verification']) ? 'checked' : '' ?>>
-                            <label class="form-check-label fw-semibold" for="skipPhoneVerification">SKIP PHONE NUMBER VERIFICATION</label>
-                            <div class="form-text">CHECKED BY DEFAULT. UNCHECK TO VERIFY THE MOBILE NUMBER NOW.</div>
-                        </div>
-                    </div>
-
-                    <input type="hidden" name="verification_bypass" id="verificationBypass" value="<?= e($_POST['verification_bypass'] ?? ($verificationServiceAvailable ? '0' : '1')) ?>">
-
-                    <div class="col-12 <?= $verificationServiceAvailable ? 'd-none' : '' ?>" id="verificationBypassNotice">
-                        <div class="alert alert-warning mb-0">
-                            <i class="bi bi-exclamation-triangle me-2"></i>
-                            <strong>Verification service unavailable.</strong>
-                            SMS and email code delivery both failed. You can continue registration now; contact verification will remain pending and can be completed later.
-                        </div>
+                        <label class="form-label required" for="coachPhone">Mobile Number (contact only)</label>
+                        <input class="form-control" id="coachPhone" name="phone" value="<?= e($_POST['phone'] ?? '') ?>" placeholder="Example: 60123456789" inputmode="tel" required>
                     </div>
 
                     <div class="col-12 mt-4">
@@ -700,185 +585,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     schoolId1?.addEventListener('change', validateSchoolSelection);
     schoolId2?.addEventListener('change', validateSchoolSelection);
-
-    const phoneInput = document.getElementById('coachPhone');
-    const emailInput = document.getElementById('coachEmail');
-    const nameInput = document.querySelector('#coachRegistrationForm input[name="full_name"]');
-    const sendButton = document.getElementById('sendSmsCodeButton');
-    const smsCode = document.getElementById('smsCode');
-    const smsCodeLabel = document.getElementById('smsCodeLabel');
-    const smsCodeHelp = document.getElementById('smsCodeHelp');
-    const status = document.getElementById('smsCodeStatus');
-    const bypassInput = document.getElementById('verificationBypass');
-    const bypassNotice = document.getElementById('verificationBypassNotice');
-    const csrfToken = document.querySelector('#coachRegistrationForm input[name="csrf_token"]');
-    const verificationServiceAvailable = <?= $verificationServiceAvailable ? 'true' : 'false' ?>;
-    const skipPhoneVerification = document.getElementById('skipPhoneVerification');
-    let countdownTimer = null;
-
-    const setBypassMode = (enabled) => {
-        const effectiveBypass = enabled || !verificationServiceAvailable;
-
-        if (bypassInput) bypassInput.value = effectiveBypass ? '1' : '0';
-        bypassNotice?.classList.toggle('d-none', !effectiveBypass);
-
-        if (sendButton) {
-            sendButton.disabled = effectiveBypass || !verificationServiceAvailable;
-            sendButton.innerHTML = effectiveBypass
-                ? (verificationServiceAvailable
-                    ? '<i class="bi bi-skip-forward me-1"></i>Verification Skipped'
-                    : '<i class="bi bi-slash-circle me-1"></i>Verification Unavailable')
-                : '<i class="bi bi-chat-dots me-1"></i>Send Code';
-        }
-
-        if (smsCode) {
-            smsCode.required = !effectiveBypass;
-            smsCode.disabled = !verificationServiceAvailable;
-
-            if (effectiveBypass) {
-                smsCode.value = '';
-                smsCode.placeholder = 'Verify later';
-            } else {
-                smsCode.placeholder = '6-digit code';
-            }
-        }
-
-        if (smsCodeLabel) {
-            smsCodeLabel.classList.toggle('required', !effectiveBypass);
-            smsCodeLabel.textContent = effectiveBypass ? 'Verification Code (Optional)' : 'Verification Code';
-        }
-
-        if (smsCodeHelp) {
-            smsCodeHelp.textContent = !verificationServiceAvailable
-                ? 'Verification code is disabled because the service configuration is unavailable.'
-                : (effectiveBypass
-                    ? 'Code is not required because both delivery methods failed.'
-                    : 'Enter the code received by SMS or email. Code is valid for 10 minutes.');
-        }
-    };
-
-    const setCountdown = (seconds) => {
-        if (!sendButton) return;
-        if (countdownTimer) clearInterval(countdownTimer);
-        let remaining = Math.max(0, Number(seconds) || 0);
-
-        const render = () => {
-            if (remaining > 0) {
-                sendButton.disabled = true;
-                sendButton.innerHTML = `<i class="bi bi-clock me-1"></i>Resend in ${remaining}s`;
-                remaining -= 1;
-            } else {
-                if (countdownTimer) clearInterval(countdownTimer);
-                countdownTimer = null;
-                sendButton.disabled = !verificationServiceAvailable;
-                sendButton.innerHTML = verificationServiceAvailable
-                    ? '<i class="bi bi-chat-dots me-1"></i>Send Code'
-                    : '<i class="bi bi-slash-circle me-1"></i>Verification Unavailable';
-            }
-        };
-
-        render();
-        if (seconds > 0) countdownTimer = setInterval(render, 1000);
-    };
-
-    sendButton?.addEventListener('click', async () => {
-        const phone = phoneInput?.value.trim() || '';
-        const email = emailInput?.value.trim() || '';
-        const fullName = nameInput?.value.trim() || '';
-
-        if (!phone) {
-            status.textContent = 'Enter the mobile number first.';
-            status.className = 'form-text text-danger';
-            phoneInput?.focus();
-            return;
-        }
-        if (!email || !emailInput?.checkValidity()) {
-            status.textContent = 'Enter a valid email address first. It is required as the backup delivery method if SMS fails.';
-            status.className = 'form-text text-danger';
-            emailInput?.focus();
-            return;
-        }
-
-        sendButton.disabled = true;
-        sendButton.innerHTML = '<span class="spinner-border spinner-border-sm me-1" aria-hidden="true"></span>Sending...';
-        status.textContent = 'Sending verification code...';
-        status.className = 'form-text text-secondary';
-
-        try {
-            const body = new URLSearchParams();
-            body.set('action', 'send_coach_sms_code');
-            body.set('phone', phone);
-            body.set('email', email);
-            body.set('full_name', fullName);
-            body.set('csrf_token', csrfToken?.value || '');
-
-            const response = await fetch('register_coach.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-                    'Accept': 'application/json',
-                },
-                body: body.toString(),
-                cache: 'no-store',
-            });
-
-            const data = await response.json();
-
-            if ((!response.ok || !data.success) && data.bypass_allowed) {
-                setBypassMode(true);
-                status.textContent = data.message || 'Verification services are unavailable. You may register now and verify later.';
-                status.className = 'form-text text-warning';
-                setCountdown(data.retry_after || 60);
-                return;
-            }
-
-            if (!response.ok || !data.success) {
-                throw new Error(data.message || 'Unable to send verification code.');
-            }
-
-            setBypassMode(false);
-            if (smsCode) {
-                smsCode.value = '';
-                smsCode.focus();
-            }
-            status.textContent = data.message || 'Verification code sent.';
-            status.className = 'form-text text-success';
-            setCountdown(data.retry_after || 60);
-        } catch (error) {
-            status.textContent = error.message || 'Unable to send verification code.';
-            status.className = 'form-text text-danger';
-            sendButton.disabled = false;
-            sendButton.innerHTML = '<i class="bi bi-chat-dots me-1"></i>Send Code';
-        }
-    });
-
-    const resetVerificationAfterContactChange = () => {
-        setBypassMode(Boolean(skipPhoneVerification?.checked) || !verificationServiceAvailable);
-
-        if (status) {
-            status.textContent = verificationServiceAvailable
-                ? 'Contact details changed. Request a new 6-digit verification code.'
-                : 'Verification service is unavailable. Registration can continue with verification pending.';
-            status.className = verificationServiceAvailable
-                ? 'form-text text-secondary'
-                : 'form-text text-warning';
-        }
-    };
-
-    phoneInput?.addEventListener('input', resetVerificationAfterContactChange);
-    emailInput?.addEventListener('input', resetVerificationAfterContactChange);
-
-    skipPhoneVerification?.addEventListener('change', () => {
-        setBypassMode(skipPhoneVerification.checked || !verificationServiceAvailable);
-        if (status) {
-            status.textContent = skipPhoneVerification.checked
-                ? 'PHONE VERIFICATION WILL BE SKIPPED. YOU CAN VERIFY LATER.'
-                : 'PHONE VERIFICATION ENABLED. REQUEST A 6-DIGIT CODE.';
-            status.className = skipPhoneVerification.checked ? 'form-text text-warning' : 'form-text text-secondary';
-        }
-    });
-
-    setBypassMode(Boolean(skipPhoneVerification?.checked) || !verificationServiceAvailable);
 
     document.getElementById('coachRegistrationForm')?.addEventListener('submit', (event) => {
         if (!validateSchoolSelection()) {
