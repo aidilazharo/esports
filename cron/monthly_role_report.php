@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 require_once dirname(__DIR__) . '/config.php';
 require_once dirname(__DIR__) . '/includes/monthly_report_email.php';
+require_once dirname(__DIR__) . '/includes/school_email_policy.php';
 
 
 if (
@@ -1663,6 +1664,8 @@ function monthlyCronRecipients(
         : [$monthKey];
 
     if ($role === 'school') {
+        // Even --force cannot override email suppression on directory schools.
+        $schoolEmailGate = schoolEmailSuppressionWhere($pdo);
         $sql =
             "SELECT
                 id,
@@ -1671,6 +1674,7 @@ function monthlyCronRecipients(
                 school_code
              FROM schools
              WHERE {$filter}
+               {$schoolEmailGate}
                AND TRIM(COALESCE(contact_email,'')) <> ''
              ORDER BY id
              LIMIT {$limit}";

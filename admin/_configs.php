@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+require_once __DIR__ . '/../includes/school_email_policy.php';
+
 function adminCrudConfig(PDO $pdo, string $key): array
 {
     $schoolOptions = adminCrudOptions(
@@ -84,6 +86,31 @@ function adminCrudConfig(PDO $pdo, string $key): array
             ['key'=>'jpn','label'=>'JPN','html'=>true,'format'=>fn($v)=>$v ? '<span class="badge text-bg-success">Yes</span>' : '<span class="badge text-bg-secondary">No</span>'],
         ],
     ];
+
+    // Existing schools keep their email settings until the migration is applied.
+    // Imported schools have suppress_school_email=1 and must be activated manually.
+    if (schoolEmailSuppressionColumnExists($pdo)) {
+        $configs['schools']['fields']['suppress_school_email'] = [
+            'label' => 'Block All School Emails (Directory Only)',
+            'type' => 'checkbox',
+            'default' => 0,
+            'col' => 'col-md-6',
+            'help' => 'ON: stops invitations, monthly reports, login codes, manual and forced school emails.',
+        ];
+        $configs['schools']['list_sql'] = str_replace(
+            's.contact_email,s.jpn,',
+            's.contact_email,s.jpn,s.suppress_school_email,',
+            $configs['schools']['list_sql']
+        );
+        $configs['schools']['columns'][] = [
+            'key' => 'suppress_school_email',
+            'label' => 'School Email',
+            'html' => true,
+            'format' => fn($v) => (int) $v === 1
+                ? '<span class="badge text-bg-secondary">Disabled</span>'
+                : '<span class="badge text-bg-success">Enabled</span>',
+        ];
+    }
 
     $configs['teachers'] = [
         'key'=>'teachers','title'=>'Teachers','singular'=>'Teacher','table'=>'teachers','pk'=>'id','page'=>'/admin/teachers.php',

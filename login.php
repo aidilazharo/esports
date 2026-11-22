@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 require_once 'config.php';
 require_once __DIR__ . '/includes/school_auth.php';
+require_once __DIR__ . '/includes/school_email_policy.php';
 require_once __DIR__ . '/includes/admin_auth.php';
 require_once __DIR__ . '/includes/jpn_auth.php';
 require_once __DIR__ . '/includes/role_auth.php';
@@ -1174,6 +1175,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!$school) {
                     $error =
                         'School code was not found.';
+                } elseif (schoolEmailIsSuppressed($pdo, (int) $school['id'])) {
+                    $error =
+                        'This directory school has not been activated for school login emails.';
                 } elseif (
                     !filter_var(
                         (string)(

@@ -54,3 +54,11 @@
 - MySQL remains authoritative for CRUD, account verification, access control, membership, payments and any live business decision. Snapshot data may be stale for up to 24 hours.
 - The public school registration search can use snapshots and falls back to live MySQL when missing or invalidated. Other existing CRUD pages retain their live MySQL workflows until carefully migrated.
 - Always run `php tests/directory_snapshot_test.php` for snapshot code changes and follow the mandatory commit-directly-to-main workflow.
+
+## Nationwide school import and zero-email safeguard
+- All imported Malaysia-wide schools are **directory-only** until explicitly activated; import basic official code/name/type/state/district only.
+- Set `suppress_school_email=1`, `jpn=0`, `unsubscribed=1`, no contact email on every NEW imported school record. Never modify an already registered school during import.
+- School login PIN, invitations (automatic, manual and test), and school monthly report jobs (including `--force`) must honor `suppress_school_email=1` and never contact the school. Existing records default to 0 to retain current communication settings.
+- A self-submitted school profile does not clear suppression. Only a verified, authorized administrator can activate school email access; never bulk-enable it.
+- Use `scripts/import-school-directory.php` for reviewed official CSV data outside the web root; dry-run first, back up MySQL and apply the migration before importing. No live production database updates occur from repository commits alone.
+- Run `tests/school_directory_import_test.php` and PHP lint before committing directly to main. See `docs/malaysia-school-directory-import.md`.

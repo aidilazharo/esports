@@ -482,10 +482,14 @@ try {
 
         registrationSchoolCacheInvalidate($schoolCode);
 
+        // A directory-only school remains email-suppressed until an
+        // authorized administrator explicitly activates its record.
+        $directoryOnly = !empty($school['suppress_school_email']);
         setFlash(
             'success',
-            'School registered successfully. '
-            . 'You can now log in to the School Portal.'
+            $directoryOnly
+                ? 'Your school profile was submitted. Email communication is disabled for this directory school until an administrator activates it.'
+                : 'School registered successfully. You can now log in to the School Portal.'
         );
 
         lightweightRegistrationJson([

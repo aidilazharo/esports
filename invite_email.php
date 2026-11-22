@@ -16,7 +16,7 @@
  * Manual mode sends immediately to the selected school's real contact_email and bypasses:
  * sending day/time, Cron secret, state, unsubscribed status, download status,
  * previous invitation status and the 14-day resend interval.
- * A valid school code, valid contact_email and jpn = 1 are still required.
+ * A valid school code, valid contact_email, jpn = 1 and no school email suppression are still required.
  *
  * Test mode always sends to aidilazhar@me.com and never updates invite_email/invite_date/invite_read. The selected school must have jpn = 1.
  * Production excludes schools that unsubscribed or already downloaded the programme file.
@@ -68,6 +68,7 @@ function loadInviteEnv(string $file): void
 
 loadInviteEnv(__DIR__ . '/.env');
 require_once __DIR__ . '/config.php';
+require_once __DIR__ . '/includes/school_email_policy.php';
 
 // Use Malaysia time for all human-facing and database tracking timestamps.
 date_default_timezone_set('Asia/Kuala_Lumpur');
@@ -809,6 +810,7 @@ if ($isTest && PHP_SAPI !== 'cli') {
 }
 
 try {
+    $schoolEmailGate = schoolEmailSuppressionWhere($pdo);
     if ($isManual) {
         $stmt = $pdo->prepare(
             'SELECT id, school_code, school_name, contact_email, state, download_file, invite_email, invite_date, unsubscribed, COALESCE(jpn, 0) AS jpn
@@ -864,6 +866,7 @@ try {
              FROM schools
              WHERE state = ?
                AND COALESCE(jpn, 0) = 1
+             ' . $schoolEmailGate . '
                AND COALESCE(unsubscribed, 0) = 0
                AND COALESCE(download_file, 0) = 0
                AND (
@@ -897,6 +900,10 @@ try {
         }
 
         $recipientEmail = trim((string) $school['contact_email']);
+    }
+
+    if (schoolEmailIsSuppressed($pdo, (int) $school['id'])) {
+        respond('Email disabled: this school is listed in the directory but is not activated for school communication.', 403);
     }
 
     $schoolName = trim((string) $school['school_name']);
