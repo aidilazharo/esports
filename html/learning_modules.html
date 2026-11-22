@@ -1,0 +1,1258 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Learning Modules | Malaysia School Esports Portal</title>
+    <meta name="description" content="Explore structured STEM, TVET, AI, digital innovation and esports learning modules for Malaysian students.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="author" content="Metadata Berhad">
+    <meta name="language" content="English">
+    <meta name="geo.region" content="MY">
+    <meta name="theme-color" content="#0d6efd">
+
+    <link rel="canonical" href="https://esports.metadata.technology/learning_modules">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_MY">
+    <meta property="og:site_name" content="Malaysia School Esports Portal">
+    <meta property="og:title" content="Learning Modules | Malaysia School Esports Portal">
+    <meta property="og:description" content="Explore structured STEM, TVET, AI, digital innovation and esports learning modules for Malaysian students.">
+    <meta property="og:url" content="https://esports.metadata.technology/learning_modules">
+    <meta property="og:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+    <meta property="og:image:alt" content="Malaysia School Esports Portal - STEM, TVET, AI and esports education programme in Malaysia">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Learning Modules | Malaysia School Esports Portal">
+    <meta name="twitter:description" content="Explore structured STEM, TVET, AI, digital innovation and esports learning modules for Malaysian students.">
+    <meta name="twitter:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://esports.metadata.technology/#organization","name":"Malaysia School Esports Portal","url":"https://esports.metadata.technology/","logo":{"@type":"ImageObject","url":"https://esports.metadata.technology/assets/images/logo.svg"},"description":"Malaysia school programme for STEM, TVET, artificial intelligence (AI), simulation, digital innovation and esports education, connecting students, teachers and schools with future-ready learning opportunities.","areaServed":{"@type":"Country","name":"Malaysia"},"knowsAbout":["STEM education","TVET education","Artificial intelligence education","Simulation learning","Digital innovation","Esports education","School technology programmes"]}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://esports.metadata.technology/#website","url":"https://esports.metadata.technology/","name":"Malaysia School Esports Portal","publisher":{"@id":"https://esports.metadata.technology/#organization"},"inLanguage":"en-MY"}</script>
+
+            <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://esports.metadata.technology/"},{"@type":"ListItem","position":2,"name":"Learning Modules","item":"https://esports.metadata.technology/learning_modules"}]}</script>
+    
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/mobile-icon-links.css?v=2" rel="stylesheet">
+    <link href="assets/css/mobile-split-navigation.css?v=1" rel="stylesheet">
+
+    <style>
+        .portal-navbar-brand{display:inline-flex;align-items:center;min-height:52px;padding-top:.25rem;padding-bottom:.25rem}
+        .portal-navbar-logo{display:block;width:auto;height:44px;max-width:180px;object-fit:contain}
+        .navbar .dropdown-item.active,.navbar .dropdown-item:active{color:var(--bs-dropdown-link-active-color);background-color:var(--bs-dropdown-link-active-bg)}
+
+        #portalPageLoadProgress{
+            position:fixed;
+            top:0;
+            left:0;
+            width:0;
+            height:3px;
+            z-index:2000;
+            opacity:0;
+            pointer-events:none;
+            background:currentColor;
+            color:#ffc107;
+            box-shadow:0 0 8px rgba(255,193,7,.65);
+            transition:width .25s ease,opacity .2s ease;
+        }
+        #portalPageLoadProgress.is-visible{opacity:1}
+        #portalPageLoadProgress.is-complete{
+            width:100%!important;
+            opacity:0;
+            transition:width .15s ease,opacity .35s ease .15s;
+        }
+
+        @media(max-width:575.98px){
+            .portal-navbar-brand{min-height:46px}
+            .portal-navbar-logo{height:36px;max-width:145px}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            #portalPageLoadProgress{transition:none}
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+<div
+    id="portalPageLoadProgress"
+    role="progressbar"
+    aria-label="Page loading"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+></div>
+
+<script>
+(() => {
+    'use strict';
+
+    const bar = document.getElementById('portalPageLoadProgress');
+    if (!bar) return;
+
+    let progress = 4;
+    let finished = false;
+    let progressTimer = null;
+
+    const setProgress = (value) => {
+        progress = Math.max(progress, Math.min(95, value));
+        bar.style.width = progress + '%';
+        bar.setAttribute('aria-valuenow', String(Math.round(progress)));
+    };
+
+    const revealTimer = window.setTimeout(() => {
+        if (finished) return;
+
+        bar.classList.add('is-visible');
+        setProgress(18);
+
+        progressTimer = window.setInterval(() => {
+            if (finished) return;
+
+            if (progress < 55) {
+                setProgress(progress + 8);
+            } else if (progress < 78) {
+                setProgress(progress + 4);
+            } else if (progress < 92) {
+                setProgress(progress + 1.5);
+            }
+        }, 450);
+    }, 400);
+
+    const reportSlowLoad = () => {
+        const navigation = performance.getEntriesByType('navigation')[0];
+
+        const duration = navigation
+            ? navigation.duration
+            : performance.now();
+
+        const ttfb = navigation
+            ? navigation.responseStart
+            : 0;
+
+        const domContentLoaded = navigation
+            ? navigation.domContentLoadedEventEnd
+            : 0;
+
+        if (duration < 2500 && ttfb < 1500) {
+            return;
+        }
+
+        const payload = JSON.stringify({
+            path: window.location.pathname,
+            duration_ms: Math.round(duration),
+            ttfb_ms: Math.round(ttfb),
+            dom_content_loaded_ms: Math.round(domContentLoaded),
+            transfer_size: navigation
+                ? Number(navigation.transferSize || 0)
+                : 0,
+            encoded_body_size: navigation
+                ? Number(navigation.encodedBodySize || 0)
+                : 0,
+        });
+
+        try {
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(
+                    'api/performance/slow_page_log.php',
+                    new Blob([payload], {type:'application/json'})
+                );
+                return;
+            }
+        } catch (_) {}
+
+        fetch(
+            'api/performance/slow_page_log.php',
+            {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:payload,
+                keepalive:true,
+                credentials:'same-origin'
+            }
+        ).catch(() => {});
+    };
+
+    window.addEventListener(
+        'load',
+        () => {
+            finished = true;
+            window.clearTimeout(revealTimer);
+
+            if (progressTimer) {
+                window.clearInterval(progressTimer);
+            }
+
+            setProgress(100);
+            bar.classList.add('is-complete');
+
+            window.setTimeout(() => {
+                bar.style.display = 'none';
+            }, 600);
+
+            window.setTimeout(reportSlowLoad, 0);
+        },
+        {once:true}
+    );
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            finished = true;
+            bar.classList.add('is-complete');
+        }
+    });
+})();
+</script>
+<nav class="navbar navbar-expand-xl navbar-dark bg-primary shadow-sm sticky-top">
+<div class="container">
+    <a class="navbar-brand portal-navbar-brand" href="index" aria-label="Malaysia School Esports Portal home">
+        <img src="assets/images/logo.svg" alt="Metadata Berhad" class="portal-navbar-logo" width="180" height="44">
+        <span class="visually-hidden">Malaysia School Esports Portal</span>
+    </a>
+    <nav class="mobile-top-nav" aria-label="Primary mobile navigation"><div class="mobile-nav-scroller"><a class="mobile-nav-link" href="index" title="Home" aria-label="Home"><i class="bi bi-house-door" aria-hidden="true"></i><span class="visually-hidden">Home</span></a><a class="mobile-nav-link" href="about-programme" title="Programme" aria-label="Programme"><i class="bi bi-journal-richtext" aria-hidden="true"></i><span class="visually-hidden">Programme</span></a><a class="mobile-nav-link" href="events-competitions" title="Events &amp; Competitions" aria-label="Events &amp; Competitions"><i class="bi bi-calendar-event" aria-hidden="true"></i><span class="visually-hidden">Events &amp; Competitions</span></a><a class="mobile-nav-link" href="login" title="Login" aria-label="Login"><i class="bi bi-person-circle" aria-hidden="true"></i><span class="visually-hidden">Login</span></a></div></nav>    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-xl-center">
+            <li class="nav-item"><a class="nav-link " href="index">Home</a></li>
+
+            <!--
+                This header is only rendered for guests.
+                Authenticated users are redirected to their own role portal
+                before any navigation is output.
+            -->
+            <li class="nav-item dropdown">
+                <a
+                    class="nav-link dropdown-toggle "
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                >
+                    Programme
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="about-programme"
+                        >
+                            <i class="bi bi-info-circle me-2"></i>
+                            About Programme
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="events-competitions"
+                        >
+                            <i class="bi bi-calendar-event me-2"></i>
+                            Events &amp; Competitions
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="register_school"
+                        >
+                            <i class="bi bi-building-add me-2"></i>
+                            Register School
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="register_student"
+                        >
+                            <i class="bi bi-person-plus me-2"></i>
+                            Register Student
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="register_teacher"
+                        >
+                            <i class="bi bi-person-badge me-2"></i>
+                            Register Teacher
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item "
+                            href="manuals"
+                        >
+                            <i class="bi bi-book me-2"></i>
+                            Manuals
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item "
+                            href="contact"
+                        >
+                            <i class="bi bi-envelope me-2"></i>
+                            Contact Us
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item ms-xl-2">
+                <a
+                    class="nav-link px-2 "
+                    href="login"
+                    title="Login"
+                    aria-label="Login"
+                >
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span class="visually-hidden">Login</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</nav>
+
+<main class="container py-4 flex-grow-1">
+
+<style>
+.learning-page{
+    max-width:1280px;
+    margin:0 auto;
+}
+.learning-hero{
+    background:
+        linear-gradient(
+            135deg,
+            rgba(13,110,253,.09),
+            rgba(25,135,84,.06)
+        );
+    border:1px solid rgba(13,110,253,.10);
+}
+.week-card{
+    border:0;
+    box-shadow:0 .125rem .5rem rgba(0,0,0,.06);
+}
+.week-heading{
+    padding:1rem 1.15rem;
+    border-bottom:1px solid var(--bs-border-color);
+}
+.module-list{
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:.75rem;
+    padding:1rem;
+}
+.module-card{
+    border:1px solid var(--bs-border-color);
+    border-radius:.75rem;
+    background:#fff;
+    padding:.95rem;
+    min-width:0;
+    height:100%;
+}
+.module-code{
+    font-size:.75rem;
+    font-weight:700;
+}
+.module-card h3{
+    font-size:1rem;
+    margin:.45rem 0 .35rem;
+}
+.module-meta{
+    font-size:.8rem;
+    color:var(--bs-secondary-color);
+}
+.module-objective{
+    font-size:.86rem;
+    line-height:1.4;
+    margin:.7rem 0 0;
+}
+.module-detail{
+    display:flex;
+    gap:.4rem;
+    align-items:flex-start;
+    margin-top:.55rem;
+    font-size:.8rem;
+}
+.module-detail i{
+    color:var(--bs-primary);
+    margin-top:.1rem;
+}
+@media(max-width:1199.98px){
+    .module-list{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
+@media(max-width:767.98px){
+    .module-list{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+@media(max-width:575.98px){
+    .module-list{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+
+<div class="learning-page">
+    <section class="learning-hero rounded-4 p-4 mb-4">
+        <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+            <div>
+                <span class="badge text-bg-primary mb-2">
+                    Learning Modules
+                </span>
+
+                <h1 class="h2 mb-2">
+                    Weekly Learning Modules
+                </h1>
+
+                <p class="text-secondary mb-0">
+                    20 structured modules organised across four weeks.
+                </p>
+            </div>
+
+            <div class="text-lg-end">
+                <div class="h3 mb-0">
+                    20                </div>
+                <div class="small text-secondary">
+                    Modules
+                </div>
+            </div>
+        </div>
+    </section>
+
+                        
+            <section class="card week-card mb-3">
+                <div class="week-heading d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
+                    <div>
+                        <div class="small text-uppercase fw-semibold text-primary">
+                            Week 1                        </div>
+
+                        <h2 class="h5 mb-0">
+                            Esports Fundamentals                        </h2>
+                    </div>
+
+                    <span class="badge text-bg-light border">
+                        5 modules
+                    </span>
+                </div>
+
+                <div class="module-list">
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M01                                </span>
+
+                                <span class="module-meta">
+                                    Monday                                </span>
+                            </div>
+
+                            <h3>
+                                Introduction to Esports                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    EA Sports FC                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Explore scenarios                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Understand the concept of competitive gaming                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Esports Fundamentals:
+                                    </strong>
+                                    Definition of esports and its rules                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M02                                </span>
+
+                                <span class="module-meta">
+                                    Tuesday                                </span>
+                            </div>
+
+                            <h3>
+                                Controller Basics                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Astro&#039;s Playroom                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Control objects                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Become familiar with using a controller                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Controller:
+                                    </strong>
+                                    Button functions                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M03                                </span>
+
+                                <span class="module-meta">
+                                    Wednesday                                </span>
+                            </div>
+
+                            <h3>
+                                Camera and Movement                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Gran Turismo 7                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Camera settings                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Control viewing angles and movement                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Camera:
+                                    </strong>
+                                    Camera types                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M04                                </span>
+
+                                <span class="module-meta">
+                                    Thursday                                </span>
+                            </div>
+
+                            <h3>
+                                Digital Etiquette                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Fall Guys                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Simulate situations                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Understand appropriate behaviour in games                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Etiquette:
+                                    </strong>
+                                    Good gaming manners                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M05                                </span>
+
+                                <span class="module-meta">
+                                    Friday                                </span>
+                            </div>
+
+                            <h3>
+                                Game Fundamentals                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Rocket League                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Modify scenarios                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Understand teamwork                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Teamwork:
+                                    </strong>
+                                    Player roles                                </span>
+                            </div>
+                        </article>
+                                    </div>
+            </section>
+                    
+            <section class="card week-card mb-3">
+                <div class="week-heading d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
+                    <div>
+                        <div class="small text-uppercase fw-semibold text-primary">
+                            Week 2                        </div>
+
+                        <h2 class="h5 mb-0">
+                            Strategy and Environment                        </h2>
+                    </div>
+
+                    <span class="badge text-bg-light border">
+                        5 modules
+                    </span>
+                </div>
+
+                <div class="module-list">
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M06                                </span>
+
+                                <span class="module-meta">
+                                    Monday                                </span>
+                            </div>
+
+                            <h3>
+                                Game Worlds                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Minecraft                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Place objects                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Understand space and the game environment                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Maps:
+                                    </strong>
+                                    Map elements                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M07                                </span>
+
+                                <span class="module-meta">
+                                    Tuesday                                </span>
+                            </div>
+
+                            <h3>
+                                Movement Skills                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Fortnite                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Movement logic                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Control movement effectively                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Movement:
+                                    </strong>
+                                    Movement techniques                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M08                                </span>
+
+                                <span class="module-meta">
+                                    Wednesday                                </span>
+                            </div>
+
+                            <h3>
+                                Map Awareness                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Call of Duty: Warzone                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Build a map                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Improve awareness of the surrounding environment                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Awareness:
+                                    </strong>
+                                    Importance of maps                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M09                                </span>
+
+                                <span class="module-meta">
+                                    Thursday                                </span>
+                            </div>
+
+                            <h3>
+                                Audio Cues                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Apex Legends                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Sound settings                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Use audio to gain an advantage in gameplay                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Audio:
+                                    </strong>
+                                    Functions of audio                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M10                                </span>
+
+                                <span class="module-meta">
+                                    Friday                                </span>
+                            </div>
+
+                            <h3>
+                                Teamwork                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Overcooked! All You Can Eat                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Multiplayer logic                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Improve communication                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Communication:
+                                    </strong>
+                                    Role of communication                                </span>
+                            </div>
+                        </article>
+                                    </div>
+            </section>
+                    
+            <section class="card week-card mb-3">
+                <div class="week-heading d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
+                    <div>
+                        <div class="small text-uppercase fw-semibold text-primary">
+                            Week 3                        </div>
+
+                        <h2 class="h5 mb-0">
+                            Logic and Systems                        </h2>
+                    </div>
+
+                    <span class="badge text-bg-light border">
+                        5 modules
+                    </span>
+                </div>
+
+                <div class="module-list">
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M11                                </span>
+
+                                <span class="module-meta">
+                                    Monday                                </span>
+                            </div>
+
+                            <h3>
+                                Basic Logic                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Portal 2                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Triggers                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Understand cause-and-effect relationships                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Logic:
+                                    </strong>
+                                    What is logic?                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M12                                </span>
+
+                                <span class="module-meta">
+                                    Tuesday                                </span>
+                            </div>
+
+                            <h3>
+                                Interaction                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    It Takes Two                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Interaction systems                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Understand interaction between players                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Interaction:
+                                    </strong>
+                                    Types of interaction                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M13                                </span>
+
+                                <span class="module-meta">
+                                    Wednesday                                </span>
+                            </div>
+
+                            <h3>
+                                Character Control                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Spider-Man: Miles Morales                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Control settings                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Control character movement                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Characters:
+                                    </strong>
+                                    Character controls                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M14                                </span>
+
+                                <span class="module-meta">
+                                    Thursday                                </span>
+                            </div>
+
+                            <h3>
+                                Scoring Systems                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    NBA 2K                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Scoring system                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Understand scoring systems                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Scoring:
+                                    </strong>
+                                    How scoring systems work                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M15                                </span>
+
+                                <span class="module-meta">
+                                    Friday                                </span>
+                            </div>
+
+                            <h3>
+                                Game Structure                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    LittleBigPlanet 3                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Level design                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Understand game structure                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Structure:
+                                    </strong>
+                                    Game structure                                </span>
+                            </div>
+                        </article>
+                                    </div>
+            </section>
+                    
+            <section class="card week-card mb-3">
+                <div class="week-heading d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-2">
+                    <div>
+                        <div class="small text-uppercase fw-semibold text-primary">
+                            Week 4                        </div>
+
+                        <h2 class="h5 mb-0">
+                            Projects and Tournaments                        </h2>
+                    </div>
+
+                    <span class="badge text-bg-light border">
+                        5 modules
+                    </span>
+                </div>
+
+                <div class="module-list">
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M16                                </span>
+
+                                <span class="module-meta">
+                                    Monday                                </span>
+                            </div>
+
+                            <h3>
+                                Game Ideas                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Minecraft                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Game planning                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Generate game-design ideas                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Design:
+                                    </strong>
+                                    Design elements                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M17                                </span>
+
+                                <span class="module-meta">
+                                    Tuesday                                </span>
+                            </div>
+
+                            <h3>
+                                Build a Game                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Fortnite                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Build a game                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Develop a game                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Development:
+                                    </strong>
+                                    System functions                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M18                                </span>
+
+                                <span class="module-meta">
+                                    Wednesday                                </span>
+                            </div>
+
+                            <h3>
+                                Testing and Improvement                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Human: Fall Flat                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Detect errors                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Test and improve the game                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Debugging:
+                                    </strong>
+                                    What is a bug?                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M19                                </span>
+
+                                <span class="module-meta">
+                                    Thursday                                </span>
+                            </div>
+
+                            <h3>
+                                Tournament                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    EA Sports FC                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Play the game                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Experience a competitive environment                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Tournament:
+                                    </strong>
+                                    Competition rules                                </span>
+                            </div>
+                        </article>
+                                            <article class="module-card">
+                            <div class="d-flex align-items-center justify-content-between gap-2">
+                                <span class="badge text-bg-primary module-code">
+                                    M20                                </span>
+
+                                <span class="module-meta">
+                                    Friday                                </span>
+                            </div>
+
+                            <h3>
+                                Presentation Day                            </h3>
+
+                            <div class="module-detail">
+                                <i class="bi bi-controller"></i>
+                                <span>
+                                    Rocket League                                </span>
+                            </div>
+
+                            <div class="module-detail">
+                                <i class="bi bi-stars"></i>
+                                <span>
+                                    Present results                                </span>
+                            </div>
+
+                            <p class="module-objective">
+                                Present the completed project                            </p>
+
+                            <div class="module-detail">
+                                <i class="bi bi-question-circle"></i>
+                                <span>
+                                    <strong>
+                                        Reflection:
+                                    </strong>
+                                    What was learned?                                </span>
+                            </div>
+                        </article>
+                                    </div>
+            </section>
+            </div>
+
+</main>
+<footer class="border-top bg-white py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-secondary small">
+        <span>&copy; 2026 Metadata Berhad 1573083-A</span>
+        <span>Contact Support: 09-5818322 Email: cs@metadata.technology</span>
+    </div>
+    <nav class="mobile-bottom-nav" aria-label="Secondary mobile navigation"><div class="mobile-nav-scroller"><a class="mobile-nav-link" href="register_school" title="Register School" aria-label="Register School"><i class="bi bi-building-add" aria-hidden="true"></i><span class="visually-hidden">Register School</span></a><a class="mobile-nav-link" href="register_student" title="Register Student" aria-label="Register Student"><i class="bi bi-person-plus" aria-hidden="true"></i><span class="visually-hidden">Register Student</span></a><a class="mobile-nav-link" href="register_teacher" title="Register Teacher" aria-label="Register Teacher"><i class="bi bi-person-badge" aria-hidden="true"></i><span class="visually-hidden">Register Teacher</span></a><a class="mobile-nav-link" href="manuals" title="Manuals" aria-label="Manuals"><i class="bi bi-book" aria-hidden="true"></i><span class="visually-hidden">Manuals</span></a><a class="mobile-nav-link" href="contact" title="Contact Us" aria-label="Contact Us"><i class="bi bi-envelope" aria-hidden="true"></i><span class="visually-hidden">Contact Us</span></a></div></nav></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/mobile-icon-links.js?v=2"></script>
+</body>
+</html>

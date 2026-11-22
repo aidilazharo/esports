@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+
+# Application internals
+Disallow: /api/
+Disallow: /includes/
+
+# Authenticated role portals / back-office areas
+Disallow: /admin/
+Disallow: /school/
+Disallow: /teacher/
+Disallow: /parent/
+
+# Utility / transactional pages should not be search landing pages
+Disallow: /logout
+Disallow: /dashboard
+Disallow: /payments
+Disallow: /student_payment
+Disallow: /events-competitions-payment
+Disallow: /events-competitions-payment-success
+Disallow: /attendance_scanner
+Disallow: /redeem_coupon
+Disallow: /edit_school
+Disallow: /school_portal
+
+# Static HTML cache is intentionally omitted from the sitemap.
+# Its pages should keep canonical links pointing to the primary public URLs.
+
+Sitemap: https://esports.metadata.technology/sitemap.xml

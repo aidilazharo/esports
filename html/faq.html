@@ -1,0 +1,886 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Frequently Asked Questions (FAQ) | Malaysia School Esports Portal</title>
+    <meta name="description" content="Frequently asked questions about the Malaysian school STEM, TVET, AI, digital innovation and esports education programme.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="author" content="Metadata Berhad">
+    <meta name="language" content="English">
+    <meta name="geo.region" content="MY">
+    <meta name="theme-color" content="#0d6efd">
+
+    <link rel="canonical" href="https://esports.metadata.technology/faq">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_MY">
+    <meta property="og:site_name" content="Malaysia School Esports Portal">
+    <meta property="og:title" content="Frequently Asked Questions (FAQ) | Malaysia School Esports Portal">
+    <meta property="og:description" content="Frequently asked questions about the Malaysian school STEM, TVET, AI, digital innovation and esports education programme.">
+    <meta property="og:url" content="https://esports.metadata.technology/faq">
+    <meta property="og:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+    <meta property="og:image:alt" content="Malaysia School Esports Portal - STEM, TVET, AI and esports education programme in Malaysia">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Frequently Asked Questions (FAQ) | Malaysia School Esports Portal">
+    <meta name="twitter:description" content="Frequently asked questions about the Malaysian school STEM, TVET, AI, digital innovation and esports education programme.">
+    <meta name="twitter:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://esports.metadata.technology/#organization","name":"Malaysia School Esports Portal","url":"https://esports.metadata.technology/","logo":{"@type":"ImageObject","url":"https://esports.metadata.technology/assets/images/logo.svg"},"description":"Malaysia school programme for STEM, TVET, artificial intelligence (AI), simulation, digital innovation and esports education, connecting students, teachers and schools with future-ready learning opportunities.","areaServed":{"@type":"Country","name":"Malaysia"},"knowsAbout":["STEM education","TVET education","Artificial intelligence education","Simulation learning","Digital innovation","Esports education","School technology programmes"]}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://esports.metadata.technology/#website","url":"https://esports.metadata.technology/","name":"Malaysia School Esports Portal","publisher":{"@id":"https://esports.metadata.technology/#organization"},"inLanguage":"en-MY"}</script>
+
+            <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://esports.metadata.technology/"},{"@type":"ListItem","position":2,"name":"Frequently Asked Questions (FAQ)","item":"https://esports.metadata.technology/faq"}]}</script>
+    
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <style>
+        .portal-navbar-brand{display:inline-flex;align-items:center;min-height:52px;padding-top:.25rem;padding-bottom:.25rem}
+        .portal-navbar-logo{display:block;width:auto;height:44px;max-width:180px;object-fit:contain}
+        .navbar .dropdown-item.active,.navbar .dropdown-item:active{color:var(--bs-dropdown-link-active-color);background-color:var(--bs-dropdown-link-active-bg)}
+        .portal-role-badge{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+        #portalPageLoadProgress{
+            position:fixed;
+            top:0;
+            left:0;
+            width:0;
+            height:3px;
+            z-index:2000;
+            opacity:0;
+            pointer-events:none;
+            background:currentColor;
+            color:#ffc107;
+            box-shadow:0 0 8px rgba(255,193,7,.65);
+            transition:width .25s ease,opacity .2s ease;
+        }
+        #portalPageLoadProgress.is-visible{opacity:1}
+        #portalPageLoadProgress.is-complete{
+            width:100%!important;
+            opacity:0;
+            transition:width .15s ease,opacity .35s ease .15s;
+        }
+
+        @media(max-width:575.98px){
+            .portal-navbar-brand{min-height:46px}
+            .portal-navbar-logo{height:36px;max-width:145px}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            #portalPageLoadProgress{transition:none}
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+<div
+    id="portalPageLoadProgress"
+    role="progressbar"
+    aria-label="Page loading"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+></div>
+
+<script>
+(() => {
+    'use strict';
+
+    const bar = document.getElementById('portalPageLoadProgress');
+    if (!bar) return;
+
+    let progress = 4;
+    let finished = false;
+    let progressTimer = null;
+
+    const setProgress = (value) => {
+        progress = Math.max(progress, Math.min(95, value));
+        bar.style.width = progress + '%';
+        bar.setAttribute('aria-valuenow', String(Math.round(progress)));
+    };
+
+    const revealTimer = window.setTimeout(() => {
+        if (finished) return;
+
+        bar.classList.add('is-visible');
+        setProgress(18);
+
+        progressTimer = window.setInterval(() => {
+            if (finished) return;
+
+            if (progress < 55) {
+                setProgress(progress + 8);
+            } else if (progress < 78) {
+                setProgress(progress + 4);
+            } else if (progress < 92) {
+                setProgress(progress + 1.5);
+            }
+        }, 450);
+    }, 400);
+
+    const reportSlowLoad = () => {
+        const navigation = performance.getEntriesByType('navigation')[0];
+
+        const duration = navigation
+            ? navigation.duration
+            : performance.now();
+
+        const ttfb = navigation
+            ? navigation.responseStart
+            : 0;
+
+        const domContentLoaded = navigation
+            ? navigation.domContentLoadedEventEnd
+            : 0;
+
+        if (duration < 2500 && ttfb < 1500) {
+            return;
+        }
+
+        const payload = JSON.stringify({
+            path: window.location.pathname,
+            duration_ms: Math.round(duration),
+            ttfb_ms: Math.round(ttfb),
+            dom_content_loaded_ms: Math.round(domContentLoaded),
+            transfer_size: navigation
+                ? Number(navigation.transferSize || 0)
+                : 0,
+            encoded_body_size: navigation
+                ? Number(navigation.encodedBodySize || 0)
+                : 0,
+        });
+
+        try {
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(
+                    'api/performance/slow_page_log.php',
+                    new Blob([payload], {type:'application/json'})
+                );
+                return;
+            }
+        } catch (_) {}
+
+        fetch(
+            'api/performance/slow_page_log.php',
+            {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:payload,
+                keepalive:true,
+                credentials:'same-origin'
+            }
+        ).catch(() => {});
+    };
+
+    window.addEventListener(
+        'load',
+        () => {
+            finished = true;
+            window.clearTimeout(revealTimer);
+
+            if (progressTimer) {
+                window.clearInterval(progressTimer);
+            }
+
+            setProgress(100);
+            bar.classList.add('is-complete');
+
+            window.setTimeout(() => {
+                bar.style.display = 'none';
+            }, 600);
+
+            window.setTimeout(reportSlowLoad, 0);
+        },
+        {once:true}
+    );
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            finished = true;
+            bar.classList.add('is-complete');
+        }
+    });
+})();
+</script>
+<nav class="navbar navbar-expand-xl navbar-dark bg-primary shadow-sm sticky-top">
+<div class="container">
+    <a class="navbar-brand portal-navbar-brand" href="index" aria-label="Malaysia School Esports Portal home">
+        <img src="assets/images/logo.svg" alt="Metadata Berhad" class="portal-navbar-logo" width="180" height="44">
+        <span class="visually-hidden">Malaysia School Esports Portal</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-xl-center">
+            <li class="nav-item"><a class="nav-link " href="index">Home</a></li>
+
+                            <!-- Public/guest menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown">Programme</a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="about-programme"><i class="bi bi-info-circle me-2"></i>About Programme</a></li>
+                        <li><a class="dropdown-item" href="events-competitions"><i class="bi bi-calendar-event me-2"></i>Events &amp; Competitions</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="register_school"><i class="bi bi-building-add me-2"></i>Register School</a></li>
+                        <li><a class="dropdown-item" href="register_student"><i class="bi bi-person-plus me-2"></i>Register Student</a></li>
+                        <li><a class="dropdown-item" href="register_teacher"><i class="bi bi-person-badge me-2"></i>Register Teacher</a></li>
+                    </ul>
+                </li>
+            
+            
+                            <li class="nav-item ms-xl-2"><a class="nav-link px-2 " href="login" title="Login" aria-label="Login"><i class="bi bi-person-circle fs-5"></i><span class="visually-hidden">Login</span></a></li>
+                    </ul>
+    </div>
+</div>
+</nav>
+
+<main class="container py-4 flex-grow-1">
+
+<div class="row justify-content-center">
+    <div class="col-xl-10">
+
+        
+        
+        
+            <div class="d-flex flex-column flex-lg-row align-items-lg-end justify-content-between gap-3 mb-4">
+                <div>
+                    <h1
+                        class="h2 mb-2 faq-page-title"
+                                                    data-en="Frequently Asked Questions (FAQ)"
+                                                    data-ms="Soalan Lazim (FAQ)"
+                                                    data-zh="常见问题（FAQ）"
+                                                    data-ta="அடிக்கடி கேட்கப்படும் கேள்விகள் (FAQ)"
+                                            >Frequently Asked Questions (FAQ)</h1>
+
+                    <p
+                        class="text-secondary mb-0 faq-page-description"
+                                                    data-en="A quick reference on programme delivery, the Teacher role, facilities, the RM100 annual programme fee and competition participation."
+                                                    data-ms="Rujukan ringkas mengenai pelaksanaan program, peranan Guru, penggunaan kemudahan, yuran tahunan RM100 serta penyertaan dalam pertandingan."
+                                                    data-zh="有关计划执行、教师职责、设备使用、每年 RM100 计划费用及比赛参与安排的简要说明。"
+                                                    data-ta="திட்ட செயல்பாடு, ஆசிரியரின் பங்கு, வசதிகள், ஆண்டு RM100 திட்டக் கட்டணம் மற்றும் போட்டிப் பங்கேற்பு குறித்த சுருக்கமான வழிகாட்டி."
+                                            >A quick reference on programme delivery, the Teacher role, facilities, the RM100 annual programme fee and competition participation.</p>
+                </div>
+
+                <div class="no-print d-flex gap-2 flex-wrap justify-content-lg-end">
+                    <div class="btn-group" role="group" aria-label="Language selection">
+                        <button type="button" class="btn btn-primary faq-language-btn active" data-lang="en">English</button>
+                        <button type="button" class="btn btn-outline-primary faq-language-btn" data-lang="ms">Bahasa Melayu</button>
+                        <button type="button" class="btn btn-outline-primary faq-language-btn" data-lang="zh">中文</button>
+                        <button type="button" class="btn btn-outline-primary faq-language-btn" data-lang="ta">தமிழ்</button>
+                    </div>
+
+                                    </div>
+            </div>
+
+                            <div class="faq-language-section " data-lang-section="en">
+                    <div class="accordion shadow-sm" id="faqAccordionEn">
+                        
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqEnHeading1">
+                                    <button
+                                        class="accordion-button "
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqEnCollapse1"
+                                        aria-expanded="true"
+                                        aria-controls="faqEnCollapse1"
+                                    >
+                                        1. Who will deliver the 20 learning modules in this programme?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqEnCollapse1"
+                                    class="accordion-collapse collapse show"
+                                    aria-labelledby="faqEnHeading1"
+                                    data-bs-parent="#faqAccordionEn"
+                                >
+                                    <div class="accordion-body">
+                                        <p class="mb-0">All <strong>20 learning modules will be delivered by the school Teacher</strong>. The Teacher is responsible for delivering or facilitating the modules, guiding participants, supervising students and ensuring learning activities continue according to the programme schedule.</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqEnHeading2">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqEnCollapse2"
+                                        aria-expanded="false"
+                                        aria-controls="faqEnCollapse2"
+                                    >
+                                        2. What is the Teacher&#039;s role during each 2-hour training session?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqEnCollapse2"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqEnHeading2"
+                                    data-bs-parent="#faqAccordionEn"
+                                >
+                                    <div class="accordion-body">
+                                        <p>The Teacher serves as the <strong>Team Leader / Team Administrator and programme trainer</strong> for the school team. The Teacher coordinates programme implementation at school and has the final decision-making authority on matters involving the school team.</p><p class="mb-0">During each training session, the Teacher delivers or facilitates the learning modules, guides participants, supervises students, manages training activities and attendance, and coordinates preparation for programme activities and competitions.</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqEnHeading3">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqEnCollapse3"
+                                        aria-expanded="false"
+                                        aria-controls="faqEnCollapse3"
+                                    >
+                                        3. How will PS5 usage be managed if a school has 100 participants?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqEnCollapse3"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqEnHeading3"
+                                    data-bs-parent="#faqAccordionEn"
+                                >
+                                    <div class="accordion-body">
+                                        <p>
+Each gameplay session uses <strong>2 controllers for 2 participants</strong>. Participants will be grouped
+into rotations, and a usage schedule will be provided so that training can be conducted in an organised manner.
+</p>
+<p>
+The programme was originally designed for schools around Cherating, where participants can use the Metadata
+training centre in Cherating, which has facilities for up to <strong>20 PS5 units</strong>.
+</p>
+<p class="mb-0">
+As the programme is now open to schools in other areas, Metadata is prepared to
+<strong>increase the number of PS5 units provided to participating schools from the second month of programme
+implementation</strong>, subject to participant numbers, school requirements and programme implementation.
+</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqEnHeading4">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqEnCollapse4"
+                                        aria-expanded="false"
+                                        aria-controls="faqEnCollapse4"
+                                    >
+                                        4. What is the annual programme fee for each participant?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqEnCollapse4"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqEnHeading4"
+                                    data-bs-parent="#faqAccordionEn"
+                                >
+                                    <div class="accordion-body">
+                                        <p>The programme fee is <strong>RM100 per participant per year</strong>. This is the only standard programme fee charged to each participant.</p><div class="alert alert-primary mb-3"><strong>Annual programme fee:</strong> RM100 / participant / year.</div><p class="mb-0">The annual fee covers participation in the programme, learning and training activities, team administration, membership-related items and school-level programme activities. There is <strong>no monthly programme fee</strong>.</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqEnHeading5">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqEnCollapse5"
+                                        aria-expanded="false"
+                                        aria-controls="faqEnCollapse5"
+                                    >
+                                        5. Are there any additional costs if participants take part in competitions?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqEnCollapse5"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqEnHeading5"
+                                    data-bs-parent="#faqAccordionEn"
+                                >
+                                    <div class="accordion-body">
+                                        <p>The <strong>RM100 annual programme fee is the only standard participant fee</strong>. Optional additional costs may arise only when a participant enters a specific external competition.</p><p>Metadata will prioritise <strong>online competitions</strong> so students can participate from school without normally incurring travel or accommodation costs.</p><p>If a competition requires attendance at a physical venue, the school should discuss the related costs and funding arrangement with parents/guardians before participation.</p>                                    </div>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+                            <div class="faq-language-section d-none" data-lang-section="ms">
+                    <div class="accordion shadow-sm" id="faqAccordionMs">
+                        
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqMsHeading1">
+                                    <button
+                                        class="accordion-button "
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqMsCollapse1"
+                                        aria-expanded="true"
+                                        aria-controls="faqMsCollapse1"
+                                    >
+                                        1. Siapakah yang akan mengendalikan 20 modul pembelajaran dalam program ini?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqMsCollapse1"
+                                    class="accordion-collapse collapse show"
+                                    aria-labelledby="faqMsHeading1"
+                                    data-bs-parent="#faqAccordionMs"
+                                >
+                                    <div class="accordion-body">
+                                        <p class="mb-0">Kesemua <strong>20 modul pembelajaran akan dikendalikan oleh Guru sekolah</strong>. Guru bertanggungjawab mengendalikan atau memudah cara modul, membimbing peserta, memantau murid serta memastikan aktiviti pembelajaran berjalan mengikut jadual program.</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqMsHeading2">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqMsCollapse2"
+                                        aria-expanded="false"
+                                        aria-controls="faqMsCollapse2"
+                                    >
+                                        2. Apakah peranan Guru sekolah sepanjang sesi latihan selama 2 jam?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqMsCollapse2"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqMsHeading2"
+                                    data-bs-parent="#faqAccordionMs"
+                                >
+                                    <div class="accordion-body">
+                                        <p>Guru bertindak sebagai <strong>Ketua Pasukan / Pentadbir Pasukan dan pengendali latihan program</strong> bagi pasukan sekolah. Guru menyelaras pelaksanaan program di sekolah dan mempunyai kuasa membuat keputusan akhir berkaitan pasukan sekolah.</p><p class="mb-0">Sepanjang setiap sesi latihan, Guru mengendalikan atau memudah cara modul pembelajaran, membimbing peserta, memantau murid, mengurus aktiviti dan kehadiran latihan serta menyelaras persediaan pasukan untuk aktiviti program dan pertandingan.</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqMsHeading3">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqMsCollapse3"
+                                        aria-expanded="false"
+                                        aria-controls="faqMsCollapse3"
+                                    >
+                                        3. Bagaimanakah penggunaan PS5 diuruskan jika sekolah mempunyai 100 peserta?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqMsCollapse3"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqMsHeading3"
+                                    data-bs-parent="#faqAccordionMs"
+                                >
+                                    <div class="accordion-body">
+                                        <p>
+Setiap sesi permainan menggunakan <strong>2 alat kawalan permainan (controller) untuk 2 peserta</strong>.
+Peserta akan dibahagikan mengikut giliran dan jadual penggunaan akan disediakan supaya latihan dapat
+dijalankan secara tersusun.
+</p>
+<p>
+Program ini pada asalnya dirancang untuk sekolah-sekolah sekitar Cherating kerana peserta boleh menggunakan
+pusat latihan Metadata di Cherating yang mempunyai kemudahan sehingga <strong>20 unit PS5</strong>.
+</p>
+<p class="mb-0">
+Oleh sebab program kini dibuka kepada sekolah di kawasan lain, pihak Metadata bersedia
+<strong>menambah jumlah PS5 yang dibekalkan kepada sekolah mulai bulan kedua pelaksanaan program</strong>,
+tertakluk kepada keperluan, jumlah peserta dan pelaksanaan program di sekolah berkenaan.
+</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqMsHeading4">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqMsCollapse4"
+                                        aria-expanded="false"
+                                        aria-controls="faqMsCollapse4"
+                                    >
+                                        4. Berapakah yuran tahunan program bagi setiap peserta?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqMsCollapse4"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqMsHeading4"
+                                    data-bs-parent="#faqAccordionMs"
+                                >
+                                    <div class="accordion-body">
+                                        <p>Yuran program ialah <strong>RM100 bagi setiap peserta untuk tempoh satu tahun</strong>. Ini merupakan satu-satunya yuran standard program yang dikenakan kepada setiap peserta.</p><div class="alert alert-primary mb-3"><strong>Yuran tahunan program:</strong> RM100 / peserta / tahun.</div><p class="mb-0">Yuran tahunan merangkumi penyertaan dalam program, aktiviti pembelajaran dan latihan, pengurusan pasukan, barangan berkaitan keahlian serta aktiviti program di peringkat sekolah. <strong>Tiada yuran bulanan program.</strong></p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqMsHeading5">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqMsCollapse5"
+                                        aria-expanded="false"
+                                        aria-controls="faqMsCollapse5"
+                                    >
+                                        5. Adakah terdapat kos tambahan jika peserta menyertai pertandingan?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqMsCollapse5"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqMsHeading5"
+                                    data-bs-parent="#faqAccordionMs"
+                                >
+                                    <div class="accordion-body">
+                                        <p><strong>Yuran tahunan RM100 ialah satu-satunya yuran standard peserta</strong>. Kos tambahan secara pilihan hanya mungkin timbul apabila peserta menyertai pertandingan luar tertentu.</p><p>Pihak Metadata akan memberi keutamaan kepada <strong>pertandingan secara online</strong> supaya peserta boleh bertanding dari sekolah tanpa kebiasaannya melibatkan kos perjalanan atau penginapan.</p><p>Jika sesuatu pertandingan memerlukan peserta hadir secara fizikal, pihak sekolah perlu berbincang terlebih dahulu dengan ibu bapa/penjaga mengenai kos berkaitan dan kaedah pembiayaan sebelum penyertaan.</p>                                    </div>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+                            <div class="faq-language-section d-none" data-lang-section="zh">
+                    <div class="accordion shadow-sm" id="faqAccordionZh">
+                        
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqZhHeading1">
+                                    <button
+                                        class="accordion-button "
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqZhCollapse1"
+                                        aria-expanded="true"
+                                        aria-controls="faqZhCollapse1"
+                                    >
+                                        1. 本计划的 20 个学习模块将由谁负责指导？                                    </button>
+                                </h2>
+                                <div
+                                    id="faqZhCollapse1"
+                                    class="accordion-collapse collapse show"
+                                    aria-labelledby="faqZhHeading1"
+                                    data-bs-parent="#faqAccordionZh"
+                                >
+                                    <div class="accordion-body">
+                                        <p class="mb-0">全部 <strong>20 个学习模块将由学校教师负责</strong>。教师负责讲授或带领学习模块、指导参与学生、监督学生，并确保学习活动按照计划时间表进行。</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqZhHeading2">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqZhCollapse2"
+                                        aria-expanded="false"
+                                        aria-controls="faqZhCollapse2"
+                                    >
+                                        2. 在每次 2 小时的训练中，学校教师扮演什么角色？                                    </button>
+                                </h2>
+                                <div
+                                    id="faqZhCollapse2"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqZhHeading2"
+                                    data-bs-parent="#faqAccordionZh"
+                                >
+                                    <div class="accordion-body">
+                                        <p>教师担任学校队伍的<strong>队伍负责人 / 队伍管理员及课程培训负责人</strong>，负责协调计划在学校内的实施，并对校队相关事项拥有最终决定权。</p><p class="mb-0">每次训练期间，教师负责讲授或带领学习模块、指导参与学生、监督学生、管理训练活动与出席情况，并协调队伍参与计划活动及比赛的准备工作。</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqZhHeading3">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqZhCollapse3"
+                                        aria-expanded="false"
+                                        aria-controls="faqZhCollapse3"
+                                    >
+                                        3. 如果学校有 100 名参与者，PS5 将如何安排使用？                                    </button>
+                                </h2>
+                                <div
+                                    id="faqZhCollapse3"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqZhHeading3"
+                                    data-bs-parent="#faqAccordionZh"
+                                >
+                                    <div class="accordion-body">
+                                        <p>
+每次游戏训练使用 <strong>2 个控制器，由 2 名学生参与</strong>。
+学生将按组轮流使用，主办方也会提供使用时间表，让训练安排更有秩序。
+</p>
+<p>
+本计划最初为 Cherating 周边学校而设计，因为参与者可使用 Metadata 位于 Cherating
+的训练中心，该中心设有多达 <strong>20 台 PS5</strong>。
+</p>
+<p class="mb-0">
+由于计划现已开放给其他地区的学校，Metadata 可根据参与人数、实际需要及计划执行情况，
+<strong>从计划实施的第二个月起增加提供给学校的 PS5 数量</strong>。
+</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqZhHeading4">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqZhCollapse4"
+                                        aria-expanded="false"
+                                        aria-controls="faqZhCollapse4"
+                                    >
+                                        4. 每位参与者的年度计划费用是多少？                                    </button>
+                                </h2>
+                                <div
+                                    id="faqZhCollapse4"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqZhHeading4"
+                                    data-bs-parent="#faqAccordionZh"
+                                >
+                                    <div class="accordion-body">
+                                        <p>本计划的费用为<strong>每位参与者每年 RM100</strong>。这是每位参与者需要缴付的唯一标准计划费用。</p><div class="alert alert-primary mb-3"><strong>年度计划费用：</strong>每位参与者每年 RM100。</div><p class="mb-0">年度费用涵盖计划参与、学习与训练活动、队伍管理、会员相关物品及校级计划活动。<strong>本计划不收取月费。</strong></p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqZhHeading5">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqZhCollapse5"
+                                        aria-expanded="false"
+                                        aria-controls="faqZhCollapse5"
+                                    >
+                                        5. 学生参加比赛时，是否会产生其他费用？                                    </button>
+                                </h2>
+                                <div
+                                    id="faqZhCollapse5"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqZhHeading5"
+                                    data-bs-parent="#faqAccordionZh"
+                                >
+                                    <div class="accordion-body">
+                                        <p><strong>每年 RM100 是参与者唯一的标准计划费用</strong>。只有在参与者参加特定外部比赛时，才可能产生可选的额外费用。</p><p>Metadata 将优先选择<strong>线上比赛</strong>，让学生可直接从学校参赛，一般无需承担交通或住宿费用。</p><p>如果比赛要求学生亲自前往比赛地点，学校应在参赛前先与家长 / 监护人讨论相关费用及资助安排。</p>                                    </div>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+                            <div class="faq-language-section d-none" data-lang-section="ta">
+                    <div class="accordion shadow-sm" id="faqAccordionTa">
+                        
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqTaHeading1">
+                                    <button
+                                        class="accordion-button "
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqTaCollapse1"
+                                        aria-expanded="true"
+                                        aria-controls="faqTaCollapse1"
+                                    >
+                                        1. இந்தத் திட்டத்தின் 20 கற்றல் தொகுதிகளையும் யார் நடத்துவார்கள்?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqTaCollapse1"
+                                    class="accordion-collapse collapse show"
+                                    aria-labelledby="faqTaHeading1"
+                                    data-bs-parent="#faqAccordionTa"
+                                >
+                                    <div class="accordion-body">
+                                        <p class="mb-0">அனைத்து <strong>20 கற்றல் தொகுதிகளையும் பள்ளி ஆசிரியர் நடத்துவார்</strong>. ஆசிரியர் கற்றல் தொகுதிகளை நடத்தவோ வழிநடத்தவோ செய்து, மாணவர்களை வழிகாட்டி மேற்பார்வை செய்து, திட்ட அட்டவணைப்படி கற்றல் நடவடிக்கைகள் நடைபெறுவதை உறுதிசெய்வார்.</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqTaHeading2">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqTaCollapse2"
+                                        aria-expanded="false"
+                                        aria-controls="faqTaCollapse2"
+                                    >
+                                        2. 2 மணி நேர பயிற்சி அமர்வில் பள்ளி ஆசிரியரின் பங்கு என்ன?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqTaCollapse2"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqTaHeading2"
+                                    data-bs-parent="#faqAccordionTa"
+                                >
+                                    <div class="accordion-body">
+                                        <p>ஆசிரியர் பள்ளி அணியின் <strong>அணி தலைவர் / அணி நிர்வாகி மற்றும் திட்டப் பயிற்சி பொறுப்பாளர்</strong> ஆக செயல்படுவார். பள்ளியில் திட்டம் செயல்படுத்தப்படுவதை ஒருங்கிணைத்து, பள்ளி அணியைச் சார்ந்த இறுதி முடிவுகளை எடுப்பார்.</p><p class="mb-0">ஒவ்வொரு பயிற்சி அமர்விலும் ஆசிரியர் கற்றல் தொகுதிகளை நடத்தவோ வழிநடத்தவோ செய்து, மாணவர்களை வழிகாட்டி மேற்பார்வை செய்து, பயிற்சி நடவடிக்கைகள் மற்றும் வருகையை நிர்வகித்து, திட்ட நடவடிக்கைகள் மற்றும் போட்டிகளுக்கான அணியின் தயாரிப்பை ஒருங்கிணைப்பார்.</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqTaHeading3">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqTaCollapse3"
+                                        aria-expanded="false"
+                                        aria-controls="faqTaCollapse3"
+                                    >
+                                        3. பள்ளியில் 100 பங்கேற்பாளர்கள் இருந்தால் PS5 பயன்பாடு எவ்வாறு நிர்வகிக்கப்படும்?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqTaCollapse3"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqTaHeading3"
+                                    data-bs-parent="#faqAccordionTa"
+                                >
+                                    <div class="accordion-body">
+                                        <p>
+ஒவ்வொரு விளையாட்டு அமர்விலும் <strong>2 கட்டுப்பாட்டிகள் (controllers) மூலம் 2 மாணவர்கள்</strong>
+பங்கேற்பார்கள். மாணவர்கள் குழுக்களாகப் பிரிக்கப்பட்டு, மாறிமாறி பயன்படுத்துவதற்கான அட்டவணை வழங்கப்படும்.
+</p>
+<p>
+இந்தத் திட்டம் முதலில் Cherating சுற்றுவட்டாரப் பள்ளிகளுக்காக வடிவமைக்கப்பட்டது.
+Cherating-இல் உள்ள Metadata பயிற்சி மையத்தில் அதிகபட்சம் <strong>20 PS5</strong> வசதி உள்ளது.
+</p>
+<p class="mb-0">
+தற்போது திட்டம் பிற பகுதிகளில் உள்ள பள்ளிகளுக்கும் திறக்கப்பட்டுள்ளதால்,
+பங்கேற்பாளர் எண்ணிக்கை, பள்ளியின் தேவைகள் மற்றும் திட்டத்தின் நடைமுறை செயல்பாடு ஆகியவற்றைப் பொறுத்து,
+<strong>திட்டத்தின் இரண்டாவது மாதத்திலிருந்து பள்ளிகளுக்கு வழங்கப்படும் PS5 எண்ணிக்கையை அதிகரிக்க
+Metadata தயாராக உள்ளது</strong>.
+</p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqTaHeading4">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqTaCollapse4"
+                                        aria-expanded="false"
+                                        aria-controls="faqTaCollapse4"
+                                    >
+                                        4. ஒவ்வொரு பங்கேற்பாளருக்கும் ஆண்டு திட்டக் கட்டணம் எவ்வளவு?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqTaCollapse4"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqTaHeading4"
+                                    data-bs-parent="#faqAccordionTa"
+                                >
+                                    <div class="accordion-body">
+                                        <p>இந்தத் திட்டத்தின் கட்டணம் <strong>ஒவ்வொரு பங்கேற்பாளருக்கும் ஆண்டுக்கு RM100</strong>. ஒவ்வொரு பங்கேற்பாளரிடமும் வசூலிக்கப்படும் ஒரே வழக்கமான திட்டக் கட்டணம் இதுவாகும்.</p><div class="alert alert-primary mb-3"><strong>ஆண்டு திட்டக் கட்டணம்:</strong> ஒரு பங்கேற்பாளருக்கு ஆண்டுக்கு RM100.</div><p class="mb-0">ஆண்டு கட்டணம் திட்டப் பங்கேற்பு, கற்றல் மற்றும் பயிற்சி நடவடிக்கைகள், அணி நிர்வாகம், உறுப்பினர் தொடர்பான பொருட்கள் மற்றும் பள்ளி நிலை திட்ட நடவடிக்கைகளை உள்ளடக்கும். <strong>இந்தத் திட்டத்திற்கு மாதாந்திர கட்டணம் இல்லை.</strong></p>                                    </div>
+                                </div>
+                            </div>
+                                                    <div class="accordion-item">
+                                <h2 class="accordion-header" id="faqTaHeading5">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#faqTaCollapse5"
+                                        aria-expanded="false"
+                                        aria-controls="faqTaCollapse5"
+                                    >
+                                        5. மாணவர்கள் போட்டிகளில் பங்கேற்கும்போது கூடுதல் செலவுகள் இருக்குமா?                                    </button>
+                                </h2>
+                                <div
+                                    id="faqTaCollapse5"
+                                    class="accordion-collapse collapse "
+                                    aria-labelledby="faqTaHeading5"
+                                    data-bs-parent="#faqAccordionTa"
+                                >
+                                    <div class="accordion-body">
+                                        <p><strong>ஆண்டு RM100 மட்டுமே பங்கேற்பாளருக்கான வழக்கமான திட்டக் கட்டணம்</strong>. குறிப்பிட்ட வெளிப்புற போட்டியில் பங்கேற்கும்போது மட்டுமே விருப்பத் தேர்வு கூடுதல் செலவுகள் ஏற்படலாம்.</p><p>Metadata முதன்மையாக <strong>ஆன்லைன் போட்டிகளை</strong> தேர்வு செய்யும்; இதனால் மாணவர்கள் பள்ளியிலிருந்தே பங்கேற்க முடியும், மேலும் பொதுவாக பயணம் அல்லது தங்குமிடம் செலவுகள் இருக்காது.</p><p>போட்டியில் நேரடியாக கலந்து கொள்ள வேண்டுமானால், பங்கேற்பதற்கு முன் பள்ளி பெற்றோர் / பாதுகாவலர்களுடன் தொடர்புடைய செலவுகள் மற்றும் நிதி ஏற்பாடுகளை விவாதிக்க வேண்டும்.</p>                                    </div>
+                                </div>
+                            </div>
+                                            </div>
+                </div>
+            
+            <div class="card content-card mt-4">
+                <div class="card-body p-4">
+                    <h2
+                        class="h5 mb-2 faq-contact-title"
+                                                    data-en="Still have questions?"
+                                                    data-ms="Masih mempunyai pertanyaan?"
+                                                    data-zh="还有其他问题？"
+                                                    data-ta="மேலும் கேள்விகள் உள்ளனவா?"
+                                            >Still have questions?</h2>
+
+                    <p
+                        class="text-secondary mb-0 faq-contact-text"
+                                                    data-en="Please contact Metadata Berhad if you require further clarification regarding the programme, training, fees, facilities or competitions."
+                                                    data-ms="Sila hubungi Metadata Berhad sekiranya pihak tuan/puan memerlukan penjelasan lanjut mengenai program, latihan, yuran, kemudahan atau pertandingan."
+                                                    data-zh="如需进一步了解本计划、训练、费用、设备或比赛安排，请联系 Metadata Berhad。"
+                                                    data-ta="திட்டம், பயிற்சி, கட்டணம், வசதிகள் அல்லது போட்டிகள் தொடர்பான மேலதிக விளக்கங்களுக்கு Metadata Berhad-ஐ தொடர்பு கொள்ளவும்."
+                                            >Please contact Metadata Berhad if you require further clarification regarding the programme, training, fees, facilities or competitions.</p>
+                </div>
+            </div>
+
+            </div>
+</div>
+
+<script>
+(() => {
+    'use strict';
+
+    const buttons = document.querySelectorAll('.faq-language-btn');
+    const sections = document.querySelectorAll('.faq-language-section');
+    const pageTitle = document.querySelector('.faq-page-title');
+    const pageDescription = document.querySelector('.faq-page-description');
+    const contactTitle = document.querySelector('.faq-contact-title');
+    const contactText = document.querySelector('.faq-contact-text');
+    const supportedLanguages = new Set(['en', 'ms', 'zh', 'ta']);
+
+    const setLanguage = (lang) => {
+        if (!supportedLanguages.has(lang)) lang = 'en';
+
+        for (const section of sections) {
+            section.classList.toggle('d-none', section.dataset.langSection !== lang);
+        }
+
+        for (const button of buttons) {
+            const active = button.dataset.lang === lang;
+            button.classList.toggle('btn-primary', active);
+            button.classList.toggle('btn-outline-primary', !active);
+            button.classList.toggle('active', active);
+        }
+
+        if (pageTitle?.dataset[lang]) pageTitle.textContent = pageTitle.dataset[lang];
+        if (pageDescription?.dataset[lang]) pageDescription.textContent = pageDescription.dataset[lang];
+        if (contactTitle?.dataset[lang]) contactTitle.textContent = contactTitle.dataset[lang];
+        if (contactText?.dataset[lang]) contactText.textContent = contactText.dataset[lang];
+
+        try {
+            localStorage.setItem('faq_language', lang);
+        } catch {
+            // Storage can be unavailable in private/restricted browser contexts.
+        }
+
+        document.documentElement.lang =
+            lang === 'zh' ? 'zh-Hans' :
+            lang === 'ta' ? 'ta' :
+            lang === 'ms' ? 'ms' : 'en';
+    };
+
+    for (const button of buttons) {
+        button.addEventListener('click', () => setLanguage(button.dataset.lang || 'en'));
+    }
+
+    let savedLanguage = 'en';
+    try {
+        const stored = localStorage.getItem('faq_language');
+        if (stored && supportedLanguages.has(stored)) savedLanguage = stored;
+    } catch {
+        // Keep English as fallback.
+    }
+
+    setLanguage(savedLanguage);
+})();
+</script>
+
+</main>
+<footer class="border-top bg-white py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-secondary small">
+        <span>&copy; 2026 Metadata Berhad 1573083-A</span>
+        <span>Contact Support: 09-5818322 Email: cs@metadata.technology</span>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

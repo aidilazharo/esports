@@ -1,0 +1,1232 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Student Esports Profile | Malaysia School Esports Portal</title>
+    <meta name="description" content="View a student esports profile, completed learning modules, tournament participation, certificates and gameplay videos.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="author" content="Metadata Berhad">
+    <meta name="language" content="English">
+    <meta name="geo.region" content="MY">
+    <meta name="theme-color" content="#0d6efd">
+
+    <link rel="canonical" href="https://esports.metadata.technology/student_profile.php?student_id=26">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_MY">
+    <meta property="og:site_name" content="Malaysia School Esports Portal">
+    <meta property="og:title" content="Student Esports Profile | Malaysia School Esports Portal">
+    <meta property="og:description" content="View a student esports profile, completed learning modules, tournament participation, certificates and gameplay videos.">
+    <meta property="og:url" content="https://esports.metadata.technology/student_profile.php?student_id=26">
+    <meta property="og:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+    <meta property="og:image:alt" content="Malaysia School Esports Portal - STEM, TVET, AI and esports education programme in Malaysia">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Student Esports Profile | Malaysia School Esports Portal">
+    <meta name="twitter:description" content="View a student esports profile, completed learning modules, tournament participation, certificates and gameplay videos.">
+    <meta name="twitter:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://esports.metadata.technology/#organization","name":"Malaysia School Esports Portal","url":"https://esports.metadata.technology/","logo":{"@type":"ImageObject","url":"https://esports.metadata.technology/assets/images/logo.svg"},"description":"Malaysia school programme for STEM, TVET, artificial intelligence (AI), simulation, digital innovation and esports education, connecting students, teachers and schools with future-ready learning opportunities.","areaServed":{"@type":"Country","name":"Malaysia"},"knowsAbout":["STEM education","TVET education","Artificial intelligence education","Simulation learning","Digital innovation","Esports education","School technology programmes"]}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://esports.metadata.technology/#website","url":"https://esports.metadata.technology/","name":"Malaysia School Esports Portal","publisher":{"@id":"https://esports.metadata.technology/#organization"},"inLanguage":"en-MY"}</script>
+
+            <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://esports.metadata.technology/"},{"@type":"ListItem","position":2,"name":"Student Esports Profile","item":"https://esports.metadata.technology/student_profile.php?student_id=26"}]}</script>
+    
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/mobile-icon-links.css?v=2" rel="stylesheet">
+    <link href="assets/css/mobile-split-navigation.css?v=1" rel="stylesheet">
+
+    <style>
+        .portal-navbar-brand{display:inline-flex;align-items:center;min-height:52px;padding-top:.25rem;padding-bottom:.25rem}
+        .portal-navbar-logo{display:block;width:auto;height:44px;max-width:180px;object-fit:contain}
+        .navbar .dropdown-item.active,.navbar .dropdown-item:active{color:var(--bs-dropdown-link-active-color);background-color:var(--bs-dropdown-link-active-bg)}
+
+        #portalPageLoadProgress{
+            position:fixed;
+            top:0;
+            left:0;
+            width:0;
+            height:3px;
+            z-index:2000;
+            opacity:0;
+            pointer-events:none;
+            background:currentColor;
+            color:#ffc107;
+            box-shadow:0 0 8px rgba(255,193,7,.65);
+            transition:width .25s ease,opacity .2s ease;
+        }
+        #portalPageLoadProgress.is-visible{opacity:1}
+        #portalPageLoadProgress.is-complete{
+            width:100%!important;
+            opacity:0;
+            transition:width .15s ease,opacity .35s ease .15s;
+        }
+
+        @media(max-width:575.98px){
+            .portal-navbar-brand{min-height:46px}
+            .portal-navbar-logo{height:36px;max-width:145px}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            #portalPageLoadProgress{transition:none}
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+<div
+    id="portalPageLoadProgress"
+    role="progressbar"
+    aria-label="Page loading"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+></div>
+
+<script>
+(() => {
+    'use strict';
+
+    const bar = document.getElementById('portalPageLoadProgress');
+    if (!bar) return;
+
+    let progress = 4;
+    let finished = false;
+    let progressTimer = null;
+
+    const setProgress = (value) => {
+        progress = Math.max(progress, Math.min(95, value));
+        bar.style.width = progress + '%';
+        bar.setAttribute('aria-valuenow', String(Math.round(progress)));
+    };
+
+    const revealTimer = window.setTimeout(() => {
+        if (finished) return;
+
+        bar.classList.add('is-visible');
+        setProgress(18);
+
+        progressTimer = window.setInterval(() => {
+            if (finished) return;
+
+            if (progress < 55) {
+                setProgress(progress + 8);
+            } else if (progress < 78) {
+                setProgress(progress + 4);
+            } else if (progress < 92) {
+                setProgress(progress + 1.5);
+            }
+        }, 450);
+    }, 400);
+
+    const reportSlowLoad = () => {
+        const navigation = performance.getEntriesByType('navigation')[0];
+
+        const duration = navigation
+            ? navigation.duration
+            : performance.now();
+
+        const ttfb = navigation
+            ? navigation.responseStart
+            : 0;
+
+        const domContentLoaded = navigation
+            ? navigation.domContentLoadedEventEnd
+            : 0;
+
+        if (duration < 2500 && ttfb < 1500) {
+            return;
+        }
+
+        const payload = JSON.stringify({
+            path: window.location.pathname,
+            duration_ms: Math.round(duration),
+            ttfb_ms: Math.round(ttfb),
+            dom_content_loaded_ms: Math.round(domContentLoaded),
+            transfer_size: navigation
+                ? Number(navigation.transferSize || 0)
+                : 0,
+            encoded_body_size: navigation
+                ? Number(navigation.encodedBodySize || 0)
+                : 0,
+        });
+
+        try {
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(
+                    'api/performance/slow_page_log.php',
+                    new Blob([payload], {type:'application/json'})
+                );
+                return;
+            }
+        } catch (_) {}
+
+        fetch(
+            'api/performance/slow_page_log.php',
+            {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:payload,
+                keepalive:true,
+                credentials:'same-origin'
+            }
+        ).catch(() => {});
+    };
+
+    window.addEventListener(
+        'load',
+        () => {
+            finished = true;
+            window.clearTimeout(revealTimer);
+
+            if (progressTimer) {
+                window.clearInterval(progressTimer);
+            }
+
+            setProgress(100);
+            bar.classList.add('is-complete');
+
+            window.setTimeout(() => {
+                bar.style.display = 'none';
+            }, 600);
+
+            window.setTimeout(reportSlowLoad, 0);
+        },
+        {once:true}
+    );
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            finished = true;
+            bar.classList.add('is-complete');
+        }
+    });
+})();
+</script>
+<nav class="navbar navbar-expand-xl navbar-dark bg-primary shadow-sm sticky-top">
+<div class="container">
+    <a class="navbar-brand portal-navbar-brand" href="index" aria-label="Malaysia School Esports Portal home">
+        <img src="assets/images/logo.svg" alt="Metadata Berhad" class="portal-navbar-logo" width="180" height="44">
+        <span class="visually-hidden">Malaysia School Esports Portal</span>
+    </a>
+    <nav class="mobile-top-nav" aria-label="Primary mobile navigation"><div class="mobile-nav-scroller"><a class="mobile-nav-link" href="index" title="Home" aria-label="Home"><i class="bi bi-house-door" aria-hidden="true"></i><span class="visually-hidden">Home</span></a><a class="mobile-nav-link" href="about-programme" title="Programme" aria-label="Programme"><i class="bi bi-journal-richtext" aria-hidden="true"></i><span class="visually-hidden">Programme</span></a><a class="mobile-nav-link" href="events-competitions" title="Events &amp; Competitions" aria-label="Events &amp; Competitions"><i class="bi bi-calendar-event" aria-hidden="true"></i><span class="visually-hidden">Events &amp; Competitions</span></a><a class="mobile-nav-link" href="login" title="Login" aria-label="Login"><i class="bi bi-person-circle" aria-hidden="true"></i><span class="visually-hidden">Login</span></a></div></nav>    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-xl-center">
+            <li class="nav-item"><a class="nav-link " href="index">Home</a></li>
+
+            <!--
+                This header is only rendered for guests.
+                Authenticated users are redirected to their own role portal
+                before any navigation is output.
+            -->
+            <li class="nav-item dropdown">
+                <a
+                    class="nav-link dropdown-toggle "
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                >
+                    Programme
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="about-programme"
+                        >
+                            <i class="bi bi-info-circle me-2"></i>
+                            About Programme
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="events-competitions"
+                        >
+                            <i class="bi bi-calendar-event me-2"></i>
+                            Events &amp; Competitions
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="register_school"
+                        >
+                            <i class="bi bi-building-add me-2"></i>
+                            Register School
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="register_student"
+                        >
+                            <i class="bi bi-person-plus me-2"></i>
+                            Register Student
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="register_teacher"
+                        >
+                            <i class="bi bi-person-badge me-2"></i>
+                            Register Teacher
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item "
+                            href="manuals"
+                        >
+                            <i class="bi bi-book me-2"></i>
+                            Manuals
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item "
+                            href="contact"
+                        >
+                            <i class="bi bi-envelope me-2"></i>
+                            Contact Us
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item ms-xl-2">
+                <a
+                    class="nav-link px-2 "
+                    href="login"
+                    title="Login"
+                    aria-label="Login"
+                >
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span class="visually-hidden">Login</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</nav>
+
+<main class="container py-4 flex-grow-1">
+
+<link
+    rel="stylesheet"
+    href="https://cdn.datatables.net/1.13.11/css/dataTables.bootstrap5.min.css"
+>
+
+<style>
+.profile-page{max-width:1280px;margin:0 auto}
+.profile-stat-card,.profile-section-card{border:0;box-shadow:0 .125rem .5rem rgba(0,0,0,.06)}
+.profile-avatar{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:var(--bs-primary-bg-subtle);color:var(--bs-primary);font-size:1.8rem;overflow:hidden}
+.profile-school-logo{width:64px;height:64px;object-fit:contain;background:#fff;border:1px solid var(--bs-border-color);border-radius:16px;padding:6px}
+.profile-score{font-size:1.9rem;font-weight:700;line-height:1}
+.profile-head-card .card-body{padding:1.25rem 1.25rem}
+.profile-stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.85rem;margin-bottom:1rem}
+.profile-stats-row > [class*="col-"]{padding:0;max-width:none;width:auto;flex:none}
+.profile-stat-card .card-body{padding:1rem 1.05rem}
+.profile-stat-card .h2{font-size:2rem;line-height:1.05;margin-bottom:0}
+.profile-stat-card .small{line-height:1.25}
+.profile-section-row{--bs-gutter-x:.9rem;--bs-gutter-y:.9rem}
+.profile-section-card .card-header,.profile-section-card .card-body.profile-padded{padding:1rem 1.1rem}
+.profile-section-card .card-header h2{margin-bottom:.15rem}
+.profile-section-card .table{margin-bottom:0}
+.profile-section-card .table thead th{white-space:nowrap}
+.profile-section-card .table > :not(caption) > * > *{padding:.72rem .9rem}
+.profile-section-card .table .ps-4{padding-left:1.15rem !important}
+.profile-section-card .table .pe-4{padding-right:1.15rem !important}
+
+/* DataTables spacing inside cards */
+.dataTables_wrapper > .row{
+  margin-left:0;
+  margin-right:0;
+}
+.dataTables_wrapper > .row:first-child{
+  padding:.85rem 1.1rem .55rem;
+  align-items:center;
+}
+.dataTables_wrapper > .row:last-child{
+  padding:.65rem 1.1rem .85rem;
+  align-items:center;
+}
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_length{
+  margin:0;
+}
+.dataTables_wrapper .dataTables_filter label{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:.5rem;
+  margin:0;
+}
+.dataTables_wrapper .dataTables_filter input{
+  min-width:190px;
+  margin-left:0 !important;
+}
+.dataTables_wrapper .dataTables_info{
+  padding-top:.35rem !important;
+  margin:0;
+}
+.dataTables_wrapper .dataTables_paginate{
+  padding-top:0 !important;
+  margin:0 !important;
+}
+.dataTables_wrapper .pagination{
+  margin:0;
+  justify-content:flex-end;
+}
+.dataTables_wrapper .page-link{
+  padding:.4rem .7rem;
+}
+@media (max-width:767.98px){
+  .dataTables_wrapper > .row:first-child,
+  .dataTables_wrapper > .row:last-child{
+    padding:.7rem .85rem;
+  }
+  .dataTables_wrapper .dataTables_filter label{
+    justify-content:stretch;
+    flex-wrap:wrap;
+  }
+  .dataTables_wrapper .dataTables_filter input{
+    width:100%;
+    min-width:0;
+  }
+  .dataTables_wrapper .dataTables_info{
+    text-align:center;
+    margin-bottom:.5rem;
+  }
+  .dataTables_wrapper .pagination{
+    justify-content:center;
+  }
+}
+@media (max-width: 767.98px){
+  .profile-head-card .card-body{padding:1rem}
+  .profile-score{font-size:1.6rem}
+  .profile-stat-card .card-body{padding:.9rem}
+  .profile-section-card .card-header,.profile-section-card .card-body.profile-padded{padding:.9rem}
+}
+
+.module-video-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:.75rem;
+}
+.module-video-card{
+  min-width:0;
+  overflow:hidden;
+  border:1px solid var(--bs-border-color);
+  border-radius:.75rem;
+  background:#fff;
+}
+.module-video-frame{
+  width:100%;
+  aspect-ratio:16/9;
+  border:0;
+  display:block;
+  background:#000;
+}
+.module-video-body{
+  padding:.65rem .7rem .75rem;
+}
+.module-video-title{
+  font-size:.82rem;
+  font-weight:700;
+  line-height:1.25;
+  margin-bottom:.25rem;
+}
+.module-video-meta{
+  font-size:.72rem;
+  color:var(--bs-secondary-color);
+  line-height:1.3;
+}
+.module-video-placeholder{
+  width:100%;
+  aspect-ratio:16/9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f8f9fa;
+  color:#6c757d;
+  border-bottom:1px solid var(--bs-border-color);
+  text-align:center;
+  font-size:.72rem;
+}
+.module-video-status{
+  font-size:.64rem;
+}
+@media (max-width:991.98px){
+  .module-video-grid{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media (max-width:767.98px){
+  .module-video-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+@media (max-width:575.98px){
+  .module-video-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* Keep the two membership activation options alongside each other. */
+.profile-pending-actions{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:.6rem;
+  min-width:min(100%,390px);
+}
+.profile-pending-actions .btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:normal;
+  line-height:1.25;
+  min-width:0;
+}
+@media(max-width:767.98px){
+  .profile-pending-actions{
+    width:100%;
+    min-width:0;
+  }
+  .profile-pending-actions .btn{
+    font-size:.83rem;
+    padding:.7rem .3rem;
+  }
+}
+
+</style>
+
+<div class="profile-page">
+<div class="card border-0 shadow-sm mb-3 profile-head-card">
+    <div class="card-body p-4 p-lg-5">
+        <div class="d-flex flex-column flex-md-row align-items-md-center gap-4">
+                                        <img
+                    src="/uploads/schools/CBB2031/school-logo-20260827-221235-2c496dffec.jpg"
+                    alt="SEKOLAH KEBANGSAAN JERANTUT logo"
+                    class="profile-school-logo"
+                    width="72"
+                    height="72"
+                >
+            
+            <div class="flex-grow-1">
+                <div class="d-flex flex-wrap gap-2 mb-2">
+                    <span class="badge text-bg-primary">
+                        CBB2031-14                    </span>
+
+                    <span class="badge text-bg-success">
+                        Active                    </span>
+                </div>
+
+                <h1 class="h2 mb-1">
+                    WAN SHER QAISER BIN WAN MOHD SHAHARIR                </h1>
+
+                <div class="text-secondary mb-1">
+                    2HE                </div>
+
+                <div>
+                    <a
+                        class="text-decoration-none"
+                        href="school_profile.php?school_id=542"
+                    >
+                        SEKOLAH KEBANGSAAN JERANTUT                        · CBB2031                    </a>
+                </div>
+
+                <div class="small mt-1">
+                                            <i class="bi bi-person-plus me-1 text-secondary"></i>
+                        <a
+                            class="text-decoration-none"
+                            href="login.php?role=teacher&amp;return=%2Fteacher%2Fstudents.php%3Fstudent_id%3D26"
+                        >
+                            Assign Teacher
+                        </a>
+                        <span class="text-secondary">
+                            · Teacher login required
+                        </span>
+                                    </div>
+            </div>
+
+            <div class="text-md-end">
+                <div class="small text-secondary">Student Ranking</div>
+                <div class="h3 mb-1">
+                    Not Ranked                </div>
+                <div class="fw-semibold text-primary">
+                    0 points
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="profile-stats-row">
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Modules Completed</div>
+                <div class="h2 mb-0">0</div>
+                <div class="small text-primary">
+                    0 points
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Tournaments</div>
+                <div class="h2 mb-0">0</div>
+                <div class="small text-primary">
+                    0 points
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Attendance</div>
+                <div class="h2 mb-0">
+                    0m                </div>
+                <div class="small text-secondary">
+                    0 sessions
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Certificates</div>
+                <div class="h2 mb-0">0</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card border-0 shadow-sm mb-3 profile-section-card">
+    <div class="card-header bg-white">
+        <h2 class="h5 mb-1">
+            <i class="bi bi-journal-play me-2"></i>
+            Learning Modules & YouTube Videos
+        </h2>
+
+        <div class="small text-secondary">
+            All programme modules are shown below. Uploaded gameplay videos appear directly in the matching module.
+        </div>
+    </div>
+
+    <div class="card-body profile-padded">
+                    <div class="module-video-grid">
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M01                                    · Esports Match Setup &amp; Recording                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                EA SPORTS FC 26
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M02                                    · FC 26 1v1 Victory Challenge                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                EA SPORTS FC 26
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M03                                    · FC 26 2v2 Team Victory Challenge                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                EA SPORTS FC 26
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M04                                    · Rocket League 2v2 Rotation Challenge                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Rocket League
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M05                                    · Match Review &amp; Sportsmanship                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                EA SPORTS FC 26 / Rocket League
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M06                                    · Racing Precision Challenge                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Gran Turismo 7
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M07                                    · Basketball Team Strategy                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                NBA 2K26
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M08                                    · Fighting Game Best-of-Three                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Tekken 8
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M09                                    · Battle Royale Decision Making                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Fortnite
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M10                                    · Party Competition Challenge                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Fall Guys
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M11                                    · FC 26 Tactical 1v1                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                EA SPORTS FC 26
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M12                                    · FC 26 2v2 Roles &amp; Communication                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                EA SPORTS FC 26
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M13                                    · Rocket League Competitive Match                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Rocket League
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M14                                    · Racing Head-to-Head Challenge                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Gran Turismo 7
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M15                                    · Cross-Genre Performance Challenge                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Multiple Genres
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M16                                    · Online Tournament Registration &amp; Readiness                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Approved Esports Title
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M17                                    · Online Tournament Match                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Approved Esports Title
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M18                                    · Tournament Replay Analysis                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Tournament Game
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M19                                    · Tournament Progression Challenge                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Approved Esports Title
+                                                            </div>
+                        </div>
+                    </div>
+                                    
+                    <div class="module-video-card">
+                                                    <div class="module-video-placeholder">
+                                <div>
+                                    <i class="bi bi-youtube fs-4 d-block mb-1"></i>
+                                    No video uploaded
+                                </div>
+                            </div>
+                        
+                        <div class="module-video-body">
+                            <div class="d-flex align-items-start justify-content-between gap-2 mb-1">
+                                <div class="module-video-title mb-0">
+                                    M20                                    · Final Esports Performance Showcase                                </div>
+
+                                <span class="badge text-bg-secondary module-video-status">
+                                    Not Started                                </span>
+                            </div>
+
+                            <div class="module-video-meta">
+                                Student Selected Esports Title
+                                                            </div>
+                        </div>
+                    </div>
+                            </div>
+            </div>
+</div>
+
+<div class="row profile-section-row mb-3">
+    <div class="col-xl-7">
+        <div class="card border-0 shadow-sm h-100 profile-section-card">
+            <div class="card-header bg-white">
+                <h2 class="h5 mb-1">Tournaments</h2>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table id="studentTournamentsTable" class="table table-hover align-middle w-100">
+                        <thead>
+                            <tr>
+                                <th class="ps-4">Tournament</th>
+                                <th>Result</th>
+                                <th class="text-end pe-4">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-5">
+        <div class="card border-0 shadow-sm h-100 profile-section-card">
+            <div class="card-header bg-white">
+                <h2 class="h5 mb-1">Certificates</h2>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table
+                        id="studentCertificatesTable"
+                        class="table table-hover align-middle w-100"
+                    >
+                        <thead>
+                            <tr>
+                                <th class="ps-4">Certificate Obtained</th>
+                                <th>Date</th>
+                                <th class="pe-4">Certificate No.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.11/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (
+        !window.jQuery
+        || !jQuery.fn
+        || !jQuery.fn.DataTable
+    ) {
+        return;
+    }
+
+    jQuery('#studentTournamentsTable').DataTable({
+        pageLength: 5,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        order: [[2, 'desc']],
+        language: {
+            search: 'Search:',
+            emptyTable: 'No tournament participation recorded.'
+        }
+    });
+
+    jQuery('#studentCertificatesTable').DataTable({
+        pageLength: 5,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        order: [[1, 'desc']],
+        language: {
+            search: 'Search:',
+            emptyTable: 'No certificates obtained yet.'
+        }
+    });
+});
+</script>
+
+</div>
+
+</main>
+<footer class="border-top bg-white py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-secondary small">
+        <span>&copy; 2026 Metadata Berhad 1573083-A</span>
+        <span>Contact Support: 09-5818322 Email: cs@metadata.technology</span>
+    </div>
+    <nav class="mobile-bottom-nav" aria-label="Secondary mobile navigation"><div class="mobile-nav-scroller"><a class="mobile-nav-link" href="register_school" title="Register School" aria-label="Register School"><i class="bi bi-building-add" aria-hidden="true"></i><span class="visually-hidden">Register School</span></a><a class="mobile-nav-link" href="register_student" title="Register Student" aria-label="Register Student"><i class="bi bi-person-plus" aria-hidden="true"></i><span class="visually-hidden">Register Student</span></a><a class="mobile-nav-link" href="register_teacher" title="Register Teacher" aria-label="Register Teacher"><i class="bi bi-person-badge" aria-hidden="true"></i><span class="visually-hidden">Register Teacher</span></a><a class="mobile-nav-link" href="manuals" title="Manuals" aria-label="Manuals"><i class="bi bi-book" aria-hidden="true"></i><span class="visually-hidden">Manuals</span></a><a class="mobile-nav-link" href="contact" title="Contact Us" aria-label="Contact Us"><i class="bi bi-envelope" aria-hidden="true"></i><span class="visually-hidden">Contact Us</span></a></div></nav></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/mobile-icon-links.js?v=2"></script>
+</body>
+</html>

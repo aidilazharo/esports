@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Parent / Guardian Registration | Malaysia School Esports Portal</title>
+    <meta name="description" content="Malaysia school programme for STEM, TVET, artificial intelligence (AI), simulation, digital innovation and esports education, connecting students, teachers and schools with future-ready learning opportunities.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="author" content="Metadata Berhad">
+    <meta name="language" content="English">
+    <meta name="geo.region" content="MY">
+    <meta name="theme-color" content="#0d6efd">
+
+    <link rel="canonical" href="https://esports.metadata.technology/register_parent.php">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_MY">
+    <meta property="og:site_name" content="Malaysia School Esports Portal">
+    <meta property="og:title" content="Parent / Guardian Registration | Malaysia School Esports Portal">
+    <meta property="og:description" content="Malaysia school programme for STEM, TVET, artificial intelligence (AI), simulation, digital innovation and esports education, connecting students, teachers and schools with future-ready learning opportunities.">
+    <meta property="og:url" content="https://esports.metadata.technology/register_parent.php">
+    <meta property="og:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+    <meta property="og:image:alt" content="Malaysia School Esports Portal - STEM, TVET, AI and esports education programme in Malaysia">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Parent / Guardian Registration | Malaysia School Esports Portal">
+    <meta name="twitter:description" content="Malaysia school programme for STEM, TVET, artificial intelligence (AI), simulation, digital innovation and esports education, connecting students, teachers and schools with future-ready learning opportunities.">
+    <meta name="twitter:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://esports.metadata.technology/#organization","name":"Malaysia School Esports Portal","url":"https://esports.metadata.technology/","logo":{"@type":"ImageObject","url":"https://esports.metadata.technology/assets/images/logo.svg"},"description":"Malaysia school programme for STEM, TVET, artificial intelligence (AI), simulation, digital innovation and esports education, connecting students, teachers and schools with future-ready learning opportunities.","areaServed":{"@type":"Country","name":"Malaysia"},"knowsAbout":["STEM education","TVET education","Artificial intelligence education","Simulation learning","Digital innovation","Esports education","School technology programmes"]}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://esports.metadata.technology/#website","url":"https://esports.metadata.technology/","name":"Malaysia School Esports Portal","publisher":{"@id":"https://esports.metadata.technology/#organization"},"inLanguage":"en-MY"}</script>
+
+            <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://esports.metadata.technology/"},{"@type":"ListItem","position":2,"name":"Parent / Guardian Registration","item":"https://esports.metadata.technology/register_parent.php"}]}</script>
+    
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <style>
+        .portal-navbar-brand{display:inline-flex;align-items:center;min-height:52px;padding-top:.25rem;padding-bottom:.25rem}
+        .portal-navbar-logo{display:block;width:auto;height:44px;max-width:180px;object-fit:contain}
+        .navbar .dropdown-item.active,.navbar .dropdown-item:active{color:var(--bs-dropdown-link-active-color);background-color:var(--bs-dropdown-link-active-bg)}
+        .portal-role-badge{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+        #portalPageLoadProgress{
+            position:fixed;
+            top:0;
+            left:0;
+            width:0;
+            height:3px;
+            z-index:2000;
+            opacity:0;
+            pointer-events:none;
+            background:currentColor;
+            color:#ffc107;
+            box-shadow:0 0 8px rgba(255,193,7,.65);
+            transition:width .25s ease,opacity .2s ease;
+        }
+        #portalPageLoadProgress.is-visible{opacity:1}
+        #portalPageLoadProgress.is-complete{
+            width:100%!important;
+            opacity:0;
+            transition:width .15s ease,opacity .35s ease .15s;
+        }
+
+        @media(max-width:575.98px){
+            .portal-navbar-brand{min-height:46px}
+            .portal-navbar-logo{height:36px;max-width:145px}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            #portalPageLoadProgress{transition:none}
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+<div
+    id="portalPageLoadProgress"
+    role="progressbar"
+    aria-label="Page loading"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+></div>
+
+<script>
+(() => {
+    'use strict';
+
+    const bar = document.getElementById('portalPageLoadProgress');
+    if (!bar) return;
+
+    let progress = 4;
+    let finished = false;
+    let progressTimer = null;
+
+    const setProgress = (value) => {
+        progress = Math.max(progress, Math.min(95, value));
+        bar.style.width = progress + '%';
+        bar.setAttribute('aria-valuenow', String(Math.round(progress)));
+    };
+
+    const revealTimer = window.setTimeout(() => {
+        if (finished) return;
+
+        bar.classList.add('is-visible');
+        setProgress(18);
+
+        progressTimer = window.setInterval(() => {
+            if (finished) return;
+
+            if (progress < 55) {
+                setProgress(progress + 8);
+            } else if (progress < 78) {
+                setProgress(progress + 4);
+            } else if (progress < 92) {
+                setProgress(progress + 1.5);
+            }
+        }, 450);
+    }, 400);
+
+    const reportSlowLoad = () => {
+        const navigation = performance.getEntriesByType('navigation')[0];
+
+        const duration = navigation
+            ? navigation.duration
+            : performance.now();
+
+        const ttfb = navigation
+            ? navigation.responseStart
+            : 0;
+
+        const domContentLoaded = navigation
+            ? navigation.domContentLoadedEventEnd
+            : 0;
+
+        if (duration < 2500 && ttfb < 1500) {
+            return;
+        }
+
+        const payload = JSON.stringify({
+            path: window.location.pathname,
+            duration_ms: Math.round(duration),
+            ttfb_ms: Math.round(ttfb),
+            dom_content_loaded_ms: Math.round(domContentLoaded),
+            transfer_size: navigation
+                ? Number(navigation.transferSize || 0)
+                : 0,
+            encoded_body_size: navigation
+                ? Number(navigation.encodedBodySize || 0)
+                : 0,
+        });
+
+        try {
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(
+                    'api/performance/slow_page_log.php',
+                    new Blob([payload], {type:'application/json'})
+                );
+                return;
+            }
+        } catch (_) {}
+
+        fetch(
+            'api/performance/slow_page_log.php',
+            {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:payload,
+                keepalive:true,
+                credentials:'same-origin'
+            }
+        ).catch(() => {});
+    };
+
+    window.addEventListener(
+        'load',
+        () => {
+            finished = true;
+            window.clearTimeout(revealTimer);
+
+            if (progressTimer) {
+                window.clearInterval(progressTimer);
+            }
+
+            setProgress(100);
+            bar.classList.add('is-complete');
+
+            window.setTimeout(() => {
+                bar.style.display = 'none';
+            }, 600);
+
+            window.setTimeout(reportSlowLoad, 0);
+        },
+        {once:true}
+    );
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            finished = true;
+            bar.classList.add('is-complete');
+        }
+    });
+})();
+</script>
+<nav class="navbar navbar-expand-xl navbar-dark bg-primary shadow-sm sticky-top">
+<div class="container">
+    <a class="navbar-brand portal-navbar-brand" href="index" aria-label="Malaysia School Esports Portal home">
+        <img src="assets/images/logo.svg" alt="Metadata Berhad" class="portal-navbar-logo" width="180" height="44">
+        <span class="visually-hidden">Malaysia School Esports Portal</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-xl-center">
+            <li class="nav-item"><a class="nav-link " href="index">Home</a></li>
+
+                            <!-- Public/guest menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown">Programme</a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="about-programme"><i class="bi bi-info-circle me-2"></i>About Programme</a></li>
+                        <li><a class="dropdown-item" href="events-competitions"><i class="bi bi-calendar-event me-2"></i>Events &amp; Competitions</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="register_school"><i class="bi bi-building-add me-2"></i>Register School</a></li>
+                        <li><a class="dropdown-item" href="register_student"><i class="bi bi-person-plus me-2"></i>Register Student</a></li>
+                        <li><a class="dropdown-item" href="register_teacher"><i class="bi bi-person-badge me-2"></i>Register Teacher</a></li>
+                    </ul>
+                </li>
+            
+            
+                            <li class="nav-item ms-xl-2"><a class="nav-link px-2 " href="login" title="Login" aria-label="Login"><i class="bi bi-person-circle fs-5"></i><span class="visually-hidden">Login</span></a></li>
+                    </ul>
+    </div>
+</div>
+</nav>
+
+<main class="container py-4 flex-grow-1">
+<div class="row justify-content-center">
+<div class="col-xl-8">
+<div class="card content-card">
+<div class="card-body p-4 p-md-5">
+<h1 class="h3 mb-1">Parent / Guardian Registration</h1>
+<p class="text-secondary mb-4">The same NRIC / Passport may also register separately as a Student or Teacher. Roles are independent.</p>
+
+
+<form method="post" class="row g-3 registration-uppercase" id="parentRegistrationForm">
+<input type="hidden" name="csrf_token" value="4e6c42b0a69d987a58889fa3b9027256b3042043c5a2aed7c4569cf1b084f19e">
+
+<div class="col-md-8">
+<label class="form-label required">Full Name</label>
+<input class="form-control" name="full_name" value="" required>
+</div>
+
+<div class="col-md-4">
+<label class="form-label required">NRIC / Passport</label>
+<input class="form-control" id="parentIdentityNumber" name="identity_number"
+       data-registration-identity="1" data-identity-role="parent" data-status-target="parentIdentityStatus"
+       value="" required>
+<div class="form-text" id="parentIdentityStatus">CHECKS ONLY THE PARENT ROLE. OTHER ROLES DO NOT BLOCK THIS REGISTRATION.</div>
+</div>
+
+<div class="col-md-6">
+<label class="form-label required">Email</label>
+<input type="email" class="form-control" id="parentEmail" name="email" value="" required>
+</div>
+
+<div class="col-md-6">
+<label class="form-label required">Mobile Number</label>
+<div class="input-group">
+<input class="form-control" id="parentPhone" name="phone" value="" inputmode="tel" placeholder="60123456789" required>
+<button class="btn btn-outline-primary" type="button" id="sendParentCode"><i class="bi bi-chat-dots me-1"></i>Send Code</button>
+</div>
+<div class="form-text" id="parentCodeStatus">PHONE VERIFICATION IS SKIPPED BY DEFAULT.</div>
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Verification Code</label>
+<input class="form-control" id="parentSmsCode" name="sms_code" inputmode="numeric" maxlength="6" placeholder="6-DIGIT CODE" disabled>
+</div>
+
+<div class="col-md-6 d-flex align-items-end">
+<div class="form-check mb-2">
+<input class="form-check-input" type="checkbox" value="1" name="skip_phone_verification" id="skipPhoneVerification" checked>
+<label class="form-check-label fw-semibold" for="skipPhoneVerification">SKIP PHONE NUMBER VERIFICATION</label>
+<div class="form-text">CHECKED BY DEFAULT. UNCHECK TO VERIFY NOW.</div>
+</div>
+</div>
+
+<div class="col-12">
+<button class="btn btn-primary" type="submit"><i class="bi bi-person-plus me-2"></i>Register Parent / Guardian</button>
+<a class="btn btn-outline-secondary" href="register.php">Other Roles</a>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+
+<script src="assets/js/registration_common.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const skip=document.getElementById('skipPhoneVerification');
+    const send=document.getElementById('sendParentCode');
+    const code=document.getElementById('parentSmsCode');
+    const phone=document.getElementById('parentPhone');
+    const email=document.getElementById('parentEmail');
+    const name=document.querySelector('input[name="full_name"]');
+    const status=document.getElementById('parentCodeStatus');
+    const csrf=document.querySelector('input[name="csrf_token"]');
+
+    const applyMode=()=>{
+        const bypass=Boolean(skip?.checked) || false;
+        if(send) send.disabled=bypass;
+        if(code){code.disabled=bypass;code.required=!bypass;if(bypass)code.value='';}
+        if(status){
+            status.textContent=bypass
+                ? 'PHONE VERIFICATION WILL BE SKIPPED. YOU CAN VERIFY LATER.'
+                : 'PHONE VERIFICATION ENABLED. REQUEST A 6-DIGIT CODE.';
+            status.className=bypass?'form-text text-warning':'form-text text-secondary';
+        }
+    };
+    skip?.addEventListener('change',applyMode);
+    applyMode();
+
+    send?.addEventListener('click', async()=>{
+        try{
+            const body=new URLSearchParams({
+                action:'send_parent_sms_code',
+                phone:phone?.value||'',
+                email:email?.value||'',
+                full_name:name?.value||'',
+                csrf_token:csrf?.value||''
+            });
+            send.disabled=true;
+            status.textContent='SENDING VERIFICATION CODE...';
+            const response=await fetch('register_parent.php',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8','Accept':'application/json'},body:body.toString(),cache:'no-store'});
+            const data=await response.json();
+            if(!response.ok||!data.success)throw new Error(data.message||'UNABLE TO SEND CODE.');
+            code.disabled=false;code.required=true;code.focus();
+            status.textContent=String(data.message||'CODE SENT.').toUpperCase();
+            status.className='form-text text-success';
+        }catch(error){
+            status.textContent=String(error.message||'UNABLE TO SEND CODE.').toUpperCase();
+            status.className='form-text text-danger';
+        }finally{
+            if(!skip?.checked)send.disabled=false;
+        }
+    });
+});
+</script>
+</main>
+<footer class="border-top bg-white py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-secondary small">
+        <span>&copy; 2026 Metadata Berhad 1573083-A</span>
+        <span>Contact Support: 09-5818322 Email: cs@metadata.technology</span>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

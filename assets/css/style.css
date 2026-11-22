@@ -1,0 +1,142 @@
+:root {
+    --portal-radius: 1rem;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #0d6efd 0%, #4f46e5 100%);
+    border-radius: 1.25rem;
+    color: #fff;
+}
+
+.action-card,
+.stat-card,
+.content-card {
+    border: 0;
+    border-radius: var(--portal-radius);
+    box-shadow: 0 0.35rem 1.25rem rgba(15, 23, 42, 0.08);
+}
+
+.action-card {
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.action-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 0.75rem 1.5rem rgba(15, 23, 42, 0.12);
+}
+
+.icon-box {
+    width: 3rem;
+    height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .8rem;
+    font-size: 1.35rem;
+}
+
+.table > :not(caption) > * > * {
+    vertical-align: middle;
+}
+
+.required::after {
+    content: ' *';
+    color: #dc3545;
+}
+
+@media print {
+    .navbar, footer, .no-print, .alert {
+        display: none !important;
+    }
+    main.container {
+        max-width: 100%;
+        padding: 0 !important;
+    }
+    .content-card, .stat-card {
+        box-shadow: none;
+        border: 1px solid #dee2e6;
+    }
+}
+
+.reward-tier {
+    border-left: .3rem solid #0d6efd;
+    padding-left: 1rem;
+}
+
+.reward-card {
+    overflow: hidden;
+}
+
+.success-icon,
+.cancel-icon {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+.success-icon {
+    background: #d1e7dd;
+    color: #146c43;
+}
+
+.cancel-icon {
+    background: #f8d7da;
+    color: #b02a37;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+main.flex-grow-1 {
+    width: 100%;
+}
+
+.attendance-progress {
+    height: .65rem;
+}
+
+.qr-card {
+    max-width: 460px;
+    margin-inline: auto;
+}
+
+#qr-code canvas,
+#qr-code img {
+    max-width: 100%;
+    height: auto !important;
+}
+
+#reader {
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--portal-radius);
+}
+
+.scanner-result {
+    min-height: 8rem;
+}
+
+.module-card {
+    border-left: .3rem solid #0d6efd;
+}
+
+.score-input {
+    min-width: 5.5rem;
+}
+
+@media print {
+    .qr-print-card {
+        border: 1px solid #212529 !important;
+        box-shadow: none !important;
+    }
+}

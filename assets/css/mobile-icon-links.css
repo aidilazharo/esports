@@ -1,0 +1,171 @@
+/*
+ * Mobile-only icon buttons for public/portal navigation and action links.
+ * The script progressively enhances existing links without changing hrefs,
+ * target, methods, desktop labels, or inline content links.
+ */
+/* Generated icons are mobile-only; the original desktop layout is untouched. */
+.mobile-only-icon { display: none !important; }
+
+@media (max-width: 767.98px) {
+    a.mobile-icon-link {
+        position: relative;
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        width: 44px;
+        min-width: 44px;
+        max-width: 44px;
+        height: 44px;
+        min-height: 44px;
+        padding: 0.55rem !important;
+        line-height: 1 !important;
+        flex: 0 0 44px !important;
+        text-align: center;
+        white-space: nowrap;
+        border-radius: 0.65rem;
+    }
+
+    a.mobile-icon-link .mobile-icon-label,
+    a.mobile-icon-link .mobile-icon-decoration {
+        display: none !important;
+    }
+
+    a.mobile-icon-link > .bi,
+    a.mobile-icon-link > .mobile-only-icon {
+        display: inline-block !important;
+        font-size: 1.25rem;
+        line-height: 1;
+        margin: 0 !important;
+    }
+
+    a.mobile-icon-link .bi.me-1,
+    a.mobile-icon-link .bi.me-2,
+    a.mobile-icon-link .bi.ms-1,
+    a.mobile-icon-link .bi.ms-2 {
+        margin: 0 !important;
+    }
+
+    /* Mobile navigation: compact, keyboard-focusable, fingertip-size links. */
+    #mainNav .navbar-nav {
+        position: relative;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        padding: 0.5rem 0;
+    }
+
+    #mainNav .nav-item {
+        margin: 0 !important;
+    }
+
+    #mainNav a.mobile-icon-link {
+        border: 1px solid rgba(255,255,255,0.23);
+        color: #fff;
+    }
+
+    #mainNav a.mobile-icon-link:hover,
+    #mainNav a.mobile-icon-link:focus-visible,
+    #mainNav a.mobile-icon-link.active {
+        background: rgba(255,255,255,0.2);
+    }
+
+    #mainNav .nav-item.dropdown {
+        position: static;
+    }
+
+    /* The dropdown needs the whole mobile navigation width, not only the
+       width of its 44px toggle icon. Keep it above the content. */
+    #mainNav .dropdown-menu.show {
+        display: flex;
+        position: absolute !important;
+        inset: auto 0 auto 0 !important;
+        top: calc(100% + .2rem) !important;
+        transform: none !important;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.4rem;
+        width: 100%;
+        padding: 0.65rem;
+        margin: 0;
+        border-radius: 0.7rem;
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+        z-index: 1050;
+    }
+
+    #mainNav a.mobile-icon-link.dropdown-toggle::after {
+        display: none !important;
+    }
+
+    #mainNav .dropdown-menu li {
+        display: flex;
+    }
+
+    #mainNav .dropdown-menu .dropdown-divider {
+        display: none;
+    }
+
+    #mainNav .dropdown-menu a.mobile-icon-link {
+        color: var(--bs-body-color);
+        border: 1px solid var(--bs-border-color);
+    }
+
+    #mainNav .dropdown-menu a.mobile-icon-link:hover,
+    #mainNav .dropdown-menu a.mobile-icon-link:focus-visible {
+        background: var(--bs-primary-bg-subtle);
+        color: var(--bs-primary-text-emphasis);
+    }
+
+    /* Logged-in role portals: an icon-toolbar replaces the tall sidebar. */
+    .portal-sidebar, .jpn-sidebar {
+        min-height: auto !important;
+        padding: 0.55rem !important;
+    }
+
+    .portal-sidebar .nav,
+    .jpn-sidebar .nav {
+        flex-direction: row !important;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.4rem !important;
+    }
+
+    .portal-sidebar a.mobile-icon-link,
+    .jpn-sidebar a.mobile-icon-link {
+        color: var(--bs-body-color);
+        border: 1px solid var(--bs-border-color);
+    }
+
+    .portal-sidebar a.mobile-icon-link.active,
+    .jpn-sidebar a.mobile-icon-link.active {
+        color: #fff;
+    }
+
+    .portal-sidebar a.mobile-icon-link > i,
+    .jpn-sidebar a.mobile-icon-link > i {
+        width: auto !important;
+    }
+
+    /* Brand titles should not displace Logout on small screens. */
+    .portal-role-navbar .navbar-brand,
+    .jpn-role-navbar .navbar-brand {
+        max-width: calc(100vw - 95px);
+        font-size: 0.86rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .portal-role-navbar .container-fluid,
+    .jpn-role-navbar .container-fluid {
+        flex-wrap: nowrap;
+        gap: 0.3rem;
+    }
+
+    a.mobile-icon-link:focus-visible {
+        outline: 3px solid #ffca2c;
+        outline-offset: 2px;
+    }
+}

@@ -1,0 +1,110 @@
+/* Primary navigation in the top header, secondary navigation at the bottom.
+   Desktop layouts and links remain unchanged. */
+@media (min-width: 768px) {
+  .mobile-top-nav, .mobile-bottom-nav { display: none !important; }
+}
+@media (max-width: 767.98px) {
+  :root { --mobile-nav-button: 43px; --mobile-footer-height: 63px; }
+  body {
+    padding-bottom: calc(var(--mobile-footer-height) + env(safe-area-inset-bottom, 0px));
+  }
+  /* Guests: prevent the old collapse/hamburger from taking any space. */
+  .navbar .navbar-toggler,
+  .navbar #mainNav { display: none !important; }
+  .navbar .container { flex-wrap: nowrap; gap: .15rem; min-width: 0; }
+  .navbar-brand.portal-navbar-brand { flex: 0 1 auto; min-width: 0; margin-right: auto; }
+  .navbar-brand.portal-navbar-brand img {
+    width: auto; height: 32px; max-width: 103px;
+  }
+  .mobile-top-nav {
+    display: flex; align-items: center; justify-content: flex-end;
+    flex: 0 0 auto; min-width: 0;
+  }
+  .mobile-nav-scroller {
+    display: flex; flex-wrap: nowrap; align-items: center;
+    gap: .25rem;
+  }
+  .mobile-top-nav .mobile-nav-scroller { justify-content: flex-end; }
+  .mobile-nav-link,
+  .mobile-nav-action {
+    position: relative;
+    display: inline-flex; justify-content: center; align-items: center;
+    flex: 0 0 var(--mobile-nav-button);
+    width: var(--mobile-nav-button); min-width: var(--mobile-nav-button);
+    height: 44px; min-height: 44px; padding: .4rem !important;
+    border-radius: .65rem; text-decoration: none; line-height: 1;
+    touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  }
+  .mobile-nav-link .bi,
+  .mobile-nav-action .bi { font-size: 1.35rem; line-height: 1; margin: 0 !important; }
+  .mobile-top-nav .mobile-nav-link {
+    border: 1px solid rgba(255,255,255,.15);
+    color: #fff;
+  }
+  .mobile-top-nav .mobile-nav-link:hover,
+  .mobile-top-nav .mobile-nav-link.active,
+  .mobile-top-nav .mobile-nav-link:focus-visible {
+    background: rgba(255,255,255,.2);
+    color: #fff;
+  }
+  .mobile-bottom-nav {
+    display: block; position: fixed; left: 0; right: 0; bottom: 0;
+    z-index: 1030; width: 100%;
+    padding: 7px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+    background: #fff; background: var(--bs-body-bg, #fff);
+    border-top: 1px solid var(--bs-border-color, #dee2e6);
+    box-shadow: 0 -.25rem .75rem rgba(15,23,42,.08);
+  }
+  .mobile-bottom-nav .mobile-nav-scroller {
+    width: 100%; justify-content: space-evenly;
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-bottom-nav .mobile-nav-link,
+  .mobile-bottom-nav .mobile-nav-action {
+    scroll-snap-align: start; color: #475569;
+    border: 1px solid transparent; background: transparent;
+  }
+  .mobile-bottom-nav .mobile-nav-link.active,
+  .mobile-bottom-nav .mobile-nav-link:hover,
+  .mobile-bottom-nav .mobile-nav-link:focus-visible,
+  .mobile-bottom-nav .mobile-nav-action:focus-visible {
+    background: var(--bs-primary-bg-subtle, #cfe2ff);
+    color: var(--bs-primary, #0d6efd);
+    border-color: var(--bs-primary-border-subtle, #9ec5fe);
+  }
+  .mobile-nav-link:focus-visible,
+  .mobile-nav-action:focus-visible {
+    outline: 3px solid #fbbf24; outline-offset: 2px;
+  }
+  /* Role menus migrate from the tall sidebar to the two fixed nav areas. */
+  .portal-sidebar, .jpn-sidebar { display: none !important; }
+  .portal-role-navbar, .jpn-role-navbar {
+    position: sticky; top: 0; z-index: 1020;
+  }
+  .portal-role-navbar .navbar-brand,
+  .jpn-role-navbar .navbar-brand {
+    flex: 1 1 auto; max-width: none; min-width: 0;
+    margin-right: .2rem; font-size: .83rem;
+  }
+  .portal-role-navbar .container-fluid,
+  .jpn-role-navbar .container-fluid { gap: .25rem; }
+  .mobile-nav-extra-form { margin: 0; display: inline-flex; }
+  .mobile-nav-action { font: inherit; cursor: pointer; }
+  .mobile-header-test-return { display: none !important; }
+  /* Bottom controls must not be covered by native mobile home indicators. */
+  footer:not(.mobile-navigation-footer) { scroll-margin-bottom: calc(80px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (max-width: 359.98px) {
+  :root { --mobile-nav-button: 40px; }
+  .mobile-top-nav .mobile-nav-scroller { gap: .1rem; }
+  .navbar-brand.portal-navbar-brand img { max-width: 92px; height: 29px; }
+  .portal-role-navbar .navbar-brand,
+  .jpn-role-navbar .navbar-brand { font-size: .75rem; }
+}
+@media print {
+  .mobile-top-nav, .mobile-bottom-nav { display: none !important; }
+  body { padding-bottom: 0 !important; }
+}

@@ -1,0 +1,982 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>School Esports Profile | Malaysia School Esports Portal</title>
+    <meta name="description" content="View a participating school profile, student participation, teacher team, esports achievements and programme progress.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="author" content="Metadata Berhad">
+    <meta name="language" content="English">
+    <meta name="geo.region" content="MY">
+    <meta name="theme-color" content="#0d6efd">
+
+    <link rel="canonical" href="https://esports.metadata.technology/school_profile.php?school_id=864">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_MY">
+    <meta property="og:site_name" content="Malaysia School Esports Portal">
+    <meta property="og:title" content="School Esports Profile | Malaysia School Esports Portal">
+    <meta property="og:description" content="View a participating school profile, student participation, teacher team, esports achievements and programme progress.">
+    <meta property="og:url" content="https://esports.metadata.technology/school_profile.php?school_id=864">
+    <meta property="og:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+    <meta property="og:image:alt" content="Malaysia School Esports Portal - STEM, TVET, AI and esports education programme in Malaysia">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="School Esports Profile | Malaysia School Esports Portal">
+    <meta name="twitter:description" content="View a participating school profile, student participation, teacher team, esports achievements and programme progress.">
+    <meta name="twitter:image" content="https://esports.metadata.technology/assets/images/logo.svg">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://esports.metadata.technology/#organization","name":"Malaysia School Esports Portal","url":"https://esports.metadata.technology/","logo":{"@type":"ImageObject","url":"https://esports.metadata.technology/assets/images/logo.svg"},"description":"Malaysia school programme for STEM, TVET, artificial intelligence (AI), simulation, digital innovation and esports education, connecting students, teachers and schools with future-ready learning opportunities.","areaServed":{"@type":"Country","name":"Malaysia"},"knowsAbout":["STEM education","TVET education","Artificial intelligence education","Simulation learning","Digital innovation","Esports education","School technology programmes"]}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://esports.metadata.technology/#website","url":"https://esports.metadata.technology/","name":"Malaysia School Esports Portal","publisher":{"@id":"https://esports.metadata.technology/#organization"},"inLanguage":"en-MY"}</script>
+
+            <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://esports.metadata.technology/"},{"@type":"ListItem","position":2,"name":"School Esports Profile","item":"https://esports.metadata.technology/school_profile.php?school_id=864"}]}</script>
+    
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/mobile-icon-links.css?v=2" rel="stylesheet">
+    <link href="assets/css/mobile-split-navigation.css?v=1" rel="stylesheet">
+
+    <style>
+        .portal-navbar-brand{display:inline-flex;align-items:center;min-height:52px;padding-top:.25rem;padding-bottom:.25rem}
+        .portal-navbar-logo{display:block;width:auto;height:44px;max-width:180px;object-fit:contain}
+        .navbar .dropdown-item.active,.navbar .dropdown-item:active{color:var(--bs-dropdown-link-active-color);background-color:var(--bs-dropdown-link-active-bg)}
+
+        #portalPageLoadProgress{
+            position:fixed;
+            top:0;
+            left:0;
+            width:0;
+            height:3px;
+            z-index:2000;
+            opacity:0;
+            pointer-events:none;
+            background:currentColor;
+            color:#ffc107;
+            box-shadow:0 0 8px rgba(255,193,7,.65);
+            transition:width .25s ease,opacity .2s ease;
+        }
+        #portalPageLoadProgress.is-visible{opacity:1}
+        #portalPageLoadProgress.is-complete{
+            width:100%!important;
+            opacity:0;
+            transition:width .15s ease,opacity .35s ease .15s;
+        }
+
+        @media(max-width:575.98px){
+            .portal-navbar-brand{min-height:46px}
+            .portal-navbar-logo{height:36px;max-width:145px}
+        }
+
+        @media(prefers-reduced-motion:reduce){
+            #portalPageLoadProgress{transition:none}
+        }
+    </style>
+</head>
+<body class="bg-light d-flex flex-column min-vh-100">
+<div
+    id="portalPageLoadProgress"
+    role="progressbar"
+    aria-label="Page loading"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+></div>
+
+<script>
+(() => {
+    'use strict';
+
+    const bar = document.getElementById('portalPageLoadProgress');
+    if (!bar) return;
+
+    let progress = 4;
+    let finished = false;
+    let progressTimer = null;
+
+    const setProgress = (value) => {
+        progress = Math.max(progress, Math.min(95, value));
+        bar.style.width = progress + '%';
+        bar.setAttribute('aria-valuenow', String(Math.round(progress)));
+    };
+
+    const revealTimer = window.setTimeout(() => {
+        if (finished) return;
+
+        bar.classList.add('is-visible');
+        setProgress(18);
+
+        progressTimer = window.setInterval(() => {
+            if (finished) return;
+
+            if (progress < 55) {
+                setProgress(progress + 8);
+            } else if (progress < 78) {
+                setProgress(progress + 4);
+            } else if (progress < 92) {
+                setProgress(progress + 1.5);
+            }
+        }, 450);
+    }, 400);
+
+    const reportSlowLoad = () => {
+        const navigation = performance.getEntriesByType('navigation')[0];
+
+        const duration = navigation
+            ? navigation.duration
+            : performance.now();
+
+        const ttfb = navigation
+            ? navigation.responseStart
+            : 0;
+
+        const domContentLoaded = navigation
+            ? navigation.domContentLoadedEventEnd
+            : 0;
+
+        if (duration < 2500 && ttfb < 1500) {
+            return;
+        }
+
+        const payload = JSON.stringify({
+            path: window.location.pathname,
+            duration_ms: Math.round(duration),
+            ttfb_ms: Math.round(ttfb),
+            dom_content_loaded_ms: Math.round(domContentLoaded),
+            transfer_size: navigation
+                ? Number(navigation.transferSize || 0)
+                : 0,
+            encoded_body_size: navigation
+                ? Number(navigation.encodedBodySize || 0)
+                : 0,
+        });
+
+        try {
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(
+                    'api/performance/slow_page_log.php',
+                    new Blob([payload], {type:'application/json'})
+                );
+                return;
+            }
+        } catch (_) {}
+
+        fetch(
+            'api/performance/slow_page_log.php',
+            {
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:payload,
+                keepalive:true,
+                credentials:'same-origin'
+            }
+        ).catch(() => {});
+    };
+
+    window.addEventListener(
+        'load',
+        () => {
+            finished = true;
+            window.clearTimeout(revealTimer);
+
+            if (progressTimer) {
+                window.clearInterval(progressTimer);
+            }
+
+            setProgress(100);
+            bar.classList.add('is-complete');
+
+            window.setTimeout(() => {
+                bar.style.display = 'none';
+            }, 600);
+
+            window.setTimeout(reportSlowLoad, 0);
+        },
+        {once:true}
+    );
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            finished = true;
+            bar.classList.add('is-complete');
+        }
+    });
+})();
+</script>
+<nav class="navbar navbar-expand-xl navbar-dark bg-primary shadow-sm sticky-top">
+<div class="container">
+    <a class="navbar-brand portal-navbar-brand" href="index" aria-label="Malaysia School Esports Portal home">
+        <img src="assets/images/logo.svg" alt="Metadata Berhad" class="portal-navbar-logo" width="180" height="44">
+        <span class="visually-hidden">Malaysia School Esports Portal</span>
+    </a>
+    <nav class="mobile-top-nav" aria-label="Primary mobile navigation"><div class="mobile-nav-scroller"><a class="mobile-nav-link" href="index" title="Home" aria-label="Home"><i class="bi bi-house-door" aria-hidden="true"></i><span class="visually-hidden">Home</span></a><a class="mobile-nav-link" href="about-programme" title="Programme" aria-label="Programme"><i class="bi bi-journal-richtext" aria-hidden="true"></i><span class="visually-hidden">Programme</span></a><a class="mobile-nav-link" href="events-competitions" title="Events &amp; Competitions" aria-label="Events &amp; Competitions"><i class="bi bi-calendar-event" aria-hidden="true"></i><span class="visually-hidden">Events &amp; Competitions</span></a><a class="mobile-nav-link" href="login" title="Login" aria-label="Login"><i class="bi bi-person-circle" aria-hidden="true"></i><span class="visually-hidden">Login</span></a></div></nav>    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-xl-center">
+            <li class="nav-item"><a class="nav-link " href="index">Home</a></li>
+
+            <!--
+                This header is only rendered for guests.
+                Authenticated users are redirected to their own role portal
+                before any navigation is output.
+            -->
+            <li class="nav-item dropdown">
+                <a
+                    class="nav-link dropdown-toggle "
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                >
+                    Programme
+                </a>
+
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="about-programme"
+                        >
+                            <i class="bi bi-info-circle me-2"></i>
+                            About Programme
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="events-competitions"
+                        >
+                            <i class="bi bi-calendar-event me-2"></i>
+                            Events &amp; Competitions
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="register_school"
+                        >
+                            <i class="bi bi-building-add me-2"></i>
+                            Register School
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="register_student"
+                        >
+                            <i class="bi bi-person-plus me-2"></i>
+                            Register Student
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item"
+                            href="register_teacher"
+                        >
+                            <i class="bi bi-person-badge me-2"></i>
+                            Register Teacher
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item "
+                            href="manuals"
+                        >
+                            <i class="bi bi-book me-2"></i>
+                            Manuals
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                            class="dropdown-item "
+                            href="contact"
+                        >
+                            <i class="bi bi-envelope me-2"></i>
+                            Contact Us
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item ms-xl-2">
+                <a
+                    class="nav-link px-2 "
+                    href="login"
+                    title="Login"
+                    aria-label="Login"
+                >
+                    <i class="bi bi-person-circle fs-5"></i>
+                    <span class="visually-hidden">Login</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</nav>
+
+<main class="container py-4 flex-grow-1">
+
+<link
+    rel="stylesheet"
+    href="https://cdn.datatables.net/1.13.11/css/dataTables.bootstrap5.min.css"
+>
+
+<style>
+.profile-page{max-width:1280px;margin:0 auto}
+.profile-stat-card,.profile-section-card{border:0;box-shadow:0 .125rem .5rem rgba(0,0,0,.06)}
+.profile-avatar{width:64px;height:64px;border-radius:16px;display:flex;align-items:center;justify-content:center;background:var(--bs-primary-bg-subtle);color:var(--bs-primary);font-size:1.8rem;overflow:hidden}
+.profile-school-logo{width:64px;height:64px;object-fit:contain;background:#fff;border:1px solid var(--bs-border-color);border-radius:16px;padding:6px}
+.profile-score{font-size:1.9rem;font-weight:700;line-height:1}
+.profile-head-card .card-body{padding:1.25rem 1.25rem}
+.profile-stats-row{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.75rem;margin-bottom:.9rem}
+.profile-stats-row > [class*="col-"]{padding:0;max-width:none;width:auto;flex:none}
+.profile-stat-card .card-body{padding:1rem 1.05rem}
+.profile-stat-card .h2{font-size:2rem;line-height:1.05;margin-bottom:0}
+.profile-stat-card .small{line-height:1.25}
+.profile-section-row{--bs-gutter-x:.9rem;--bs-gutter-y:.9rem}
+.school-profile-main-row{align-items:stretch}
+.school-profile-main-row > [class*="col-"]{display:flex}
+.school-profile-main-row .profile-section-card{width:100%}
+.school-side-stack{
+  display:flex;
+  flex-direction:column;
+  gap:.9rem;
+  width:100%;
+  min-height:100%;
+}
+.school-side-stack > .profile-section-card{
+  flex:1 1 0;
+  min-height:0;
+}
+.school-side-stack .dataTables_wrapper{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+.school-side-stack .dataTables_wrapper .dataTables_scroll,
+.school-side-stack .table-responsive{
+  flex:1 1 auto;
+}
+.school-side-stack .profile-section-card .table > :not(caption) > * > *{
+  padding:.58rem .65rem;
+  font-size:.86rem;
+}
+.school-side-stack .profile-section-card .table .ps-4{
+  padding-left:.8rem !important;
+}
+.school-side-stack .profile-section-card .table .pe-4{
+  padding-right:.8rem !important;
+}
+.school-side-stack .dataTables_wrapper > .row:first-child{
+  padding:.65rem .8rem .4rem;
+}
+.school-side-stack .dataTables_wrapper > .row:last-child{
+  padding:.5rem .8rem .65rem;
+}
+.school-side-stack .dataTables_wrapper .dataTables_filter input{
+  min-width:120px;
+  width:135px;
+}
+.profile-section-card .card-header,.profile-section-card .card-body.profile-padded{padding:1rem 1.1rem}
+.profile-section-card .card-header h2{margin-bottom:.15rem}
+.profile-section-card .table{margin-bottom:0}
+.profile-section-card .table thead th{white-space:nowrap}
+.profile-section-card .table > :not(caption) > * > *{padding:.72rem .9rem}
+.school-teachers-full .dataTables_wrapper > .row:first-child{
+  padding-top:.75rem;
+}
+.profile-section-card .table .ps-4{padding-left:1.15rem !important}
+.profile-section-card .table .pe-4{padding-right:1.15rem !important}
+
+/* DataTables spacing inside cards */
+.dataTables_wrapper > .row{
+  margin-left:0;
+  margin-right:0;
+}
+.dataTables_wrapper > .row:first-child{
+  padding:.85rem 1.1rem .55rem;
+  align-items:center;
+}
+.dataTables_wrapper > .row:last-child{
+  padding:.65rem 1.1rem .85rem;
+  align-items:center;
+}
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_length{
+  margin:0;
+}
+.dataTables_wrapper .dataTables_filter label{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:.5rem;
+  margin:0;
+}
+.dataTables_wrapper .dataTables_filter input{
+  min-width:190px;
+  margin-left:0 !important;
+}
+.dataTables_wrapper .dataTables_info{
+  padding-top:.35rem !important;
+  margin:0;
+}
+.dataTables_wrapper .dataTables_paginate{
+  padding-top:0 !important;
+  margin:0 !important;
+}
+.dataTables_wrapper .pagination{
+  margin:0;
+  justify-content:flex-end;
+}
+.dataTables_wrapper .page-link{
+  padding:.4rem .7rem;
+}
+@media (max-width:1199.98px){
+  .profile-stats-row{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media (max-width:991.98px){
+  .profile-stats-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .school-side-stack{min-height:auto}
+  .school-side-stack > .profile-section-card{flex:none}
+}
+@media (max-width:575.98px){
+  .profile-stats-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:767.98px){
+  .dataTables_wrapper > .row:first-child,
+  .dataTables_wrapper > .row:last-child{
+    padding:.7rem .85rem;
+  }
+  .dataTables_wrapper .dataTables_filter label{
+    justify-content:stretch;
+    flex-wrap:wrap;
+  }
+  .dataTables_wrapper .dataTables_filter input{
+    width:100%;
+    min-width:0;
+  }
+  .dataTables_wrapper .dataTables_info{
+    text-align:center;
+    margin-bottom:.5rem;
+  }
+  .dataTables_wrapper .pagination{
+    justify-content:center;
+  }
+}
+@media (max-width: 767.98px){
+  .profile-head-card .card-body{padding:1rem}
+  .profile-score{font-size:1.6rem}
+  .profile-stat-card .card-body{padding:.9rem}
+  .profile-section-card .card-header,.profile-section-card .card-body.profile-padded{padding:.9rem}
+}
+</style>
+
+<div class="profile-page">
+<div class="card border-0 shadow-sm mb-3 profile-head-card">
+    <div class="card-body p-4 p-lg-5">
+        <div class="d-flex flex-column flex-md-row align-items-md-center gap-4">
+                                        <img
+                    src="/uploads/schools/CBA9045/school-logo-20260827-092202-1e2f5c6f64.png"
+                    alt="SEKOLAH KEBANGSAAN BUKIT LADA logo"
+                    class="profile-school-logo"
+                    width="72"
+                    height="72"
+                >
+            
+            <div class="flex-grow-1">
+                <span class="badge text-bg-primary mb-2">
+                    CBA9045                </span>
+
+                <h1 class="h2 mb-1">
+                    SEKOLAH KEBANGSAAN BUKIT LADA                </h1>
+
+                <div class="text-secondary">
+                    Maran                                            · Pahang                                    </div>
+            </div>
+
+            <div class="text-md-end">
+                <div class="small text-secondary">School Ranking</div>
+                <div class="h3 mb-1">
+                    Not Ranked                </div>
+                <div class="fw-semibold text-primary">
+                    0 points
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <section class="mb-4 portal-video-gallery" aria-labelledby="school-videos-title">
+            <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mb-3">
+                <div>
+                    <div class="small text-uppercase fw-semibold text-primary mb-1">Videos</div>
+                    <h2 class="h3 mb-1" id="school-videos-title">School Videos</h2>
+                                    </div>
+            </div>
+            <div class="row g-3">
+                                                        <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm h-100 overflow-hidden">
+                            <div class="ratio ratio-16x9 bg-dark">
+                                <iframe
+                                    src="https://www.youtube-nocookie.com/embed/b4SFsdqMEVo"
+                                    title="FC 26 2v2 Team Victory Challenge"
+                                    loading="lazy"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                            <div class="card-body d-flex flex-column p-3">
+                                <div class="small text-secondary mb-1">Student submission</div>
+                                <h3 class="h6 fw-semibold mb-3">FC 26 2v2 Team Victory Challenge</h3>
+                                <a href="https://www.youtube.com/watch?v=b4SFsdqMEVo" target="_blank" rel="noopener noreferrer"
+                                   class="btn btn-sm btn-outline-danger mt-auto align-self-start"
+                                   aria-label="Watch FC 26 2v2 Team Victory Challenge on YouTube">
+                                    <i class="bi bi-youtube me-1" aria-hidden="true"></i>Watch on YouTube
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm h-100 overflow-hidden">
+                            <div class="ratio ratio-16x9 bg-dark">
+                                <iframe
+                                    src="https://www.youtube-nocookie.com/embed/UXHVRMrrk4c"
+                                    title="Esports Match Setup &amp; Recording"
+                                    loading="lazy"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                            <div class="card-body d-flex flex-column p-3">
+                                <div class="small text-secondary mb-1">Student submission</div>
+                                <h3 class="h6 fw-semibold mb-3">Esports Match Setup &amp; Recording</h3>
+                                <a href="https://www.youtube.com/watch?v=UXHVRMrrk4c" target="_blank" rel="noopener noreferrer"
+                                   class="btn btn-sm btn-outline-danger mt-auto align-self-start"
+                                   aria-label="Watch Esports Match Setup &amp; Recording on YouTube">
+                                    <i class="bi bi-youtube me-1" aria-hidden="true"></i>Watch on YouTube
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm h-100 overflow-hidden">
+                            <div class="ratio ratio-16x9 bg-dark">
+                                <iframe
+                                    src="https://www.youtube-nocookie.com/embed/v19SUzTooUE"
+                                    title="Match Review &amp; Sportsmanship"
+                                    loading="lazy"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                            <div class="card-body d-flex flex-column p-3">
+                                <div class="small text-secondary mb-1">Student submission</div>
+                                <h3 class="h6 fw-semibold mb-3">Match Review &amp; Sportsmanship</h3>
+                                <a href="https://www.youtube.com/watch?v=v19SUzTooUE" target="_blank" rel="noopener noreferrer"
+                                   class="btn btn-sm btn-outline-danger mt-auto align-self-start"
+                                   aria-label="Watch Match Review &amp; Sportsmanship on YouTube">
+                                    <i class="bi bi-youtube me-1" aria-hidden="true"></i>Watch on YouTube
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="card border-0 shadow-sm h-100 overflow-hidden">
+                            <div class="ratio ratio-16x9 bg-dark">
+                                <iframe
+                                    src="https://www.youtube-nocookie.com/embed/_7T61C7paLc"
+                                    title="FC 26 1v1 Victory Challenge"
+                                    loading="lazy"
+                                    referrerpolicy="strict-origin-when-cross-origin"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen
+                                ></iframe>
+                            </div>
+                            <div class="card-body d-flex flex-column p-3">
+                                <div class="small text-secondary mb-1">Student submission</div>
+                                <h3 class="h6 fw-semibold mb-3">FC 26 1v1 Victory Challenge</h3>
+                                <a href="https://www.youtube.com/watch?v=_7T61C7paLc" target="_blank" rel="noopener noreferrer"
+                                   class="btn btn-sm btn-outline-danger mt-auto align-self-start"
+                                   aria-label="Watch FC 26 1v1 Victory Challenge on YouTube">
+                                    <i class="bi bi-youtube me-1" aria-hidden="true"></i>Watch on YouTube
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                                            </div>
+                    </section>
+        
+<div class="profile-stats-row">
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Students</div>
+                <div class="h2 mb-0">0</div>
+                <div class="small text-success">0 active</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Teachers</div>
+                <div class="h2 mb-0">1</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Modules Completed</div>
+                <div class="h2 mb-0">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Tournament Entries</div>
+                <div class="h2 mb-0">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Attendance</div>
+                <div class="h2 mb-0">
+                    0m                </div>
+                <div class="small text-secondary">
+                    0 sessions
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Certificates</div>
+                <div class="h2 mb-0">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-xl-3">
+        <div class="card profile-stat-card h-100">
+            <div class="card-body profile-padded">
+                <div class="small text-secondary">Tournament Wins</div>
+                <div class="h2 mb-0">
+                    0                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row profile-section-row school-profile-main-row">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-sm h-100 profile-section-card">
+            <div class="card-header bg-white">
+                <h2 class="h5 mb-1"><i class="bi bi-people me-2"></i>Registered Students</h2>
+                <div class="small text-secondary">
+                    All registered students with membership status, ranking points and profile access.
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table
+                        id="schoolStudentsTable"
+                        class="table table-hover align-middle w-100"
+                    >
+                        <thead>
+                            <tr>
+                                <th class="ps-4">Student</th>
+                                <th>Class</th>
+                                <th>Status</th>
+                                <th>Rank</th>
+                                <th class="text-end">Points</th>
+                                <th class="text-end pe-4">Profile</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                                </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="school-side-stack">
+            <div class="card border-0 shadow-sm profile-section-card">
+                <div class="card-header bg-white">
+                    <h2 class="h5 mb-1">Tournaments</h2>
+                    <div class="small text-secondary">
+                        Tournaments joined by students from this school.
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table
+                            id="schoolTournamentsTable"
+                            class="table table-hover align-middle w-100"
+                        >
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Student</th>
+                                    <th>Tournament</th>
+                                    <th>Result</th>
+                                    <th class="text-end pe-4">Pts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm profile-section-card">
+                <div class="card-header bg-white">
+                    <h2 class="h5 mb-1">Certificates</h2>
+                    <div class="small text-secondary">
+                        Certificates obtained by students from this school.
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table
+                            id="schoolCertificatesTable"
+                            class="table table-hover align-middle w-100"
+                        >
+                            <thead>
+                                <tr>
+                                    <th class="ps-4">Student</th>
+                                    <th>Certificate</th>
+                                    <th class="pe-4">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row profile-section-row mt-3">
+    <div class="col-12">
+        <div class="card border-0 shadow-sm h-100 profile-section-card school-teachers-full">
+            <div class="card-header bg-white">
+                <h2 class="h5 mb-1">
+                    <i class="bi bi-person-badge me-2"></i>
+                    School Team Teachers
+                </h2>
+
+                <div class="small text-secondary">
+                    Registered teachers for this school.
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table
+                        id="schoolTeachersTable"
+                        class="table table-hover align-middle w-100"
+                    >
+                        <thead>
+                            <tr>
+                                <th class="ps-4">Teacher</th>
+                                <th>Position</th>
+                                <th>Status</th>
+                                <th>Registered</th>
+                                <th class="text-end pe-4">Profile</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                                                    
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-semibold">
+                                        MOHD FAIQ BIN MOHD ALADIN                                    </div>
+
+                                                                            <div class="small text-secondary">
+                                            foo_faiq@yahoo.com                                        </div>
+                                                                    </td>
+
+                                <td>
+                                    TEACHER                                </td>
+
+                                <td data-order="1">
+                                    <span
+                                        class="badge text-bg-success"
+                                    >
+                                        Active                                    </span>
+                                </td>
+
+                                <td
+                                    data-order="1787765089"
+                                >
+                                    27 Aug 2026                                </td>
+
+                                <td class="text-end pe-4">
+                                    <a
+                                        class="btn btn-sm btn-outline-primary"
+                                        href="teacher_profile.php?teacher_id=10"
+                                        title="Teacher Profile"
+                                        aria-label="Teacher Profile"
+                                    >
+                                        <i class="bi bi-person-vcard"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                                                </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.11/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.11/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (
+        !window.jQuery
+        || !jQuery.fn
+        || !jQuery.fn.DataTable
+    ) {
+        return;
+    }
+
+    jQuery('#schoolStudentsTable').DataTable({
+        pageLength: 5,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        // Pending Payment (data-order 0) is shown first by default.
+        order: [[2, 'asc'], [4, 'desc'], [0, 'asc']],
+        columnDefs: [
+            {
+                orderable: false,
+                searchable: false,
+                targets: [5]
+            }
+        ],
+        language: {
+            search: 'Search:',
+            emptyTable: 'No students registered.'
+        }
+    });
+
+    jQuery('#schoolTournamentsTable').DataTable({
+        pageLength: 5,
+        lengthChange: false,
+        pagingType: 'simple',
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        order: [[3, 'desc']],
+        language: {
+            search: 'Search:',
+            emptyTable: 'No tournament participation recorded.'
+        }
+    });
+
+    jQuery('#schoolCertificatesTable').DataTable({
+        pageLength: 5,
+        lengthChange: false,
+        pagingType: 'simple',
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        order: [[2, 'desc']],
+        language: {
+            search: 'Search:',
+            emptyTable: 'No certificates obtained yet.'
+        }
+    });
+
+    jQuery('#schoolTeachersTable').DataTable({
+        pageLength: 5,
+        lengthChange: false,
+        searching: true,
+        ordering: true,
+        info: true,
+        autoWidth: false,
+        // Status first: Pending Verification, Active, Expired.
+        // Within each status, Teacher name A-Z.
+        order: [[2, 'asc'], [0, 'asc']],
+        columnDefs: [
+            {
+                orderable: false,
+                searchable: false,
+                targets: [4]
+            }
+        ],
+        language: {
+            search: 'Search:',
+            emptyTable: 'No teachers registered.'
+        }
+    });
+});
+</script>
+
+</div>
+
+</main>
+<footer class="border-top bg-white py-4 mt-auto">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2 text-secondary small">
+        <span>&copy; 2026 Metadata Berhad 1573083-A</span>
+        <span>Contact Support: 09-5818322 Email: cs@metadata.technology</span>
+    </div>
+    <nav class="mobile-bottom-nav" aria-label="Secondary mobile navigation"><div class="mobile-nav-scroller"><a class="mobile-nav-link" href="register_school" title="Register School" aria-label="Register School"><i class="bi bi-building-add" aria-hidden="true"></i><span class="visually-hidden">Register School</span></a><a class="mobile-nav-link" href="register_student" title="Register Student" aria-label="Register Student"><i class="bi bi-person-plus" aria-hidden="true"></i><span class="visually-hidden">Register Student</span></a><a class="mobile-nav-link" href="register_teacher" title="Register Teacher" aria-label="Register Teacher"><i class="bi bi-person-badge" aria-hidden="true"></i><span class="visually-hidden">Register Teacher</span></a><a class="mobile-nav-link" href="manuals" title="Manuals" aria-label="Manuals"><i class="bi bi-book" aria-hidden="true"></i><span class="visually-hidden">Manuals</span></a><a class="mobile-nav-link" href="contact" title="Contact Us" aria-label="Contact Us"><i class="bi bi-envelope" aria-hidden="true"></i><span class="visually-hidden">Contact Us</span></a></div></nav></footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/mobile-icon-links.js?v=2"></script>
+</body>
+</html>
