@@ -1,5 +1,12 @@
 # School Esports project instructions
 
+## Git development and release workflow — mandatory
+- For this repository, **never create a new development branch or pull request** for requested code changes.
+- Make changes and commit **directly to the existing `main` branch**. Push to `main` after running the relevant available tests.
+- Keep automatic website patch-version increments on `main` in place after every code update.
+- If repository branch protection or permissions block a direct commit, report the blocker instead of silently creating a branch or pull request.
+- This rule applies to all future School Esports code changes unless the project owner explicitly changes it.
+
 ## Authoritative source
 - Main repository: https://github.com/aidilazharo/esports
 - This is the PHP/MySQL school esports portal source repository.
@@ -11,7 +18,7 @@
 - Every future code update pushed to `main` automatically increments the patch number using `.github/workflows/website-version.yml`. Examples: `v0.0.0` → `v0.0.1` → `v0.0.2`.
 - The version bump creates a separate `main` commit with `[skip-version]` to prevent recursion. Also use `[skip-version]` for initial version setup.
 - Never manually replace the version with a hard-coded footer value.
-- Ensure GitHub Actions permissions allow `contents: write`; if direct push protection disallows bots, adjust repository settings or change to a PR-based workflow.
+- Ensure GitHub Actions permissions allow `contents: write`; if direct push protection disallows bots, report the blocker and seek a permitted direct-to-main solution; do not create a PR as a workaround.
 - Hostinger Git auto-deployment can deploy pushes to `main` automatically. Since a regular code push is followed by an automated VERSION commit, Hostinger may deploy twice per code update. Verify the second deployment finishes.
 - Retain local-only `html/`, `download/`, `uploads/`. Git ignoring these paths does NOT guarantee Hostinger will preserve them during full-directory redeployments: store persistent data outside the deployment destination or use a deploy process that excludes these directories.
 
@@ -29,7 +36,7 @@
 - Changing an already verified email requires a new email verification. Never preserve `email_verified_at` for a different email address.
 - Environment configuration must require `BREVO_API_KEY`, `BREVO_SENDER_EMAIL`, and `APP_URL`, not `BREVO_SMS_SENDER`.
 - Keep existing login email OTP and PSN TOTP features, which are distinct from SMS.
-- Run PHP lint, JavaScript syntax checks and `tests/email_verification_test.php` before merging into main; continue normal website version increments.
+- Run PHP lint, JavaScript syntax checks and `tests/email_verification_test.php` before committing directly to main; continue normal website version increments.
 
 ## Public URL and routing stability
 - Public navigation must always point directly to real PHP filenames, e.g. `/register_student.php` (never depend on extensionless routes).
