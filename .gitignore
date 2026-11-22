@@ -1,5 +1,26 @@
-# Locally generated/static site snapshots and deployment-provided assets.
-# Never commit files stored in these runtime directories.
+# Runtime-only directories — never commit their contents.
 /html/
 /download/
 /uploads/
+
+# Local environment configuration, credentials, and secrets.
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Installed dependencies and local test data.
+/vendor/
+/node_modules/
+/.phpunit.cache/
+
+# Operating-system, editor, and generated artifacts.
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.log
+*.tmp
+*.bak
+*.old
+*.orig
