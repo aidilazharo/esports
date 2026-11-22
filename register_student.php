@@ -375,8 +375,8 @@ require 'includes/header.php';
                                 <div class="col-12 d-none" id="guardianPhoneVerifiedNotice">
                                     <div class="alert alert-success py-2 px-3 mb-0">
                                         <i class="bi bi-telephone-check me-2"></i>
-                                        THE EXISTING PARENT / GUARDIAN MOBILE NUMBER IS
-                                        ALREADY VERIFIED. THE PHONE FIELD IS HIDDEN.
+                                        AN EXISTING CONTACT NUMBER IS ON FILE FOR THIS PARENT / GUARDIAN.
+                                        THE PHONE FIELD IS NOT REQUIRED AGAIN.
                                     </div>
                                 </div>
 
