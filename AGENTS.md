@@ -30,3 +30,10 @@
 - Environment configuration must require `BREVO_API_KEY`, `BREVO_SENDER_EMAIL`, and `APP_URL`, not `BREVO_SMS_SENDER`.
 - Keep existing login email OTP and PSN TOTP features, which are distinct from SMS.
 - Run PHP lint, JavaScript syntax checks and `tests/email_verification_test.php` before merging into main; continue normal website version increments.
+
+## Public URL and routing stability
+- Public navigation must always point directly to real PHP filenames, e.g. `/register_student.php` (never depend on extensionless routes).
+- `.htaccess` retains Apache rewrite compatibility for older clean URLs such as `/register_student` and blocks direct access to `scripts/`, `database/`, and executable files under `uploads/`.
+- When changing pages or navigation, run `php tests/public_navigation_test.php`; check real target files exist and keep desktop/mobile links aligned.
+- If a page is removed, change its links to an existing page/section instead of leaving a 404.
+- The generated `html/` cache is invalidated after deployment as configured. Live PHP and generated HTML must both use working root-relative menu links.

@@ -370,7 +370,7 @@ require 'includes/header.php';
                                 Register School
                             </button>
 
-                            <a class="btn btn-outline-secondary" href="schools">Cancel</a>
+                            <a class="btn btn-outline-secondary" href="/about-programme.php#programme-schools">Cancel</a>
                         </div>
                     </fieldset>
                 </form>
