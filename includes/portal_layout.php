@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/mobile_navigation.php';
+require_once __DIR__ . '/portal_language.php';
 function portalLayoutMenu(string $role): array
 {
-    return match ($role) {
+    $menu = match ($role) {
         'admin' => [
             'dashboard'=>['Dashboard','/admin/','bi-speedometer2'],
             'test_roles'=>['Test Role Views','/admin/test_roles.php','bi-eye'],
@@ -59,16 +60,22 @@ function portalLayoutMenu(string $role): array
         ],
         default => [],
     };
+    foreach ($menu as &$item) {
+        $item[0] = portalT((string) $item[0]);
+    }
+    unset($item);
+    return $menu;
 }
 
 function portalLayoutTitleForRole(string $role): string
 {
-    return match ($role) {'admin'=>'Administration','school'=>'School Portal','teacher'=>'Teacher Portal','parent'=>'Parent Portal',default=>'Portal'};
+    return portalT(match ($role) {'admin'=>'Administration','school'=>'School Portal','teacher'=>'Teacher Portal','parent'=>'Parent Portal',default=>'Portal'});
 }
 
 function portalPageStart(string $role, string $activeKey, string $title): void
 {
     $menu = portalLayoutMenu($role);
+    $title = portalT($title);
     $portalTitle = portalLayoutTitleForRole($role);
     $displayName = match ($role) {
         'school'=>(string)($_SESSION['school_name'] ?? $_SESSION['school_code'] ?? 'School'),
@@ -77,9 +84,10 @@ function portalPageStart(string $role, string $activeKey, string $title): void
         default=>'Administrator'
     };
     $e = static fn($v) => htmlspecialchars((string)$v, ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8');
-    echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
+    echo '<!doctype html><html lang="'.$e(portalLanguageHtmlTag()).'"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">';
     echo '<title>'.$e($title).' | '.$e($portalTitle).'</title>';
     echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"><link href="/assets/css/mobile-icon-links.css?v=2" rel="stylesheet"><link href="/assets/css/mobile-split-navigation.css?v=2" rel="stylesheet">';
+    echo portalLanguageAssets();
     echo '<style>
         body{background:#f5f7fb;color:#1f2937}
         .portal-sidebar{min-height:calc(100vh - 58px)}
@@ -100,22 +108,23 @@ function portalPageStart(string $role, string $activeKey, string $title): void
     };
     [$mobileTopItems, $mobileBottomItems] = mobileNavigationRoleItems($menu, $mobilePrimaryKeys, $activeKey);
     // Logout is a secondary action on mobile, not squeezed into the header.
-    $mobileBottomItems[] = ['Logout', '/login.php?logout=1', 'bi-box-arrow-right', false];
+    $mobileBottomItems[] = [portalT('Logout'), '/login.php?logout=1', 'bi-box-arrow-right', false];
     $isAdminTest = portalAuthIsAdminTestMode($role);
     $testLabel = (string)($_SESSION['admin_test_label'] ?? '');
     echo '<nav class="navbar navbar-dark bg-primary portal-role-navbar"><div class="container-fluid"><a class="navbar-brand fw-semibold" href="'.portalAuthDashboardForRole($role).'">'
         .'<span class="d-none d-md-inline">Metadata eSports · '.$e($portalTitle).'</span>'
         .'<span class="d-inline d-md-none">Metadata</span></a>'
         .mobileNavigationBar($mobileTopItems, 'Primary role navigation', 'top')
+        .portalLanguageSelector()
         .'<div class="d-flex align-items-center gap-2 text-white"><span class="small d-none d-md-inline">'.$e($displayName).'</span>';
     if ($isAdminTest) {
-        echo '<form method="post" action="/admin/stop_test.php" class="m-0 mobile-header-test-return"><input type="hidden" name="csrf_token" value="'.$e(csrfToken()).'"><button class="btn btn-sm btn-warning" type="submit"><i class="bi bi-arrow-return-left me-1"></i>Return to Admin</button></form>';
+        echo '<form method="post" action="/admin/stop_test.php" class="m-0 mobile-header-test-return"><input type="hidden" name="csrf_token" value="'.$e(csrfToken()).'"><button class="btn btn-sm btn-warning" type="submit"><i class="bi bi-arrow-return-left me-1"></i>'.$e(portalT('Return to Admin')).'</button></form>';
     }
-    echo '<a class="btn btn-sm btn-outline-light d-none d-md-inline-flex" href="/login.php?logout=1"><i class="bi bi-box-arrow-right me-1"></i>Logout</a></div></div></nav>';
+    echo '<a class="btn btn-sm btn-outline-light d-none d-md-inline-flex" href="/login.php?logout=1"><i class="bi bi-box-arrow-right me-1"></i>'.$e(portalT('Logout')).'</a></div></div></nav>';
     if ($isAdminTest) {
         echo '<div class="alert alert-warning rounded-0 border-0 border-bottom mb-0 py-2 px-3 d-flex flex-wrap align-items-center justify-content-between gap-2">';
         echo '<div><strong><i class="bi bi-shield-exclamation me-1"></i>ADMIN TEST MODE</strong> &mdash; Viewing the '.$e(ucfirst($role)).' portal as <strong>'.$e($testLabel).'</strong>. No email login code was required.</div>';
-        echo '<form method="post" action="/admin/stop_test.php" class="m-0"><input type="hidden" name="csrf_token" value="'.$e(csrfToken()).'"><button class="btn btn-sm btn-dark" type="submit">Return to Admin</button></form>';
+        echo '<form method="post" action="/admin/stop_test.php" class="m-0"><input type="hidden" name="csrf_token" value="'.$e(csrfToken()).'"><button class="btn btn-sm btn-dark" type="submit">'.$e(portalT('Return to Admin')).'</button></form>';
         echo '</div>';
     }
     $mobileExtraControls = '';
