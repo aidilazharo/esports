@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/mobile_navigation.php';
+require_once __DIR__ . '/portal_language.php';
 
 function jpnPageStart(
     string $activeKey,
@@ -14,6 +15,7 @@ function jpnPageStart(
         'UTF-8'
     );
 
+    $title = portalT($title);
     $menu = [
         'dashboard' => [
             'Dashboard',
@@ -27,7 +29,12 @@ function jpnPageStart(
         ],
     ];
 
-    echo '<!doctype html><html lang="en"><head>';
+    foreach ($menu as &$entry) {
+        $entry[0] = portalT($entry[0]);
+    }
+    unset($entry);
+
+    echo '<!doctype html><html lang="'.$e(portalLanguageHtmlTag()).'"><head>';
     echo '<meta charset="utf-8">';
     echo '<meta name="viewport" content="width=device-width,initial-scale=1">';
     echo '<meta name="robots" content="noindex,nofollow,noarchive">';
@@ -36,6 +43,7 @@ function jpnPageStart(
     echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">';
     echo '<link href="/assets/css/mobile-icon-links.css?v=2" rel="stylesheet">';
     echo '<link href="/assets/css/mobile-split-navigation.css?v=2" rel="stylesheet">';
+    echo portalLanguageAssets();
     echo '<style>
         body{background:#f5f7fb;color:#1f2937}
         .jpn-sidebar{min-height:calc(100vh - 58px)}
@@ -57,7 +65,7 @@ function jpnPageStart(
     [$mobileTopItems, $mobileBottomItems] = mobileNavigationRoleItems(
         $menu, ['dashboard', 'report'], $activeKey
     );
-    $mobileBottomItems[] = ['Logout', '/login.php?logout=1', 'bi-box-arrow-right', false];
+    $mobileBottomItems[] = [portalT('Logout'), '/login.php?logout=1', 'bi-box-arrow-right', false];
     $GLOBALS['jpnMobileFooterNav'] = mobileNavigationBar(
         $mobileBottomItems, 'Secondary JPN navigation', 'bottom'
     );
@@ -65,13 +73,14 @@ function jpnPageStart(
     echo '<div class="container-fluid">';
     echo '<a class="navbar-brand fw-semibold" href="/jpn/"><span class="d-none d-md-inline">Metadata eSports · JPN Portal</span><span class="d-inline d-md-none">Metadata</span></a>';
     echo mobileNavigationBar($mobileTopItems, 'Primary JPN navigation', 'top');
+    echo portalLanguageSelector();
     echo '<div class="d-flex align-items-center gap-2 text-white">';
     echo '<div class="small d-none d-lg-block text-end">';
     echo '<div class="fw-semibold">'.$e($official['name'] ?? 'JPN Official').'</div>';
     echo '<div class="opacity-75">'.$e($scopeLabel).'</div>';
     echo '</div>';
     echo '<a class="btn btn-sm btn-outline-light d-none d-md-inline-flex" href="/login.php?logout=1">';
-    echo '<i class="bi bi-box-arrow-right me-1"></i>Logout</a>';
+    echo '<i class="bi bi-box-arrow-right me-1"></i>'.$e(portalT('Logout')).'</a>';
     echo '</div></div></nav>';
 
     echo '<div class="container-fluid"><div class="row">';
@@ -92,7 +101,7 @@ function jpnPageStart(
     echo '<main class="col-lg-10 col-md-9 p-4">';
     echo '<div class="d-flex flex-column flex-lg-row justify-content-between gap-2 mb-4">';
     echo '<div><h1 class="h3 mb-1">'.$e($title).'</h1>';
-    echo '<div class="text-secondary small">JPN Education Department Portal · '.$e($scopeLabel).'</div></div>';
+    echo '<div class="text-secondary small">'.$e(portalT('JPN Education Department Portal')).' · '.$e($scopeLabel).'</div></div>';
     echo '</div>';
 }
 
