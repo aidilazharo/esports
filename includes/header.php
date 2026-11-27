@@ -4,6 +4,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
 require_once __DIR__ . '/school_auth.php';
 require_once __DIR__ . '/mobile_navigation.php';
+require_once __DIR__ . '/portal_language.php';
 
 /*
  * Root/public pages are for guests only.
@@ -407,7 +408,7 @@ $seoWebSiteSchema = [
     'publisher' => [
         '@id' => $seoSiteUrl . '#organization',
     ],
-    'inLanguage' => 'en-MY',
+    'inLanguage' => portalLanguageHtmlTag(),
 ];
 
 $seoBreadcrumbSchema = null;
@@ -466,6 +467,12 @@ function portalStartStaticHtmlGeneration(string $currentPage, string $portalRole
     }
 
     if ($portalRole !== 'guest') {
+        return;
+    }
+
+    // Cached English HTML cannot reflect per-visitor server-side translations.
+    // Render other languages dynamically; never redirect them to /html/*.html.
+    if (portalLanguage() !== 'en') {
         return;
     }
 
@@ -709,10 +716,19 @@ $mobilePublicSecondary = [
     ['Contact Us', '/contact.php', 'bi-envelope', $currentPage === 'contact.php'],
 ];
 
+foreach ($mobilePublicPrimary as &$item) {
+    $item[0] = portalT((string) $item[0]);
+}
+unset($item);
+foreach ($mobilePublicSecondary as &$item) {
+    $item[0] = portalT((string) $item[0]);
+}
+unset($item);
+
 $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','certificates.php','events-competitions-report.php'];
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="<?= e(portalLanguageHtmlTag()) ?>">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -722,7 +738,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
     <meta name="robots" content="<?= e($seoRobots) ?>">
     <meta name="googlebot" content="<?= e($seoRobots) ?>">
     <meta name="author" content="Metadata Berhad">
-    <meta name="language" content="English">
+    <meta name="language" content="<?= e(portalLanguageHtmlTag()) ?>">
     <meta name="geo.region" content="MY">
     <meta name="theme-color" content="#0d6efd">
 
@@ -784,6 +800,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/mobile-icon-links.css?v=2" rel="stylesheet">
     <link href="assets/css/mobile-split-navigation.css?v=2" rel="stylesheet">
+    <?= portalLanguageAssets() ?>
 
     <style>
         .portal-navbar-brand{display:inline-flex;align-items:center;min-height:52px;padding-top:.25rem;padding-bottom:.25rem}
@@ -962,7 +979,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
 
     <div class="collapse navbar-collapse" id="mainNav">
         <ul class="navbar-nav ms-auto align-items-xl-center">
-            <li class="nav-item"><a class="nav-link <?= $currentPage === 'index.php' ? 'active' : '' ?>" href="/index.php">Home</a></li>
+            <li class="nav-item"><a class="nav-link <?= $currentPage === 'index.php' ? 'active' : '' ?>" href="/index.php"><?= e(portalT('Home')) ?></a></li>
 
             <!--
                 This header is only rendered for guests.
@@ -992,7 +1009,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                     role="button"
                     data-bs-toggle="dropdown"
                 >
-                    Programme
+                    <?= e(portalT('Programme')) ?>
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -1002,7 +1019,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                             href="/about-programme.php"
                         >
                             <i class="bi bi-info-circle me-2"></i>
-                            About Programme
+                            <?= e(portalT('About Programme')) ?>
                         </a>
                     </li>
 
@@ -1012,7 +1029,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                             href="/events-competitions.php"
                         >
                             <i class="bi bi-calendar-event me-2"></i>
-                            Events &amp; Competitions
+                            <?= e(portalT('Events & Competitions')) ?>
                         </a>
                     </li>
 
@@ -1026,7 +1043,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                             href="/register_school.php"
                         >
                             <i class="bi bi-building-add me-2"></i>
-                            Register School
+                            <?= e(portalT('Register School')) ?>
                         </a>
                     </li>
 
@@ -1036,7 +1053,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                             href="/register_student.php"
                         >
                             <i class="bi bi-person-plus me-2"></i>
-                            Register Student
+                            <?= e(portalT('Register Student')) ?>
                         </a>
                     </li>
 
@@ -1046,7 +1063,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                             href="/register_teacher.php"
                         >
                             <i class="bi bi-person-badge me-2"></i>
-                            Register Teacher
+                            <?= e(portalT('Register Teacher')) ?>
                         </a>
                     </li>
 
@@ -1060,7 +1077,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                             href="/manuals.php"
                         >
                             <i class="bi bi-book me-2"></i>
-                            Manuals
+                            <?= e(portalT('Manuals')) ?>
                         </a>
                     </li>
 
@@ -1070,7 +1087,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                             href="/contact.php"
                         >
                             <i class="bi bi-envelope me-2"></i>
-                            Contact Us
+                            <?= e(portalT('Contact Us')) ?>
                         </a>
                     </li>
                 </ul>
@@ -1080,15 +1097,16 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
                 <a
                     class="nav-link px-2 <?= $currentPage === 'login.php' ? 'active' : '' ?>"
                     href="/login.php"
-                    title="Login"
-                    aria-label="Login"
+                    title="<?= e(portalT('Login')) ?>"
+                    aria-label="<?= e(portalT('Login')) ?>"
                 >
                     <i class="bi bi-person-circle fs-5"></i>
-                    <span class="visually-hidden">Login</span>
+                    <span class="visually-hidden"><?= e(portalT('Login')) ?></span>
                 </a>
             </li>
         </ul>
     </div>
+    <?= portalLanguageSelector() ?>
 </div>
 </nav>
 
