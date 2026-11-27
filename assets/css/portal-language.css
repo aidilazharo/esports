@@ -1,0 +1,26 @@
+/* Shared compact language selector for public and role-based portal headers. */
+.portal-language-select-wrap { flex: 0 0 auto; margin-inline-start: .5rem; }
+.portal-language-select {
+    width: 154px;
+    min-height: 34px;
+    padding: .3rem 2rem .3rem .65rem;
+    font-size: .84rem;
+    background-color: rgba(255, 255, 255, .96);
+    color: #1e293b;
+    border: 1px solid rgba(255, 255, 255, .8);
+    border-radius: .5rem;
+}
+.portal-language-select:focus { outline-offset: 2px; }
+.portal-language-select option { color: #1e293b; background: #fff; }
+@media (max-width: 575.98px) {
+    .portal-language-select-wrap { margin-inline-start: .25rem; }
+    .portal-language-select {
+        width: 104px;
+        min-height: 33px;
+        font-size: .72rem;
+        padding-left: .4rem;
+        padding-right: 1.4rem;
+        background-position: right .3rem center;
+        background-size: 11px;
+    }
+}
