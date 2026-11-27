@@ -198,7 +198,10 @@ function portalLanguageSelector(): string
     $url = (string) ($_SERVER['REQUEST_URI'] ?? '/index.php');
     $path = parse_url($url, PHP_URL_PATH);
     // Never place a cross-origin URL into the control.
-    if (!is_string($path) || !str_starts_with($path, '/') || str_starts_with($path, '//')) {
+    if (!str_starts_with($url, '/') || str_starts_with($url, '//')
+        || !is_string($path) || !str_starts_with($path, '/')
+        || parse_url($url, PHP_URL_HOST) !== null
+        || parse_url($url, PHP_URL_SCHEME) !== null) {
         $url = '/index.php';
     }
 
