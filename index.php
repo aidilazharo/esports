@@ -124,9 +124,26 @@ require 'includes/header.php';
     }
 
     @media (max-width: 991.98px) {
+        /* Use the original artwork as a decorative background at 20% opacity.
+           Isolate the image layer so text, links and buttons remain opaque. */
+        .hero-section {
+            isolation: isolate;
+        }
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: url('/assets/images/hero.png') center bottom / cover no-repeat;
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: -1;
+        }
         .hero-image-column {
             display: none;
         }
+    }
+    @media print {
+        .hero-section::before { display: none; }
     }
 </style>
 

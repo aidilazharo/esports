@@ -27,6 +27,21 @@ $required = [
 ];
 
 $errors = [];
+$navigationCss = (string)file_get_contents($root.'/assets/css/mobile-split-navigation.css');
+$footer = (string)file_get_contents($root.'/includes/footer.php');
+$home = (string)file_get_contents($root.'/index.php');
+if (str_contains($menu, 'class="navbar-toggler"') || str_contains($menu, 'data-bs-target="#mainNav"')) {
+    $errors[] = 'Legacy public hamburger must not be rendered.';
+}
+foreach (['@media (min-width:1200px)', '@media (max-width:1199.98px)', '.portal-public-navbar #mainNav', '.portal-public-navbar .mobile-top-nav', '.portal-public-footer .mobile-bottom-nav'] as $rule) {
+    if (!str_contains($navigationCss,$rule)) $errors[] = 'Missing responsive navigation rule: '.$rule;
+}
+if (!str_contains($footer, "portalLanguageSelector('portal-footer-language-select')") || !str_contains($menu,'public-desktop-language')) {
+    $errors[] = 'Language selector must remain accessible in both navigation modes.';
+}
+if (!str_contains($home, '.hero-section::before') || !str_contains($home, 'opacity: 0.2;') || !str_contains($home, "url('/assets/images/hero.png')") || !is_file($root.'/assets/images/hero.png')) {
+    $errors[] = 'Small-screen hero artwork and opacity are missing.';
+}
 foreach ($required as $name) {
     if (!is_file($root . '/' . $name)) {
         $errors[] = "Missing navigation target: {$name}";

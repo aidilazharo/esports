@@ -214,7 +214,7 @@ function portalT(string $english): string
  * The client persists a strictly allowlisted language cookie and reloads
  * the original PHP route, including from cached /html/*.html snapshots.
  */
-function portalLanguageSelector(): string
+function portalLanguageSelector(string $id = 'portal-language-select'): string
 {
     $e = static fn($value): string =>
         htmlspecialchars((string)$value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
@@ -236,9 +236,9 @@ function portalLanguageSelector(): string
         'ta' => 'தமிழ்',
     ];
     $html = '<div class="portal-language-select-wrap">'
-        . '<label class="visually-hidden" for="portal-language-select">'
+        . '<label class="visually-hidden" for="' . $e($id) . '">'
         . $e(portalT('Language')) . '</label>'
-        . '<select id="portal-language-select" class="form-select form-select-sm portal-language-select"'
+        . '<select id="' . $e($id) . '" class="form-select form-select-sm portal-language-select"'
         . ' aria-label="' . $e(portalT('Language')) . '"'
         . ' data-portal-language-select data-return-url="' . $e($url) . '">';
     foreach ($options as $code => $name) {

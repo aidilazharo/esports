@@ -124,3 +124,62 @@
   .mobile-top-nav, .mobile-bottom-nav { display: none !important; }
   body { padding-bottom: 0 !important; }
 }
+
+/* Public navigation shares Bootstrap's xl breakpoint; role layouts retain 768px. */
+.public-compact-language { display:none; }
+@media (min-width:1200px) {
+  .portal-public-navbar #mainNav { display:flex !important; }
+  .portal-public-navbar .mobile-top-nav,
+  .portal-public-footer .mobile-bottom-nav { display:none !important; }
+}
+@media (max-width:1199.98px) {
+  .portal-public-shell { padding-bottom:calc(63px + env(safe-area-inset-bottom,0px)); }
+  .portal-public-navbar #mainNav,
+  .portal-public-navbar .public-desktop-language { display:none !important; }
+  .portal-public-navbar > .container {
+    display:flex; flex-wrap:nowrap; align-items:center; justify-content:space-between;
+    min-width:0; gap:4px;
+  }
+  .portal-public-navbar .portal-navbar-brand { flex:0 1 auto; min-width:0; margin:0 auto 0 0; }
+  .portal-public-navbar .portal-navbar-logo { width:auto; max-width:100%; height:40px; object-fit:contain; }
+  .portal-public-navbar .mobile-top-nav { display:flex !important; flex:0 0 auto; align-items:center; }
+  .portal-public-navbar .mobile-nav-scroller,
+  .portal-public-footer .mobile-nav-scroller { display:flex; flex-wrap:nowrap; align-items:center; gap:4px; }
+  .portal-public-navbar .mobile-nav-link,
+  .portal-public-footer .mobile-nav-link {
+    display:inline-flex; flex:0 0 44px; width:44px; min-width:44px; height:44px;
+    min-height:44px; padding:0 !important; align-items:center; justify-content:center;
+    color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:8px;
+    text-decoration:none; line-height:1;
+  }
+  .portal-public-navbar .mobile-nav-link .bi,
+  .portal-public-footer .mobile-nav-link .bi { font-size:1.25rem; margin:0 !important; }
+  .portal-public-navbar .mobile-nav-link.active,
+  .portal-public-navbar .mobile-nav-link:hover,
+  .portal-public-footer .mobile-nav-link.active,
+  .portal-public-footer .mobile-nav-link:hover { color:#fff; background:#ffffff33; }
+  .portal-public-navbar .mobile-nav-link:focus-visible,
+  .portal-public-footer .mobile-nav-link:focus-visible { outline:3px solid #ffca2c; outline-offset:2px; }
+  .portal-public-footer .mobile-bottom-nav {
+    display:block !important; position:fixed; left:0; right:0; bottom:0; z-index:1030;
+    padding:7px 8px calc(8px + env(safe-area-inset-bottom,0px));
+    background:#0d6efd; border-top:1px solid #ffffff38;
+  }
+  .portal-public-footer .mobile-nav-scroller { justify-content:space-evenly; overflow-x:auto; }
+  .portal-public-shell .portal-public-footer { background:#0d6efd !important; color:#fff; }
+  .portal-public-shell .portal-public-footer .text-secondary { color:#fff !important; }
+  .public-compact-language { display:flex; justify-content:center; margin-top:12px; }
+  .public-compact-language .portal-language-select-wrap { margin:0; }
+  .public-compact-language .portal-language-select { width:154px; min-height:44px; }
+}
+@media (max-width:575.98px) {
+  .portal-public-navbar > .container { padding-inline:8px; }
+  .portal-public-navbar .portal-navbar-logo { height:32px; max-width:100%; }
+  .portal-public-navbar .mobile-nav-scroller { gap:3px; }
+}
+@media print {
+  .portal-public-navbar .mobile-top-nav,
+  .portal-public-footer .mobile-bottom-nav,
+  .public-compact-language { display:none !important; }
+  .portal-public-shell { padding-bottom:0 !important; }
+}

@@ -5,6 +5,9 @@
         <span>&copy; <?= date('Y') ?> Metadata Berhad 1573083-A <span class="ms-1">v<?= htmlspecialchars(websiteVersion(), ENT_QUOTES, 'UTF-8') ?></span></span>
         <span><?= htmlspecialchars(portalT('Contact Support'), ENT_QUOTES, 'UTF-8') ?>: 09-5818322 <?= htmlspecialchars(portalT('Email'), ENT_QUOTES, 'UTF-8') ?>: cs@metadata.technology</span>
     </div>
+    <div class="container public-compact-language">
+        <?= portalLanguageSelector('portal-footer-language-select') ?>
+    </div>
     <?= mobileNavigationBar($mobilePublicSecondary, 'Secondary mobile navigation', 'bottom') ?>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

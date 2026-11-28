@@ -799,7 +799,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/mobile-icon-links.css?v=2" rel="stylesheet">
-    <link href="assets/css/mobile-split-navigation.css?v=2" rel="stylesheet">
+    <link href="assets/css/mobile-split-navigation.css?v=3" rel="stylesheet">
     <?= portalLanguageAssets() ?>
 
     <style>
@@ -838,7 +838,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
         }
     </style>
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="bg-light d-flex flex-column min-vh-100 portal-public-shell">
 <div
     id="portalPageLoadProgress"
     role="progressbar"
@@ -968,16 +968,14 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
     });
 })();
 </script>
-<nav class="navbar navbar-expand-xl navbar-dark bg-primary shadow-sm sticky-top">
+<nav class="navbar navbar-expand-xl navbar-dark bg-primary shadow-sm sticky-top portal-public-navbar">
 <div class="container">
     <a class="navbar-brand portal-navbar-brand" href="/index.php" aria-label="<?= e(APP_NAME) ?> home">
         <img src="assets/images/logo.svg" alt="Metadata Berhad" class="portal-navbar-logo" width="180" height="44">
         <span class="visually-hidden"><?= e(APP_NAME) ?></span>
     </a>
     <?= mobileNavigationBar($mobilePublicPrimary, 'Primary mobile navigation', 'top') ?>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-
-    <div class="collapse navbar-collapse" id="mainNav">
+    <div class="navbar-collapse" id="mainNav">
         <ul class="navbar-nav ms-auto align-items-xl-center">
             <li class="nav-item"><a class="nav-link <?= $currentPage === 'index.php' ? 'active' : '' ?>" href="/index.php"><?= e(portalT('Home')) ?></a></li>
 
@@ -1106,7 +1104,7 @@ $adminPages = ['dashboard.php','payments.php','admin.php','programmes.php','cert
             </li>
         </ul>
     </div>
-    <?= portalLanguageSelector() ?>
+    <div class="public-desktop-language"><?= portalLanguageSelector() ?></div>
 </div>
 </nav>
 
