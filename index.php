@@ -133,7 +133,7 @@ require 'includes/header.php';
             content: "";
             position: absolute;
             inset: 0;
-            background: url('/assets/images/hero.png') center bottom / cover no-repeat;
+            background: url('/assets/images/hero.png') center center / contain no-repeat;
             opacity: 0.2;
             pointer-events: none;
             z-index: -1;

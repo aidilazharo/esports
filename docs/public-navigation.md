@@ -22,3 +22,5 @@ After deployment, test `/index.php`, `/about-programme.php`, `/events-competitio
 ## Responsive navigation and mobile hero
 Public pages use the full desktop menu at 1200px and above; below 1200px, only the icon header and blue bottom navigation appear. The hamburger/collapse menu is removed. Language selection is available in the compact footer, with a separate accessible control ID. Authenticated portal navigation is unchanged.
 On the homepage below 992px the original hero artwork is reused as a decorative background with opacity 0.2 (80% transparent); the desktop side image is hidden at those widths. Foreground text and actions retain their own opacity. No additional image files are needed.
+
+The compact homepage hero uses `background-size: contain` (centered, no repeat) to preserve the entire portrait without cropping at any aspect ratio. The original gradient fills unused space, and the 20% artwork opacity is unchanged.

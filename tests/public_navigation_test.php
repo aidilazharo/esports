@@ -39,7 +39,7 @@ foreach (['@media (min-width:1200px)', '@media (max-width:1199.98px)', '.portal-
 if (!str_contains($footer, "portalLanguageSelector('portal-footer-language-select')") || !str_contains($menu,'public-desktop-language')) {
     $errors[] = 'Language selector must remain accessible in both navigation modes.';
 }
-if (!str_contains($home, '.hero-section::before') || !str_contains($home, 'opacity: 0.2;') || !str_contains($home, "url('/assets/images/hero.png')") || !is_file($root.'/assets/images/hero.png')) {
+if (!str_contains($home, '.hero-section::before') || !str_contains($home, 'opacity: 0.2;') || !str_contains($home, 'center center / contain no-repeat') || !str_contains($home, "url('/assets/images/hero.png')") || !is_file($root.'/assets/images/hero.png')) {
     $errors[] = 'Small-screen hero artwork and opacity are missing.';
 }
 foreach ($required as $name) {
