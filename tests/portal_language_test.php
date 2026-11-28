@@ -55,4 +55,23 @@ checkLanguage(str_contains($header, "portalLanguage() !== 'en'"), 'Non-English H
 checkLanguage(str_contains($header, 'portalLanguageSelector()'), 'Public selector');
 checkLanguage(str_contains($jpn, 'portalLanguageSelector()'), 'JPN selector');
 
-echo "Four-language selector and role navigation checks passed.\n";
+
+$programme = (string) file_get_contents(dirname(__DIR__) . '/about-programme.php');
+$gallery = (string) file_get_contents(dirname(__DIR__) . '/includes/video_gallery.php');
+$programmeCatalog = require dirname(__DIR__) . '/includes/portal_language_programme.php';
+foreach (['ms', 'zh', 'ta'] as $locale) {
+    $_COOKIE['portal_lang'] = $locale;
+    foreach ($programmeCatalog as $english => $translations) {
+        checkLanguage(trim(portalT($english)) !== '', "Missing translation: {$locale} / {$english}");
+        checkLanguage(portalT($english) === $translations[array_search($locale, ['ms','zh','ta'], true)], "Wrong translation: {$locale} / {$english}");
+    }
+    foreach (['About the Programme', 'Programme at a Glance', 'School-based learning', 'Learning + competition', 'Programme Objectives', 'Frequently Asked Questions', 'Student & Teacher Programme Videos', 'Student submission', 'Watch on YouTube'] as $label) {
+        checkLanguage(portalT($label) !== $label, "Untranslated programme UI: {$locale} / {$label}");
+    }
+}
+checkLanguage(str_contains($programme, "portalT('Programme at a Glance')"), 'Programme hero rendered server-side');
+checkLanguage(str_contains($programme, "portalT('About the Programme')"), 'Programme badge rendered server-side');
+checkLanguage(str_contains($gallery, "portalT('Videos')"), 'Gallery rendered server-side');
+checkLanguage(str_contains($gallery, 'data-language-no-translate'), 'Original video titles protected');
+
+echo "Four-language selector, programme content and role navigation checks passed.\n";
