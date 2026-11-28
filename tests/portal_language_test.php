@@ -74,4 +74,52 @@ checkLanguage(str_contains($programme, "portalT('About the Programme')"), 'Progr
 checkLanguage(str_contains($gallery, "portalT('Videos')"), 'Gallery rendered server-side');
 checkLanguage(str_contains($gallery, 'data-language-no-translate'), 'Original video titles protected');
 
-echo "Four-language selector, programme content and role navigation checks passed.\n";
+// Exercise actual rendered markup, not only dictionary lookups.
+// The hero is a trusted repository template; no database or external services are needed.
+require_once dirname(__DIR__) . '/includes/video_gallery.php';
+if (!function_exists('e')) {
+    function e($value): string {
+        return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    }
+}
+$heroStart = strpos($programme, '<section class="programme-hero');
+$heroEnd = $heroStart === false ? false : strpos($programme, '</section>', $heroStart);
+checkLanguage($heroStart !== false && $heroEnd !== false, 'Programme hero template located');
+$heroTemplate = substr($programme, $heroStart, $heroEnd + strlen('</section>') - $heroStart);
+$fixture = tempnam(sys_get_temp_dir(), 'portal-hero-');
+checkLanguage($fixture !== false, 'Temporary hero test fixture');
+try {
+    checkLanguage(file_put_contents($fixture, $heroTemplate) !== false, 'Hero test fixture written');
+    foreach (['en', 'ms', 'zh', 'ta'] as $locale) {
+        $_COOKIE['portal_lang'] = $locale;
+        ob_start();
+        include $fixture;
+        portalRenderVideoGallery([
+            ['video_id' => 'dQw4w9WgXcQ', 'title' => 'Original video title', 'source' => 'Student submission'],
+        ], 'Student & Teacher Programme Videos',
+            'Random videos from teacher and student learning-module submissions across the programme.', 'test-videos');
+        $rendered = (string) ob_get_clean();
+        foreach ([
+            'About the Programme',
+            'STEM, TVET, AI, Simulation, Digital Innovation & Esports Talent Development Programme',
+            'A school-based talent development programme designed to give students practical exposure to digital technology, artificial intelligence, innovation, simulation, STEM, TVET and electronic sports through structured learning, activities and competitions.',
+            'Programme at a Glance',
+            'School-based learning',
+            'Technology exposure',
+            'Learning + competition',
+            'Student & Teacher Programme Videos',
+            'Student submission',
+            'Watch on YouTube',
+        ] as $label) {
+            checkLanguage(str_contains($rendered, e(portalT($label))), "Rendered text missing: {$locale} / {$label}");
+            if ($locale !== 'en') {
+                checkLanguage(!str_contains($rendered, e($label)), "English text leaked: {$locale} / {$label}");
+            }
+        }
+        checkLanguage(str_contains($rendered, 'Original video title'), "Original video title changed: {$locale}");
+    }
+} finally {
+    @unlink($fixture);
+}
+
+echo "Four-language selector, rendered programme content and role navigation checks passed.\n";
