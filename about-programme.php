@@ -207,14 +207,12 @@ require 'includes/header.php';
 <section class="programme-hero rounded-4 p-4 p-lg-5 mb-4">
     <div class="row align-items-center g-4">
         <div class="col-lg-8">
-            <span class="badge text-bg-primary mb-3">About the Programme</span>
+            <span class="badge text-bg-primary mb-3"><?= e(portalT('About the Programme')) ?></span>
             <h1 class="display-6 fw-bold mb-3">
-                STEM, TVET, AI, Simulation, Digital Innovation &amp; Esports Talent Development Programme
+                <?= e(portalT('STEM, TVET, AI, Simulation, Digital Innovation & Esports Talent Development Programme')) ?>
             </h1>
             <p class="lead text-secondary mb-4">
-                A school-based talent development programme designed to give students practical exposure
-                to digital technology, artificial intelligence, innovation, simulation, STEM, TVET and
-                electronic sports through structured learning, activities and competitions.
+                <?= e(portalT('A school-based talent development programme designed to give students practical exposure to digital technology, artificial intelligence, innovation, simulation, STEM, TVET and electronic sports through structured learning, activities and competitions.')) ?>
             </p>
 
         </div>
@@ -222,29 +220,29 @@ require 'includes/header.php';
         <div class="col-lg-4">
             <div class="card border-0 shadow-sm">
                 <div class="card-body p-4">
-                    <h2 class="h5 mb-3">Programme at a Glance</h2>
+                    <h2 class="h5 mb-3"><?= e(portalT('Programme at a Glance')) ?></h2>
 
                     <div class="d-flex gap-3 mb-3">
                         <span class="programme-icon"><i class="bi bi-mortarboard"></i></span>
                         <div>
-                            <div class="fw-semibold">School-based learning</div>
-                            <div class="small text-secondary">Structured activities that can support student development outside normal classroom learning.</div>
+                            <div class="fw-semibold"><?= e(portalT('School-based learning')) ?></div>
+                            <div class="small text-secondary"><?= e(portalT('Structured activities that can support student development outside normal classroom learning.')) ?></div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-3 mb-3">
                         <span class="programme-icon"><i class="bi bi-cpu"></i></span>
                         <div>
-                            <div class="fw-semibold">Technology exposure</div>
-                            <div class="small text-secondary">STEM, TVET, AI, simulation, digital innovation and esports.</div>
+                            <div class="fw-semibold"><?= e(portalT('Technology exposure')) ?></div>
+                            <div class="small text-secondary"><?= e(portalT('STEM, TVET, AI, simulation, digital innovation and esports.')) ?></div>
                         </div>
                     </div>
 
                     <div class="d-flex gap-3">
                         <span class="programme-icon"><i class="bi bi-trophy"></i></span>
                         <div>
-                            <div class="fw-semibold">Learning + competition</div>
-                            <div class="small text-secondary">Weekly modules, attendance tracking, events and competitions.</div>
+                            <div class="fw-semibold"><?= e(portalT('Learning + competition')) ?></div>
+                            <div class="small text-secondary"><?= e(portalT('Weekly modules, attendance tracking, events and competitions.')) ?></div>
                         </div>
                     </div>
                 </div>
@@ -264,10 +262,10 @@ portalRenderVideoGallery(
 
 <section class="mb-5">
     <div class="mb-4">
-        <div class="small text-uppercase fw-semibold text-primary mb-1">Programme Objectives</div>
-        <h2 class="h3 mb-2">What the programme aims to develop</h2>
+        <div class="small text-uppercase fw-semibold text-primary mb-1"><?= e(portalT('Programme Objectives')) ?></div>
+        <h2 class="h3 mb-2"><?= e(portalT('What the programme aims to develop')) ?></h2>
         <p class="text-secondary mb-0">
-            The programme focuses on practical exposure, student participation and long-term digital talent development.
+            <?= e(portalT('The programme focuses on practical exposure, student participation and long-term digital talent development.')) ?>
         </p>
     </div>
 
@@ -288,8 +286,8 @@ portalRenderVideoGallery(
                 <div class="card focus-card h-100 border-0 shadow-sm">
                     <div class="card-body p-4">
                         <span class="programme-icon mb-3"><i class="bi <?= e($icon) ?>"></i></span>
-                        <h3 class="h5"><?= e($title) ?></h3>
-                        <p class="text-secondary mb-0"><?= e($description) ?></p>
+                        <h3 class="h5"><?= e(portalT($title)) ?></h3>
+                        <p class="text-secondary mb-0"><?= e(portalT($description)) ?></p>
                     </div>
                 </div>
             </div>
@@ -299,10 +297,10 @@ portalRenderVideoGallery(
 
 <section class="mb-5">
     <div class="mb-4">
-        <div class="small text-uppercase fw-semibold text-primary mb-1">Games &amp; Competitive Titles</div>
-        <h2 class="h3 mb-2">Games used for esports activities and competitions</h2>
+        <div class="small text-uppercase fw-semibold text-primary mb-1"><?= e(portalT('Games & Competitive Titles')) ?></div>
+        <h2 class="h3 mb-2"><?= e(portalT('Games used for esports activities and competitions')) ?></h2>
         <p class="text-secondary mb-0">
-            The programme will focus on six popular competitive titles that have existing PlayStation tournament pathways.
+            <?= e(portalT('The programme will focus on six popular competitive titles that have existing PlayStation tournament pathways.')) ?>
         </p>
     </div>
 
@@ -357,7 +355,7 @@ portalRenderVideoGallery(
                             class="game-poster-thumb mb-2"
                             loading="lazy"
                         >
-                        <h3 class="small fw-semibold mb-0"><?= e($game['title']) ?></h3>
+                        <h3 class="small fw-semibold mb-0" data-language-no-translate><?= e($game['title']) ?></h3>
                     </div>
                 </div>
             </div>
@@ -368,8 +366,8 @@ portalRenderVideoGallery(
 
 <section class="mb-5">
     <div class="mb-4">
-        <div class="small text-uppercase fw-semibold text-primary mb-1">Getting Started</div>
-        <h2 class="h3 mb-2">Programme Journey</h2>
+        <div class="small text-uppercase fw-semibold text-primary mb-1"><?= e(portalT('Getting Started')) ?></div>
+        <h2 class="h3 mb-2"><?= e(portalT('Programme Journey')) ?></h2>
     </div>
 
     <div class="row g-3">
@@ -435,12 +433,12 @@ portalRenderVideoGallery(
                                 <i class="bi <?= e($step['icon']) ?>"></i>
                             </span>
                             <span class="badge text-bg-primary rounded-pill">
-                                Step <?= $index + 1 ?>
+                                <?= e(portalT('Step')) ?> <?= $index + 1 ?>
                             </span>
                         </div>
 
-                        <h3 class="h5"><?= e($step['title']) ?></h3>
-                        <p class="small text-secondary mb-3"><?= e($step['description']) ?></p>
+                        <h3 class="h5"><?= e(portalT($step['title'])) ?></h3>
+                        <p class="small text-secondary mb-3"><?= e(portalT($step['description'])) ?></p>
 
                         <div class="mt-auto d-flex flex-wrap gap-2">
                             <?php foreach ($step['buttons'] as [$url, $buttonLabel, $buttonClass]): ?>
@@ -448,7 +446,7 @@ portalRenderVideoGallery(
                                     href="<?= e($url) ?>"
                                     class="btn btn-sm <?= e($buttonClass) ?> flex-grow-1"
                                 >
-                                    <?= e($buttonLabel) ?>
+                                    <?= e(portalT($buttonLabel)) ?>
                                 </a>
                             <?php endforeach; ?>
                         </div>
@@ -462,7 +460,7 @@ portalRenderVideoGallery(
 
 <section class="mb-5" id="programme-schools">
     <div class="mb-3">
-        <h2 class="h3 mb-1">Participating Schools</h2>
+        <h2 class="h3 mb-1"><?= e(portalT('Participating Schools')) ?></h2>
     </div>
 
     <div class="card border-0 shadow-sm">
@@ -471,13 +469,13 @@ portalRenderVideoGallery(
                 <table id="programmeSchoolsTable" class="table table-hover align-middle w-100 mb-0">
                     <thead>
                         <tr>
-                            <th>School</th>
-                            <th class="text-center" title="School Image"><i class="bi bi-camera"></i></th>
-                            <th>State / District</th>
-                            <th class="text-center">Total</th>
-                            <th class="text-center">Teachers</th>
-                            <th class="text-center">Students</th>
-                            <th class="text-end">Actions</th>
+                            <th><?= e(portalT('School')) ?></th>
+                            <th class="text-center" title="<?= e(portalT('School Image')) ?>"><i class="bi bi-camera"></i></th>
+                            <th><?= e(portalT('State / District')) ?></th>
+                            <th class="text-center"><?= e(portalT('Total')) ?></th>
+                            <th class="text-center"><?= e(portalT('Teachers')) ?></th>
+                            <th class="text-center"><?= e(portalT('Students')) ?></th>
+                            <th class="text-end"><?= e(portalT('Actions')) ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -515,9 +513,9 @@ portalRenderVideoGallery(
                                         <div>
                                             <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
                                                 <span class="badge text-bg-primary"><?= e($item['school_code']) ?></span>
-                                                <span class="badge text-bg-success">Active</span>
+                                                <span class="badge text-bg-success"><?= e(portalT('Active')) ?></span>
                                             </div>
-                                            <div class="fw-semibold"><?= e($item['school_name']) ?></div>
+                                            <div class="fw-semibold" data-language-no-translate><?= e($item['school_name']) ?></div>
                                             <small class="text-secondary"><?= e($item['school_type']) ?></small>
                                         </div>
                                     </div>
@@ -532,8 +530,8 @@ portalRenderVideoGallery(
                                             data-bs-target="#programmeSchoolImageModal"
                                             data-image-url="<?= e($schoolImageUrl) ?>"
                                             data-school-name="<?= e($item['school_name']) ?>"
-                                            title="View School Image"
-                                            aria-label="View School Image"
+                                            title="<?= e(portalT('View School Image')) ?>"
+                                            aria-label="<?= e(portalT('View School Image')) ?>"
                                         >
                                             <img
                                                 src="<?= e($schoolImageUrl) ?>"
@@ -560,8 +558,8 @@ portalRenderVideoGallery(
                                     <a
                                         class="btn btn-sm btn-outline-primary programme-action-btn"
                                         href="school_profile.php?school_id=<?= (int) $item['id'] ?>"
-                                        title="School Profile"
-                                        aria-label="School Profile"
+                                        title="<?= e(portalT('School Profile')) ?>"
+                                        aria-label="<?= e(portalT('School Profile')) ?>"
                                     >
                                         <i class="bi bi-person-vcard"></i>
                                     </a>
@@ -580,8 +578,8 @@ portalRenderVideoGallery(
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title fs-5" id="programmeSchoolImageModalLabel">School Image</h2>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h2 class="modal-title fs-5" id="programmeSchoolImageModalLabel"><?= e(portalT('School Image')) ?></h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?= e(portalT('Close')) ?>"></button>
             </div>
             <div class="modal-body text-center p-2 p-md-3">
                 <img
@@ -602,15 +600,15 @@ portalRenderVideoGallery(
         <div class="col-lg-7">
             <div class="card programme-section-card h-100 border-0 shadow-sm">
                 <div class="card-body p-4 p-lg-5">
-                    <div class="small text-uppercase fw-semibold text-primary mb-1">How It Works</div>
-                    <h2 class="h3 mb-4">Student participation journey</h2>
+                    <div class="small text-uppercase fw-semibold text-primary mb-1"><?= e(portalT('How It Works')) ?></div>
+                    <h2 class="h3 mb-4"><?= e(portalT('Student participation journey')) ?></h2>
 
                     <div class="d-flex gap-3 mb-4">
                         <span class="programme-step">1</span>
                         <div>
-                            <h3 class="h6 mb-1">School Registration</h3>
+                            <h3 class="h6 mb-1"><?= e(portalT('School Registration')) ?></h3>
                             <p class="text-secondary mb-0">
-                                The school registers in the portal and appoints a school team teacher as the main coordinator.
+                                <?= e(portalT('The school registers in the portal and appoints a school team teacher as the main coordinator.')) ?>
                             </p>
                         </div>
                     </div>
@@ -618,9 +616,9 @@ portalRenderVideoGallery(
                     <div class="d-flex gap-3 mb-4">
                         <span class="programme-step">2</span>
                         <div>
-                            <h3 class="h6 mb-1">Student Membership</h3>
+                            <h3 class="h6 mb-1"><?= e(portalT('Student Membership')) ?></h3>
                             <p class="text-secondary mb-0">
-                                Students register under their school and pay a one-time RM100 participation fee.
+                                <?= e(portalT('Students register under their school and pay a one-time RM100 participation fee.')) ?>
                             </p>
                         </div>
                     </div>
@@ -628,9 +626,9 @@ portalRenderVideoGallery(
                     <div class="d-flex gap-3 mb-4">
                         <span class="programme-step">3</span>
                         <div>
-                            <h3 class="h6 mb-1">Learning &amp; Attendance</h3>
+                            <h3 class="h6 mb-1"><?= e(portalT('Learning & Attendance')) ?></h3>
                             <p class="text-secondary mb-0">
-                                Active students can participate in weekly learning modules, school activities and attendance-based programme sessions.
+                                <?= e(portalT('Active students can participate in weekly learning modules, school activities and attendance-based programme sessions.')) ?>
                             </p>
                         </div>
                     </div>
@@ -638,9 +636,9 @@ portalRenderVideoGallery(
                     <div class="d-flex gap-3">
                         <span class="programme-step">4</span>
                         <div>
-                            <h3 class="h6 mb-1">Events &amp; Competitions</h3>
+                            <h3 class="h6 mb-1"><?= e(portalT('Events & Competitions')) ?></h3>
                             <p class="text-secondary mb-0">
-                                Students and schools can join eligible events, competitions and tournaments through the programme portal.
+                                <?= e(portalT('Students and schools can join eligible events, competitions and tournaments through the programme portal.')) ?>
                             </p>
                         </div>
                     </div>
@@ -651,32 +649,32 @@ portalRenderVideoGallery(
         <div class="col-lg-5">
             <div class="card programme-section-card h-100 border-0 shadow-sm">
                 <div class="card-body p-4 p-lg-5">
-                    <div class="small text-uppercase fw-semibold text-primary mb-1">Membership</div>
+                    <div class="small text-uppercase fw-semibold text-primary mb-1"><?= e(portalT('Membership')) ?></div>
                     <h2 class="h3 mb-3">RM100</h2>
                     <p class="text-secondary">
-                        The student participation fee is RM100, payable one time only.
+                        <?= e(portalT('The student participation fee is RM100, payable one time only.')) ?>
                     </p>
 
                     <ul class="list-group list-group-flush mb-4">
                         <li class="list-group-item px-0 d-flex gap-2">
                             <i class="bi bi-check-circle-fill text-success"></i>
-                            <span>RM100 one-time participation fee</span>
+                            <span><?= e(portalT('RM100 one-time participation fee')) ?></span>
                         </li>
                         <li class="list-group-item px-0 d-flex gap-2">
                             <i class="bi bi-check-circle-fill text-success"></i>
-                            <span>Access to programme learning modules</span>
+                            <span><?= e(portalT('Access to programme learning modules')) ?></span>
                         </li>
                         <li class="list-group-item px-0 d-flex gap-2">
                             <i class="bi bi-check-circle-fill text-success"></i>
-                            <span>Attendance and participation tracking</span>
+                            <span><?= e(portalT('Attendance and participation tracking')) ?></span>
                         </li>
                         <li class="list-group-item px-0 d-flex gap-2">
                             <i class="bi bi-check-circle-fill text-success"></i>
-                            <span>Eligibility to join selected events and competitions</span>
+                            <span><?= e(portalT('Eligibility to join selected events and competitions')) ?></span>
                         </li>
                         <li class="list-group-item px-0 d-flex gap-2">
                             <i class="bi bi-check-circle-fill text-success"></i>
-                            <span>Student STEM &amp; Esports certificate access</span>
+                            <span><?= e(portalT('Student STEM & Esports certificate access')) ?></span>
                         </li>
                     </ul>
                 </div>
@@ -688,11 +686,10 @@ portalRenderVideoGallery(
 
 <section class="mb-5">
     <div class="mb-4">
-        <div class="small text-uppercase fw-semibold text-primary mb-1">Learning Modules</div>
-        <h2 class="h3 mb-2">Structured weekly digital learning</h2>
+        <div class="small text-uppercase fw-semibold text-primary mb-1"><?= e(portalT('Learning Modules')) ?></div>
+        <h2 class="h3 mb-2"><?= e(portalT('Structured weekly digital learning')) ?></h2>
         <p class="text-secondary mb-0">
-            Active students can follow structured learning modules that combine digital knowledge,
-            practical activities, responsible technology use and competition-related skills.
+            <?= e(portalT('Active students can follow structured learning modules that combine digital knowledge, practical activities, responsible technology use and competition-related skills.')) ?>
         </p>
     </div>
 
@@ -713,8 +710,8 @@ portalRenderVideoGallery(
                 <div class="card h-100 border-0 shadow-sm">
                     <div class="card-body p-4">
                         <span class="programme-icon mb-3"><i class="bi <?= e($icon) ?>"></i></span>
-                        <h3 class="h5"><?= e($title) ?></h3>
-                        <p class="text-secondary mb-0"><?= e($description) ?></p>
+                        <h3 class="h5"><?= e(portalT($title)) ?></h3>
+                        <p class="text-secondary mb-0"><?= e(portalT($description)) ?></p>
                     </div>
                 </div>
             </div>
@@ -723,18 +720,17 @@ portalRenderVideoGallery(
 
     <div class="mt-4">
         <a href="/learning_modules.php" class="btn btn-outline-primary">
-            <i class="bi bi-journal-check me-2"></i>View Learning Modules
+            <i class="bi bi-journal-check me-2"></i><?= e(portalT('View Learning Modules')) ?>
         </a>
     </div>
 </section>
 
 <section class="mb-5">
     <div class="mb-4">
-        <div class="small text-uppercase fw-semibold text-primary mb-1">School Development Support</div>
-        <h2 class="h3 mb-2">Equipment eligibility</h2>
+        <div class="small text-uppercase fw-semibold text-primary mb-1"><?= e(portalT('School Development Support')) ?></div>
+        <h2 class="h3 mb-2"><?= e(portalT('Equipment eligibility')) ?></h2>
         <p class="text-secondary mb-0">
-            Participating schools receive programme equipment in stages as student participation grows,
-            with PlayStation 5 and account activation released after the active-participant requirement is achieved.
+            <?= e(portalT('Participating schools receive programme equipment in stages as student participation grows, with PlayStation 5 and account activation released after the active-participant requirement is achieved.')) ?>
         </p>
     </div>
 
@@ -745,29 +741,28 @@ portalRenderVideoGallery(
                     <div class="d-flex align-items-center gap-3 mb-3">
                         <span class="programme-icon"><i class="bi bi-controller"></i></span>
                         <div>
-                            <div class="small text-uppercase fw-semibold text-secondary">Equipment Eligibility</div>
-                            <h3 class="h5 mb-0">10 registered participants</h3>
+                            <div class="small text-uppercase fw-semibold text-secondary"><?= e(portalT('Equipment Eligibility')) ?></div>
+                            <h3 class="h5 mb-0"><?= e(portalT('10 registered participants')) ?></h3>
                         </div>
                     </div>
 
                     <p class="text-secondary">
-                        Programme equipment is released in stages based on student participation recorded in the portal.
+                        <?= e(portalT('Programme equipment is released in stages based on student participation recorded in the portal.')) ?>
                     </p>
 
                     <div class="alert alert-success mb-3">
-                        <strong>After 10 participants:</strong><br>
-                        Programme equipment and accessories will be sent to the school.
+                        <strong><?= e(portalT('After 10 participants:')) ?></strong><br>
+                        <?= e(portalT('Programme equipment and accessories will be sent to the school.')) ?>
                     </div>
 
                     <div class="alert alert-primary mb-3">
-                        <strong>After 30 active participants:</strong><br>
-                        The PlayStation 5 and account activation details will be sent to the school.
+                        <strong><?= e(portalT('After 30 active participants:')) ?></strong><br>
+                        <?= e(portalT('The PlayStation 5 and account activation details will be sent to the school.')) ?>
                     </div>
 
                     <div class="alert alert-info mb-0">
-                        <strong>High-end workstation:</strong><br>
-                        Schools receive 1 workstation for every 100 active students
-                        for STEM, AI, simulation and digital innovation activities.
+                        <strong><?= e(portalT('High-end workstation:')) ?></strong><br>
+                        <?= e(portalT('Schools receive 1 workstation for every 100 active students for STEM, AI, simulation and digital innovation activities.')) ?>
                     </div>
                 </div>
             </div>
@@ -779,24 +774,24 @@ portalRenderVideoGallery(
                     <div class="d-flex align-items-center gap-3 mb-3">
                         <span class="programme-icon"><i class="bi bi-diagram-3"></i></span>
                         <div>
-                            <div class="small text-uppercase fw-semibold text-secondary">School Reference Eligibility</div>
-                            <h3 class="h5 mb-0">Grow the programme network</h3>
+                            <div class="small text-uppercase fw-semibold text-secondary"><?= e(portalT('School Reference Eligibility')) ?></div>
+                            <h3 class="h5 mb-0"><?= e(portalT('Grow the programme network')) ?></h3>
                         </div>
                     </div>
 
                     <p class="text-secondary mb-2">
-                        Reference eligibility requires:
+                        <?= e(portalT('Reference eligibility requires:')) ?>
                     </p>
 
                     <ul class="mb-3">
-                        <li>The referring school has at least 5 registered students.</li>
-                        <li>At least 2 schools use it as their referrer.</li>
-                        <li>At least 2 referred schools each have 30 active students.</li>
+                        <li><?= e(portalT('The referring school has at least 5 registered students.')) ?></li>
+                        <li><?= e(portalT('At least 2 schools use it as their referrer.')) ?></li>
+                        <li><?= e(portalT('At least 2 referred schools each have 30 active students.')) ?></li>
                     </ul>
 
                     <div class="alert alert-primary mb-0">
-                        <strong>1 set PlayStation 5</strong><br>
-                        1 console, 2 controllers, 1 PS Camera and 43-inch digital TV.
+                        <strong><?= e(portalT('1 set PlayStation 5')) ?></strong><br>
+                        <?= e(portalT('1 console, 2 controllers, 1 PS Camera and 43-inch digital TV.')) ?>
                     </div>
                 </div>
             </div>
@@ -810,30 +805,26 @@ portalRenderVideoGallery(
         <div class="col-lg-7">
             <div class="card h-100 border-0 shadow-sm">
                 <div class="card-body p-4 p-lg-5">
-                    <div class="small text-uppercase fw-semibold text-primary mb-1">Student &amp; Teacher Recognition</div>
-                    <h2 class="h3 mb-3">STEM &amp; Esports Certificates</h2>
+                    <div class="small text-uppercase fw-semibold text-primary mb-1"><?= e(portalT('Student & Teacher Recognition')) ?></div>
+                    <h2 class="h3 mb-3"><?= e(portalT('STEM & Esports Certificates')) ?></h2>
                     <p class="text-secondary">
-                        Students and school team teachers can receive programme certificates recognising
-                        participation, learning, coordination and development across STEM, digital learning
-                        and esports activities.
+                        <?= e(portalT('Students and school team teachers can receive programme certificates recognising participation, learning, coordination and development across STEM, digital learning and esports activities.')) ?>
                     </p>
 
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="border rounded p-3 h-100">
-                                <div class="fw-semibold">Student STEM &amp; Esports Certificate</div>
+                                <div class="fw-semibold"><?= e(portalT('Student STEM & Esports Certificate')) ?></div>
                                 <div class="small text-secondary">
-                                    Recognition of learning module participation, STEM and digital activities,
-                                    esports participation, teamwork and sportsmanship.
+                                    <?= e(portalT('Recognition of learning module participation, STEM and digital activities, esports participation, teamwork and sportsmanship.')) ?>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="border rounded p-3 h-100">
-                                <div class="fw-semibold">Teacher STEM &amp; Esports Certificate</div>
+                                <div class="fw-semibold"><?= e(portalT('Teacher STEM & Esports Certificate')) ?></div>
                                 <div class="small text-secondary">
-                                    Recognition of programme coordination, student supervision, learning support,
-                                    school activities and events participation.
+                                    <?= e(portalT('Recognition of programme coordination, student supervision, learning support, school activities and events participation.')) ?>
                                 </div>
                             </div>
                         </div>
@@ -846,13 +837,13 @@ portalRenderVideoGallery(
             <div class="card h-100 border-primary-subtle shadow-sm">
                 <div class="card-body p-4 p-lg-5 d-flex flex-column">
                     <span class="programme-icon mb-3"><i class="bi bi-award"></i></span>
-                    <h3 class="h4">Digital Certificate Access</h3>
+                    <h3 class="h4"><?= e(portalT('Digital Certificate Access')) ?></h3>
                     <p class="text-secondary">
-                        Eligible students and teachers can sign in to the portal to access available programme certificates.
+                        <?= e(portalT('Eligible students and teachers can sign in to the portal to access available programme certificates.')) ?>
                     </p>
                     <div class="mt-auto">
                         <a href="login.php" class="btn btn-outline-primary">
-                            <i class="bi bi-award me-2"></i>View Certificates
+                            <i class="bi bi-award me-2"></i><?= e(portalT('View Certificates')) ?>
                         </a>
                     </div>
                 </div>
@@ -864,10 +855,10 @@ portalRenderVideoGallery(
 <section class="mb-5" id="programme-faq">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-2 mb-3">
         <div>
-            <h2 class="h3 mb-1">Frequently Asked Questions</h2>
-            <div class="small text-secondary">Updated with the latest programme participation, fee, equipment and certificate information.</div>
+            <h2 class="h3 mb-1"><?= e(portalT('Frequently Asked Questions')) ?></h2>
+            <div class="small text-secondary"><?= e(portalT('Updated with the latest programme participation, fee, equipment and certificate information.')) ?></div>
         </div>
-        <a href="#programme-faq" class="btn btn-sm btn-outline-primary">Browse FAQs</a>
+        <a href="#programme-faq" class="btn btn-sm btn-outline-primary"><?= e(portalT('Browse FAQs')) ?></a>
     </div>
 
     <div class="card border-0 shadow-sm">
@@ -876,15 +867,15 @@ portalRenderVideoGallery(
                 <table id="programmeFaqTable" class="table table-hover align-middle w-100 mb-0">
                     <thead>
                         <tr>
-                            <th style="width:34%">Question</th>
-                            <th>Answer</th>
+                            <th style="width:34%"><?= e(portalT('Question')) ?></th>
+                            <th><?= e(portalT('Answer')) ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($programmeFaqs as $faq): ?>
                             <tr>
-                                <td class="fw-semibold"><?= e($faq['question_en']) ?></td>
-                                <td><?= aboutProgrammeSafeFaqAnswer((string) $faq['answer_en']) ?></td>
+                                <td class="fw-semibold"><?= e(portalT($faq['question_en'])) ?></td>
+                                <td><?= aboutProgrammeSafeFaqAnswer(portalT((string) $faq['answer_en'])) ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -908,7 +899,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const tables = [
         {
             selector: '#programmeSchoolsTable',
-            search: 'Search schools:',
+            search: <?= json_encode(portalT('Search schools:'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
             order: [[3, 'desc'], [0, 'asc']],
             columnDefs: [
                 { orderable: false, searchable: false, targets: [1, 6] }
@@ -916,7 +907,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         {
             selector: '#programmeFaqTable',
-            search: 'Search FAQ:',
+            search: <?= json_encode(portalT('Search FAQ:'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
             order: [[0, 'asc']],
             columnDefs: []
         }
@@ -932,17 +923,17 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!trigger) return;
 
             const imageUrl = trigger.getAttribute('data-image-url') || '';
-            const schoolName = trigger.getAttribute('data-school-name') || 'School';
+            const schoolName = trigger.getAttribute('data-school-name') || <?= json_encode(portalT('School'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
 
             schoolImageModalImage.src = imageUrl;
-            schoolImageModalImage.alt = schoolName + ' School Image';
-            schoolImageModalLabel.textContent = schoolName + ' — School Image';
+            schoolImageModalImage.alt = schoolName + ' — ' + <?= json_encode(portalT('School Image'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+            schoolImageModalLabel.textContent = schoolName + ' — ' + <?= json_encode(portalT('School Image'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
         });
 
         schoolImageModal.addEventListener('hidden.bs.modal', function () {
             schoolImageModalImage.src = '';
             schoolImageModalImage.alt = '';
-            schoolImageModalLabel.textContent = 'School Image';
+            schoolImageModalLabel.textContent = <?= json_encode(portalT('School Image'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
         });
     }
 
@@ -961,10 +952,12 @@ document.addEventListener('DOMContentLoaded', function () {
             columnDefs: item.columnDefs,
             language: {
                 search: item.search,
-                info: 'Showing _START_–_END_ of _TOTAL_ records',
-                infoEmpty: 'Showing 0 records',
-                zeroRecords: 'No matching records found',
-                paginate: { previous: 'Previous', next: 'Next' }
+                info: <?= json_encode(portalT('Showing _START_–_END_ of _TOTAL_ records'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+                infoEmpty: <?= json_encode(portalT('Showing 0 records'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+                zeroRecords: <?= json_encode(portalT('No matching records found'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+                emptyTable: <?= json_encode(portalT('No data available in table'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+                infoFiltered: <?= json_encode(portalT('(filtered from _MAX_ total records)'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+                paginate: { previous: <?= json_encode(portalT('Previous'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>, next: <?= json_encode(portalT('Next'), JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?> }
             }
         });
     });
