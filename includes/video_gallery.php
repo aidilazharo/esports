@@ -155,15 +155,16 @@ if (!function_exists('portalVideosForSchool')) {
 if (!function_exists('portalRenderVideoGallery')) {
     function portalRenderVideoGallery(array $videos, string $heading, string $subtitle, string $sectionId): void
     {
+        require_once __DIR__ . '/portal_language.php';
         $sectionId = preg_replace('/[^a-zA-Z0-9_-]/', '', $sectionId) ?: 'featured-videos';
         ?>
         <section class="mb-4 portal-video-gallery" aria-labelledby="<?= e($sectionId) ?>-title">
             <div class="d-flex flex-column flex-md-row align-items-md-end justify-content-between gap-2 mb-3">
                 <div>
-                    <div class="small text-uppercase fw-semibold text-primary mb-1">Videos</div>
-                    <h2 class="h3 mb-1" id="<?= e($sectionId) ?>-title"><?= e($heading) ?></h2>
+                    <div class="small text-uppercase fw-semibold text-primary mb-1"><?= e(portalT('Videos')) ?></div>
+                    <h2 class="h3 mb-1" id="<?= e($sectionId) ?>-title"><?= e(portalT($heading)) ?></h2>
                     <?php if (trim($subtitle) !== ''): ?>
-                        <p class="small text-secondary mb-0"><?= e($subtitle) ?></p>
+                        <p class="small text-secondary mb-0"><?= e(portalT($subtitle)) ?></p>
                     <?php endif; ?>
                 </div>
             </div>
@@ -191,12 +192,12 @@ if (!function_exists('portalRenderVideoGallery')) {
                                 ></iframe>
                             </div>
                             <div class="card-body d-flex flex-column p-3">
-                                <div class="small text-secondary mb-1"><?= e((string) ($video['source'] ?? 'Video submission')) ?></div>
-                                <h3 class="h6 fw-semibold mb-3"><?= e($title) ?></h3>
+                                <div class="small text-secondary mb-1"><?= e(portalT((string) ($video['source'] ?? 'Video submission'))) ?></div>
+                                <h3 class="h6 fw-semibold mb-3" data-language-no-translate><?= e($title) ?></h3>
                                 <a href="<?= e($watchUrl) ?>" target="_blank" rel="noopener noreferrer"
                                    class="btn btn-sm btn-outline-danger mt-auto align-self-start"
-                                   aria-label="Watch <?= e($title) ?> on YouTube">
-                                    <i class="bi bi-youtube me-1" aria-hidden="true"></i>Watch on YouTube
+                                   aria-label="<?= e(sprintf(portalT('Watch %s on YouTube'), $title)) ?>">
+                                    <i class="bi bi-youtube me-1" aria-hidden="true"></i><?= e(portalT('Watch on YouTube')) ?>
                                 </a>
                             </div>
                         </div>
@@ -204,15 +205,15 @@ if (!function_exists('portalRenderVideoGallery')) {
                 <?php endforeach; ?>
                 <?php for ($emptySlot = count($videos); $emptySlot < 4; $emptySlot++): ?>
                     <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="card border shadow-sm h-100 overflow-hidden" aria-label="Awaiting video submission">
+                        <div class="card border shadow-sm h-100 overflow-hidden" aria-label="<?= e(portalT('Awaiting video submission')) ?>">
                             <div class="ratio ratio-16x9 bg-body-tertiary text-secondary">
                                 <div class="d-flex flex-column align-items-center justify-content-center">
                                     <i class="bi bi-camera-video fs-2" aria-hidden="true"></i>
-                                    <span class="small mt-2">Awaiting video submission</span>
+                                    <span class="small mt-2"><?= e(portalT('Awaiting video submission')) ?></span>
                                 </div>
                             </div>
                             <div class="card-body p-3">
-                                <p class="small text-secondary mb-0">A teacher or student YouTube link will appear here when available.</p>
+                                <p class="small text-secondary mb-0"><?= e(portalT('A teacher or student YouTube link will appear here when available.')) ?></p>
                             </div>
                         </div>
                     </div>
@@ -220,7 +221,7 @@ if (!function_exists('portalRenderVideoGallery')) {
             </div>
             <?php if (count($videos) < 4): ?>
                 <p class="small text-secondary mt-2 mb-0" role="status">
-                    <?= count($videos) ?> of 4 slots contain submitted videos. No external or repeated videos are used.
+                    <?= e(sprintf(portalT('%d of 4 slots contain submitted videos. No external or repeated videos are used.'), count($videos))) ?>
                 </p>
             <?php endif; ?>
         </section>
