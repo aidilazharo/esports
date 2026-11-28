@@ -18,14 +18,14 @@ function schoolPortalConfig(PDO $pdo, string $key, int $schoolId): array
     $configs['teachers'] = [
         'key'=>'teachers','title'=>'Teachers','singular'=>'Teacher','table'=>'teachers','pk'=>'id','page'=>'/school/teachers.php',
         'intro'=>'Manage teachers registered under this school.',
+        'list_first'=>true,
+        'reset_verification_on_email_change'=>'email_verified_at',
         'fields'=>[
             'full_name'=>['label'=>'Full Name','type'=>'text','required'=>true,'col'=>'col-md-6'],
             'identity_number'=>['label'=>'Identity Number','type'=>'text','col'=>'col-md-6'],
             'position'=>['label'=>'Position','type'=>'text','col'=>'col-md-4'],
             'phone'=>['label'=>'Phone','type'=>'text','col'=>'col-md-4'],
             'email'=>['label'=>'Email','type'=>'email','col'=>'col-md-4'],
-            'phone_verified_at'=>['label'=>'Phone Verified At','type'=>'datetime-local','col'=>'col-md-6'],
-            'email_verified_at'=>['label'=>'Email Verified At','type'=>'datetime-local','col'=>'col-md-6'],
         ],
         'stats'=>[
             ['label'=>'Total Teachers','sql'=>'SELECT COUNT(*) FROM teachers WHERE school_id=?','school_param_count'=>1,'icon'=>'bi-person-badge'],
@@ -49,7 +49,8 @@ function schoolPortalConfig(PDO $pdo, string $key, int $schoolId): array
 
     $configs['students'] = [
         'key'=>'students','title'=>'Students','singular'=>'Student','table'=>'students','pk'=>'id','page'=>'/school/students.php',
-        'intro'=>'Manage students and membership from one page. The separate Memberships menu has been removed.',
+        'intro'=>'Manage students and membership from one page.',
+        'list_first'=>true,
         'fields'=>[
             'student_number'=>['label'=>'Student Number','type'=>'text','required'=>true,'col'=>'col-md-4'],
             'full_name'=>['label'=>'Full Name','type'=>'text','required'=>true,'col'=>'col-md-8'],
@@ -62,12 +63,10 @@ function schoolPortalConfig(PDO $pdo, string $key, int $schoolId): array
             'jersey_number'=>['label'=>'Jersey No.','type'=>'text','col'=>'col-md-2'],
             'phone'=>['label'=>'Phone','type'=>'text','col'=>'col-md-4'],
             'email'=>['label'=>'Email','type'=>'email','col'=>'col-md-4'],
-            'membership_status'=>['label'=>'Membership Status','type'=>'select','required'=>true,'options'=>$membershipOptions,'default'=>'pending_payment','col'=>'col-md-4'],
-            'membership_next_due_at'=>['label'=>'Membership Expiry','type'=>'datetime-local','col'=>'col-md-6','help'=>'Active coupon and paid memberships are valid when this date has not expired.'],
-            'account_verified_at'=>['label'=>'Account Verified At','type'=>'datetime-local','col'=>'col-md-6'],
         ],
         'create_defaults'=>function(array $data, int $schoolId): array {
             $data['qr_token'] = bin2hex(random_bytes(32));
+            $data['membership_status'] = 'pending_payment';
             return $data;
         },
         'stats'=>[
@@ -76,7 +75,10 @@ function schoolPortalConfig(PDO $pdo, string $key, int $schoolId): array
             ['label'=>'Pending Membership','sql'=>"SELECT COUNT(*) FROM students WHERE school_id=? AND membership_status IN ('pending_payment','pending_activation')",'school_param_count'=>1,'icon'=>'bi-hourglass-split'],
             ['label'=>'Expired / Inactive','sql'=>"SELECT COUNT(*) FROM students WHERE school_id=? AND (membership_status='inactive' OR (membership_next_due_at IS NOT NULL AND membership_next_due_at<NOW()))",'school_param_count'=>1,'icon'=>'bi-person-x'],
         ],
-        'list_sql'=>"SELECT id,student_number,full_name,class_name,membership_status,membership_next_due_at,created_at
+        'list_sql'=>"SELECT id,student_number,full_name,class_name,
+                    CASE WHEN membership_status='active' AND membership_next_due_at < NOW() THEN 'expired'
+                         WHEN membership_status='active' AND membership_next_due_at IS NULL THEN 'inactive'
+                         ELSE membership_status END AS membership_status,membership_next_due_at,created_at
                     FROM students WHERE school_id=? ORDER BY created_at DESC",
         'list_params'=>['__SCHOOL_ID__'],
         'columns'=>[

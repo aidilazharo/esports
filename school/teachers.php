@@ -14,7 +14,7 @@ try {
     schoolCrudHandle($pdo,$config,$schoolId);
 } catch (Throwable $e) {
     error_log('School teachers CRUD error: '.$e->getMessage());
-    setFlash('danger',$e->getMessage());
+    setFlash('danger','Unable to save the record. Please check the details and try again.');
     redirect($config['page']);
 }
 

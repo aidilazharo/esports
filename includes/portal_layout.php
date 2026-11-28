@@ -88,16 +88,7 @@ function portalPageStart(string $role, string $activeKey, string $title): void
     echo '<title>'.$e($title).' | '.$e($portalTitle).'</title>';
     echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"><link href="/assets/css/mobile-icon-links.css?v=2" rel="stylesheet"><link href="/assets/css/mobile-split-navigation.css?v=2" rel="stylesheet">';
     echo portalLanguageAssets();
-    echo '<style>
-        body{background:#f5f7fb;color:#1f2937}
-        .portal-sidebar{min-height:calc(100vh - 58px)}
-        .nav-pills .nav-link{color:#374151;display:flex;align-items:center;gap:.65rem;padding:.65rem .75rem}
-        .nav-pills .nav-link i{width:1.1rem;text-align:center}
-        .nav-pills .nav-link.active{color:#fff}
-        .stat-card{border:0;box-shadow:0 .125rem .5rem rgba(0,0,0,.06)}
-        .card{border-radius:.8rem}
-        @media (max-width:767.98px){.portal-sidebar{min-height:auto}}
-    </style></head><body>';
+    echo '<link href="/assets/css/portal-design.css?v=1" rel="stylesheet"></head><body class="portal-shell">';
     // Keep all current role links; mobile only moves their presentation.
     $mobilePrimaryKeys = match ($role) {
         'admin' => ['dashboard', 'schools', 'students', 'events'],
@@ -142,9 +133,9 @@ function portalPageStart(string $role, string $activeKey, string $title): void
         $label=(string)($item[0]??'');
         $href=(string)($item[1]??'#');
         $icon=(string)($item[2]??'bi-circle');
-        echo '<a class="nav-link'.($key===$activeKey?' active':'').'" href="'.$e($href).'"><i class="bi '.$e($icon).'"></i><span>'.$e($label).'</span></a>';
+        echo '<a class="nav-link'.($key===$activeKey?' active':'').'" href="'.$e($href).'"'.($key===$activeKey?' aria-current="page"':'').'><i class="bi '.$e($icon).'" aria-hidden="true"></i><span>'.$e($label).'</span></a>';
     }
-    echo '</div></aside><main class="col-lg-10 col-md-9 p-4"><div class="mb-4"><h1 class="h3 mb-1">'.$e($title).'</h1><div class="text-secondary small">'.$e($portalTitle).'</div></div>';
+    echo '</div></aside><main class="col-lg-10 col-md-9 p-3 p-lg-4" id="portal-main"><div class="mb-3"><h1 class="h4 mb-0">'.$e($title).'</h1></div>';
     if (!empty($_SESSION['flash']) && is_array($_SESSION['flash'])) {
         $flash=$_SESSION['flash']; unset($_SESSION['flash']);
         $type=preg_replace('/[^a-z]/','',(string)($flash['type']??'info')) ?: 'info';

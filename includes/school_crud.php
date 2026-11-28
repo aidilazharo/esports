@@ -221,8 +221,22 @@ function schoolCrudHandle(PDO $pdo, array $config, int $schoolId): void
             . ' SET ' . implode(', ', $set)
             . ' WHERE ' . schoolCrudIdentifier($pk) . ' = ? AND ' . schoolCrudIdentifier($scopeColumn) . ' = ?';
 
+        $values = array_values($data);
+        if (isset($config['reset_verification_on_email_change']) && array_key_exists('email', $data)) {
+            // Compare against the old email within the same UPDATE, before assigning email.
+            $verificationFields = [(string)$config['reset_verification_on_email_change'], 'email_verification_token_hash', 'email_verification_expires_at'];
+            $verificationSet = [];
+            foreach ($verificationFields as $field) {
+                $column = schoolCrudIdentifier($field);
+                $verificationSet[] = $column . ' = CASE WHEN BINARY email <=> BINARY ? THEN ' . $column . ' ELSE NULL END';
+            }
+            $sql = 'UPDATE ' . schoolCrudIdentifier($table)
+                . ' SET ' . implode(', ', array_merge($verificationSet, $set))
+                . ' WHERE ' . schoolCrudIdentifier($pk) . ' = ? AND ' . schoolCrudIdentifier($scopeColumn) . ' = ?';
+            $values = array_merge(array_fill(0, count($verificationSet), $data['email']), $values);
+        }
         $stmt = $pdo->prepare($sql);
-        $stmt->execute(array_merge(array_values($data), [$id, $schoolId]));
+        $stmt->execute(array_merge($values, [$id, $schoolId]));
 
         setFlash('success', ($config['singular'] ?? 'Record') . ' updated successfully.');
         redirect($page);
@@ -272,12 +286,13 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
     $tableReady = schoolCrudTableExists($pdo, $table);
     $editRow = $tableReady ? schoolCrudFetchEditRow($pdo, $config, $schoolId) : null;
     $isEditing = $editRow !== null;
+    $showForm = empty($config['list_first']) || $isEditing || isset($_GET['add']);
 
     portalPageStart('school', (string)$config['key'], (string)$config['title']); ?>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap5.min.css">
 
     <?php if (!$tableReady): ?>
-        <div class="alert alert-warning"><strong>Database upgrade required.</strong> Run <code>sql/school_portal_upgrade.sql</code>.</div>
+        <div class="alert alert-warning">Records are temporarily unavailable. Please contact support.</div>
     <?php endif; ?>
 
     <div class="row g-3 mb-4">
@@ -297,6 +312,7 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
         <?php endforeach; ?>
     </div>
 
+    <?php if ($showForm): ?>
     <div class="card stat-card mb-4">
         <div class="card-header bg-white d-flex justify-content-between align-items-center gap-2 py-3">
             <div><h2 class="h5 mb-1"><?= $isEditing ? 'Edit ' . e((string)$config['singular']) : 'Add ' . e((string)$config['singular']) ?></h2>
@@ -317,15 +333,18 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
 
                 <div class="col-12 d-flex gap-2">
                     <button class="btn btn-primary" type="submit"><i class="bi <?= $isEditing ? 'bi-save' : 'bi-plus-circle' ?> me-1"></i><?= $isEditing ? 'Save Changes' : 'Create ' . e((string)$config['singular']) ?></button>
-                    <?php if ($isEditing): ?><a class="btn btn-outline-secondary" href="<?= e((string)$config['page']) ?>">Cancel</a><?php endif; ?>
+                    <?php if ($isEditing || !empty($config['list_first'])): ?><a class="btn btn-outline-secondary" href="<?= e((string)$config['page']) ?>">Cancel</a><?php endif; ?>
                 </div>
             </form>
             <?php endif; ?>
         </div>
     </div>
 
+    <?php endif; ?>
     <div class="card stat-card">
-        <div class="card-header bg-white py-3"><h2 class="h5 mb-0"><?= e((string)$config['title']) ?> Records</h2></div>
+        <div class="card-header bg-white py-3 d-flex flex-wrap align-items-center justify-content-between gap-2"><h2 class="h5 mb-0"><?= e((string)$config['title']) ?> Records</h2>
+            <?php if (!$showForm && $tableReady): ?><a class="btn btn-primary btn-sm" data-mobile-icon-links="off" href="<?= e((string)$config['page']) ?>?add=1"><i class="bi bi-plus-circle" aria-hidden="true"></i> Add <?=e((string)$config['singular'])?></a><?php endif; ?>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table id="<?= e((string)$config['key']) ?>Table" class="table table-hover align-middle w-100">
