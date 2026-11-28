@@ -32,7 +32,7 @@ function portalLanguageHtmlTag(): string
  */
 function portalLanguageDictionary(): array
 {
-    return [
+    return array_replace([
         'Language' => ['Bahasa', '语言', 'மொழி'],
         'Home' => ['Utama', '首页', 'முகப்பு'],
         'Programme' => ['Program', '计划', 'திட்டம்'],
@@ -157,13 +157,17 @@ function portalLanguageDictionary(): array
             '一项精选 PlayStation 锦标赛及一项活动与比赛项目。',
             'ஒரு சிறப்பு PlayStation போட்டித் தொடரும் ஒரு நிகழ்வு அல்லது போட்டியும்.'
         ],
-    ];
+    ], require __DIR__ . '/portal_language_programme.php');
 }
 
 /** @return array<string,string> */
 function portalLanguageCatalog(): array
 {
+    static $cache = [];
     $language = portalLanguage();
+    if (isset($cache[$language])) {
+        return $cache[$language];
+    }
     if ($language === 'en') {
         return [];
     }
@@ -176,7 +180,7 @@ function portalLanguageCatalog(): array
     foreach (portalLanguageDictionary() as $key => $translations) {
         $messages[$key] = $translations[$index] ?? $key;
     }
-    return $messages;
+    return $cache[$language] = $messages;
 }
 
 function portalT(string $english): string
