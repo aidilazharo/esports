@@ -60,7 +60,7 @@ function jpnPageStart(
         }
         @media(max-width:767.98px){.jpn-sidebar{min-height:auto}}
     </style>';
-    echo '</head><body>';
+    echo '<link href="/assets/css/portal-design.css?v=2" rel="stylesheet"></head><body class="portal-shell">';
 
     [$mobileTopItems, $mobileBottomItems] = mobileNavigationRoleItems(
         $menu, ['dashboard', 'report'], $activeKey
@@ -98,7 +98,7 @@ function jpnPageStart(
     }
 
     echo '</div></aside>';
-    echo '<main class="col-lg-10 col-md-9 p-4">';
+    echo '<main class="col-lg-10 col-md-9 p-3 p-lg-4">';
     echo '<div class="d-flex flex-column flex-lg-row justify-content-between gap-2 mb-4">';
     echo '<div><h1 class="h3 mb-1">'.$e($title).'</h1>';
     echo '<div class="text-secondary small">'.$e(portalT('JPN Education Department Portal')).' · '.$e($scopeLabel).'</div></div>';

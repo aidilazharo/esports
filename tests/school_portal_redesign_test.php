@@ -18,4 +18,20 @@ foreach (['phone_verified_at','email_verified_at','account_verified_at','members
     verifySchoolRedesign(!str_contains($people,"'".$field."'=>['label'"), 'No editable system field '.$field);
 }
 verifySchoolRedesign(substr_count($people,"'list_first'=>true")===2,'List-first people management');
+require_once $root.'/includes/equipment_timeline.php';
+foreach ([0,1,2,10,15,20,25,30,31,60,101] as $n) {
+    $cycle=equipmentTimelineCycle($n);
+    verifySchoolRedesign(count($cycle['milestones'])===7,'Cycle milestones '.$n);
+    verifySchoolRedesign($cycle['next']['threshold']>$n,'Next milestone '.$n);
+}
+require_once $root.'/includes/portal_layout.php';
+foreach (['school','teacher','admin','parent'] as $role) {
+    $keys=array_merge(...array_values(portalLayoutGroups($role)));
+    $menu=portalLayoutMenu($role);
+    verifySchoolRedesign(count($keys)===count(array_unique($keys)) && !array_diff(array_keys($menu),$keys) && !array_diff($keys,array_keys($menu)), 'Complete role navigation '.$role);
+}
+$html=portalSchoolMobileNavigation(portalLayoutMenu('school'),'students');
+verifySchoolRedesign(substr_count($html,'class="school-bottom-item')===5,'Five mobile destinations');
+verifySchoolRedesign(str_contains($html,'/school/psn_accounts.php'),'PSN route preserved');
+verifySchoolRedesign(str_contains(file_get_contents($root.'/school_profile.php'),'equipmentRenderTimeline($pdo, $schoolId);'),'Public timeline placement');
 echo "School portal entitlement and form configuration checks passed.".PHP_EOL;

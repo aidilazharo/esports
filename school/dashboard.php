@@ -3,7 +3,7 @@ declare(strict_types=1);
 require_once __DIR__.'/../config.php';
 require_once __DIR__.'/../includes/role_auth.php';
 require_once __DIR__.'/../includes/portal_layout.php';
-require_once __DIR__.'/../includes/equipment_entitlements.php';
+require_once __DIR__.'/../includes/equipment_timeline.php';
 requirePortalRole('school');
 $schoolId=(int)($_SESSION['school_id']??0);
 
@@ -28,11 +28,9 @@ $counts=[
 ];
 $eligible = null;
 $ps5 = null;
-$next = null;
 try {
     $eligible = equipmentCurrentYearActiveStudents($pdo, $schoolId);
     $ps5 = equipmentEntitlementTotals($eligible)['ps5'];
-    $next = equipmentNextMilestones($eligible, 1)[0];
 } catch (Throwable $e) {
     error_log('School dashboard equipment count failed: '.$e->getMessage());
 }
@@ -59,6 +57,8 @@ portalPageStart('school','dashboard','Dashboard');
     <div class="d-flex flex-wrap gap-2" data-mobile-icon-links="off">
         <a class="btn btn-primary btn-sm" href="/school/students.php?add=1"><i class="bi bi-person-plus" aria-hidden="true"></i> <?=e(portalT('Add Student'))?></a>
         <a class="btn btn-outline-primary btn-sm" href="/school/attendance.php"><i class="bi bi-qr-code-scan" aria-hidden="true"></i> <?=e(portalT('Attendance'))?></a>
+        <a class="btn btn-outline-primary btn-sm" href="/school/teachers.php?add=1"><?=e(portalT('Register Teacher'))?></a>
+        <a class="btn btn-outline-primary btn-sm" href="/school/reports.php"><?=e(portalT('Reports'))?></a>
         <a class="btn btn-outline-primary btn-sm" href="/school/events.php"><?=e(portalT('Events'))?></a>
     </div>
 </div>
@@ -75,17 +75,7 @@ portalPageStart('school','dashboard','Dashboard');
 ] as [$l,$v,$i,$href]):?><div class="col-sm-6 col-xl-3"><a class="text-decoration-none" href="<?=e($href)?>"><div class="card stat-card h-100"><div class="card-body d-flex justify-content-between"><div><div class="small text-secondary"><?=e(portalT($l))?></div><div class="h3 mb-0 text-dark"><?=$v===null?'<span class="small text-secondary">'.e(portalT('Unavailable')).'</span>':number_format($v)?></div></div><i class="bi <?=e($i)?> fs-2 text-primary"></i></div></div></a></div><?php endforeach;?>
 </div>
 
-<?php if ($next !== null): ?>
-<div class="card stat-card mt-3"><div class="card-body">
-    <div class="d-flex justify-content-between flex-wrap gap-2">
-        <h2 class="h6"><?=e(portalT('Equipment'))?> · <?=e((string)date('Y'))?></h2>
-        <a href="/school/equipment.php"><?=e(portalT('View Equipment'))?></a>
-    </div>
-    <p class="mb-2"><?=number_format($eligible)?> / <?=number_format($next['threshold'])?> · <?=e(portalT($next['label']))?></p>
-    <div class="progress" role="progressbar" aria-label="<?=e(portalT('Equipment'))?>" aria-valuenow="<?=$eligible?>" aria-valuemin="0" aria-valuemax="<?=$next['threshold']?>"><div class="progress-bar" style="width:<?=round(100*$eligible/$next['threshold'],2)?>%"></div></div>
-    <p class="small text-secondary mt-2 mb-0"><?=number_format($next['students_needed'])?> <?=e(portalT('Students needed for next milestone'))?></p>
-</div></div>
-<?php endif; ?>
+<?php equipmentRenderTimeline($pdo,$schoolId); ?>
 <div class="card stat-card mt-4"><div class="card-header bg-white py-3"><h2 class="h5 mb-0"><?=e(portalT('Recent Students'))?></h2></div><div class="card-body">
 <?php if ($rowsUnavailable): ?><div class="alert alert-warning" role="alert"><?=e(portalT('Student records are temporarily unavailable.'))?></div><?php endif; ?>
 <div class="table-responsive">

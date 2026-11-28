@@ -14,7 +14,7 @@ try {
     schoolCrudHandle($pdo,$config,$schoolId);
 } catch (Throwable $e) {
     error_log('School reports CRUD error: '.$e->getMessage());
-    setFlash('danger',$e->getMessage());
+    setFlash('danger','Unable to save the report. Please try again.');
     redirect($config['page']);
 }
 

@@ -298,8 +298,8 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
     <div class="row g-3 mb-4">
         <?php foreach (($config['stats'] ?? []) as $stat):
             $value = $tableReady
-                ? schoolCrudScalar($pdo, (string)$stat['sql'], array_merge((array)($stat['params'] ?? []), array_fill(0, (int)($stat['school_param_count'] ?? 0), $schoolId)), 0)
-                : 0;
+                ? schoolCrudScalar($pdo, (string)$stat['sql'], array_merge((array)($stat['params'] ?? []), array_fill(0, (int)($stat['school_param_count'] ?? 0), $schoolId)), 'Unavailable')
+                : 'Unavailable';
             if (!empty($stat['format']) && is_callable($stat['format'])) $value = ($stat['format'])($value);
             elseif (is_numeric($value)) $value = number_format((float)$value, (float)$value == (int)$value ? 0 : 2);
         ?>
@@ -346,6 +346,9 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
             <?php if (!$showForm && $tableReady): ?><a class="btn btn-primary btn-sm" data-mobile-icon-links="off" href="<?= e((string)$config['page']) ?>?add=1"><i class="bi bi-plus-circle" aria-hidden="true"></i> Add <?=e((string)$config['singular'])?></a><?php endif; ?>
         </div>
         <div class="card-body">
+            <?php if (in_array($config['key'],['students','teachers'],true)): ?>
+            <div class="row g-2 mb-3" id="school-list-filters" data-mobile-icon-links="off"></div>
+            <?php endif; ?>
             <div class="table-responsive">
                 <table id="<?= e((string)$config['key']) ?>Table" class="table table-hover align-middle w-100">
                     <thead><tr>
@@ -364,6 +367,7 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
                             $rows = $stmt->fetchAll();
                         } catch (Throwable $e) {
                             error_log('School CRUD list query failed: ' . $e->getMessage());
+                            $listUnavailable=true;
                         }
                     }
                     foreach ($rows as $row): ?>
@@ -382,12 +386,12 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
                             <td><?= $isHtml ? (string)$rendered : e((string)($rendered ?? '')) ?></td>
                         <?php endforeach; ?>
                             <td class="text-end text-nowrap">
-                                <a class="btn btn-sm btn-outline-primary" href="<?= e((string)$config['page']) ?>?edit=<?= (int)$row[$config['pk'] ?? 'id'] ?>" title="Edit"><i class="bi bi-pencil-square"></i></a>
+                                <a class="btn btn-sm btn-outline-primary" href="<?= e((string)$config['page']) ?>?edit=<?= (int)$row[$config['pk'] ?? 'id'] ?>" title="Edit" aria-label="Edit record"><i class="bi bi-pencil-square"></i></a>
                                 <form method="post" class="d-inline" onsubmit="return confirm('Delete this record? This cannot be undone.');">
                                     <input type="hidden" name="csrf_token" value="<?= e(csrfToken()) ?>">
                                     <input type="hidden" name="crud_action" value="delete">
                                     <input type="hidden" name="<?= e((string)($config['pk'] ?? 'id')) ?>" value="<?= (int)$row[$config['pk'] ?? 'id'] ?>">
-                                    <button class="btn btn-sm btn-outline-danger" type="submit" title="Delete"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" type="submit" title="Delete" aria-label="Delete record"><i class="bi bi-trash"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -395,6 +399,7 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
                     </tbody>
                 </table>
             </div>
+            <?php if (!empty($listUnavailable)): ?><p class="alert alert-warning mt-2">Records are temporarily unavailable.</p><?php endif; ?>
         </div>
     </div>
 
@@ -405,7 +410,7 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
     document.addEventListener('DOMContentLoaded', function () {
         const table = document.getElementById(<?= json_encode((string)$config['key'] . 'Table') ?>);
         if (table && window.jQuery && jQuery.fn.DataTable) {
-            jQuery(table).DataTable({
+            const dt=jQuery(table).DataTable({
                 pageLength: 10,
                 lengthChange: false,
                 searching: true,
@@ -416,6 +421,20 @@ function schoolCrudPage(PDO $pdo, array $config, int $schoolId): void
                 columnDefs: [{orderable:false,searchable:false,targets:-1}],
                 language:{search:'Search:',emptyTable:'No records found.'}
             });
+            const filters=document.getElementById('school-list-filters');
+            if(filters){
+                const type=<?=json_encode($config['key'])?>;
+                const spec=type==='students'?[[2,'Class'],[3,'Membership'],[5,'Registration year',true]]:[[1,'Position'],[4,'Verification'],[5,'Registration year',true]];
+                spec.forEach(([idx,label,year])=>{
+                    const wrap=document.createElement('div');wrap.className='col-12 col-sm-4';
+                    const select=document.createElement('select');select.className='form-select form-select-sm';select.setAttribute('aria-label',label);
+                    select.add(new Option('All '+label.toLowerCase(),''));
+                    const clean=value=>{const text=String(value).trim();return year?text.slice(-4):text;};
+                    [...new Set(dt.column(idx).nodes().toArray().map(node=>clean(node.textContent)).filter(Boolean))].sort().forEach(value=>select.add(new Option(value,value)));
+                    select.addEventListener('change',()=>dt.column(idx).search(select.value,{exact:!year,regex:false,smart:false}).draw());
+                    wrap.append(select);filters.append(wrap);
+                });
+            }
         }
     });
     </script>

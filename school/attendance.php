@@ -20,12 +20,23 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $id=(int)($_POST['id']??0);$studentId=(int)($_POST['student_id']??0);
             if(!isset($students[$studentId]))throw new RuntimeException('Select a student from this school.');
             if($action==='update'&&!schoolAttendanceOwned($pdo,$id,$schoolId))throw new RuntimeException('You do not have access to this attendance record.');
-            $month=trim((string)($_POST['attendance_month']??date('Y-m-01')));
             $checkIn=trim((string)($_POST['check_in_at']??''));$checkOut=trim((string)($_POST['check_out_at']??''));
-            $actual=max(0,(int)($_POST['actual_minutes']??0));$credited=max(0,(int)($_POST['credited_minutes']??0));
-            $status=trim((string)($_POST['status']??'open'));$scan=trim((string)($_POST['scan_method']??'manual'));$notes=trim((string)($_POST['notes']??''));
-            $checkInDb=$checkIn?date('Y-m-d H:i:s',strtotime($checkIn)):null;$checkOutDb=$checkOut?date('Y-m-d H:i:s',strtotime($checkOut)):null;
-            if(!$checkInDb)throw new RuntimeException('Check-in date/time is required.');
+            $in=DateTimeImmutable::createFromFormat('!Y-m-d\\TH:i',$checkIn);
+            $out=$checkOut!==''?DateTimeImmutable::createFromFormat('!Y-m-d\\TH:i',$checkOut):null;
+            if(!$in||$in->format('Y-m-d\\TH:i')!==$checkIn||($checkOut!==''&&(!$out||$out->format('Y-m-d\\TH:i')!==$checkOut||$out<=$in)))throw new RuntimeException('Invalid check-in or check-out.');
+            $checkInDb=$in->format('Y-m-d H:i:s');$checkOutDb=$out?$out->format('Y-m-d H:i:s'):null;
+            $month=$in->format('Y-m-01');
+            $status=(($_POST['status']??'')==='cancelled')?'cancelled':($out?'completed':'open');
+            $scan='manual';$notes=trim((string)($_POST['notes']??''));
+            $actual=$out?max(1,(int)ceil(($out->getTimestamp()-$in->getTimestamp())/60)):0;
+            $pdo->beginTransaction();
+            $lock=$pdo->prepare('SELECT id FROM students WHERE id=? AND school_id=? FOR UPDATE');
+            $lock->execute([$studentId,$schoolId]);if(!$lock->fetchColumn())throw new RuntimeException('Student unavailable.');
+            $dup=$pdo->prepare("SELECT COUNT(*) FROM attendance_sessions WHERE student_id=? AND id<>? AND status<>'cancelled' AND (check_in_at=? OR (?='open' AND status='open'))");
+            $dup->execute([$studentId,$id,$checkInDb,$status]);if($status!=='cancelled'&&(int)$dup->fetchColumn())throw new RuntimeException('Duplicate attendance session.');
+            $used=$pdo->prepare("SELECT COALESCE(SUM(credited_minutes),0) FROM attendance_sessions WHERE student_id=? AND attendance_month=? AND status='completed' AND id<>?");
+            $used->execute([$studentId,$month,$id]);
+            $credited=$status==='completed'?min($actual,max(0,MONTHLY_ATTENDANCE_MINUTES-(int)$used->fetchColumn())):0;
             if($action==='create'){
                 $q=$pdo->prepare('INSERT INTO attendance_sessions (student_id,attendance_month,check_in_at,check_out_at,actual_minutes,credited_minutes,status,scan_method,notes) VALUES (?,?,?,?,?,?,?,?,?)');
                 $q->execute([$studentId,$month,$checkInDb,$checkOutDb,$actual,$credited,$status,$scan,$notes?:null]);
@@ -33,13 +44,14 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                 $q=$pdo->prepare('UPDATE attendance_sessions SET student_id=?,attendance_month=?,check_in_at=?,check_out_at=?,actual_minutes=?,credited_minutes=?,status=?,scan_method=?,notes=? WHERE id=?');
                 $q->execute([$studentId,$month,$checkInDb,$checkOutDb,$actual,$credited,$status,$scan,$notes?:null,$id]);
             }
+            $pdo->commit();
             setFlash('success','Attendance record saved.');redirect('/school/attendance.php');
         }
         if($action==='delete'){
             $id=(int)($_POST['id']??0);if(!schoolAttendanceOwned($pdo,$id,$schoolId))throw new RuntimeException('Attendance record not found.');
             $pdo->prepare('DELETE FROM attendance_sessions WHERE id=?')->execute([$id]);setFlash('success','Attendance record deleted.');redirect('/school/attendance.php');
         }
-    }catch(Throwable $e){setFlash('danger',$e->getMessage());redirect('/school/attendance.php');}
+    }catch(Throwable $e){if($pdo->inTransaction())$pdo->rollBack();error_log('School operation failed: '.$e->getMessage());setFlash('danger','Unable to save the record. Check the details and try again.');redirect('/school/attendance.php');}
 }
 
 $edit=null;$editId=(int)($_GET['edit']??0);
@@ -56,22 +68,20 @@ portalPageStart('school','attendance','Attendance');
 <?php foreach([['Sessions',$total,'bi-clock-history'],['Completed',$completed,'bi-check2-circle'],['Open',$open,'bi-stopwatch'],['Credited Hours',number_format($minutes/60,1),'bi-hourglass-split']] as [$l,$v,$i]):?>
 <div class="col-sm-6 col-xl-3"><div class="card stat-card h-100"><div class="card-body d-flex justify-content-between"><div><div class="small text-secondary"><?=e($l)?></div><div class="h3 mb-0"><?=e((string)$v)?></div></div><i class="bi <?=e($i)?> fs-2 text-primary"></i></div></div></div><?php endforeach;?>
 </div>
-<div class="card stat-card mb-4"><div class="card-header bg-white py-3"><h2 class="h5 mb-0"><?=$edit?'Edit Attendance':'Add Attendance'?></h2></div><div class="card-body">
+<div class="d-flex justify-content-end mb-3" data-mobile-icon-links="off"><?php if(!$edit&&!isset($_GET['add'])):?><a class="btn btn-primary btn-sm" href="/school/attendance.php?add=1"><i class="bi bi-plus-circle" aria-hidden="true"></i> Add Attendance</a><?php endif;?></div>
+<?php if($edit||isset($_GET['add'])):?><div class="card stat-card mb-4"><div class="card-header bg-white py-3"><h2 class="h5 mb-0"><?=$edit?'Edit Attendance':'Add Attendance'?></h2></div><div class="card-body">
 <form method="post" class="row g-3"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><input type="hidden" name="crud_action" value="<?=$edit?'update':'create'?>"><?php if($edit):?><input type="hidden" name="id" value="<?=(int)$edit['id']?>"><?php endif;?>
 <div class="col-md-6"><label class="form-label">Student *</label><select class="form-select" name="student_id" required><option value="">Select</option><?php foreach($students as $id=>$label):?><option value="<?=$id?>" <?=((int)($edit['student_id']??0)===$id?'selected':'')?>><?=e($label)?></option><?php endforeach;?></select></div>
-<div class="col-md-3"><label class="form-label">Month *</label><input type="date" class="form-control" name="attendance_month" value="<?=e((string)($edit['attendance_month']??date('Y-m-01')))?>" required></div>
-<div class="col-md-3"><label class="form-label">Status *</label><select class="form-select" name="status"><option value="open" <?=($edit['status']??'open')==='open'?'selected':''?>>Open</option><option value="completed" <?=($edit['status']??'')==='completed'?'selected':''?>>Completed</option><option value="cancelled" <?=($edit['status']??'')==='cancelled'?'selected':''?>>Cancelled</option></select></div>
+<div class="col-md-3"><label class="form-label">Status *</label><select class="form-select" name="status"><option value="open" <?=($edit['status']??'open')==='open'?'selected':''?>>Open</option><option value="completed" <?=($edit['status']??'')==='completed'?'selected':''?>>Completed (requires check-out)</option><option value="cancelled" <?=($edit['status']??'')==='cancelled'?'selected':''?>>Cancelled</option></select></div>
 <div class="col-md-4"><label class="form-label">Check In *</label><input type="datetime-local" class="form-control" name="check_in_at" value="<?=e(!empty($edit['check_in_at'])?date('Y-m-d\TH:i',strtotime((string)$edit['check_in_at'])):date('Y-m-d\TH:i'))?>" required></div>
 <div class="col-md-4"><label class="form-label">Check Out</label><input type="datetime-local" class="form-control" name="check_out_at" value="<?=e(!empty($edit['check_out_at'])?date('Y-m-d\TH:i',strtotime((string)$edit['check_out_at'])):'')?>"></div>
-<div class="col-md-2"><label class="form-label">Actual Min</label><input type="number" min="0" class="form-control" name="actual_minutes" value="<?=e((string)($edit['actual_minutes']??0))?>"></div>
-<div class="col-md-2"><label class="form-label">Credited Min</label><input type="number" min="0" class="form-control" name="credited_minutes" value="<?=e((string)($edit['credited_minutes']??0))?>"></div>
-<div class="col-md-4"><label class="form-label">Scan Method</label><input class="form-control" name="scan_method" value="<?=e((string)($edit['scan_method']??'manual'))?>"></div>
 <div class="col-md-8"><label class="form-label">Notes</label><input class="form-control" name="notes" value="<?=e((string)($edit['notes']??''))?>"></div>
-<div class="col-12"><button class="btn btn-primary"><i class="bi <?=$edit?'bi-save':'bi-plus-circle'?> me-1"></i><?=$edit?'Save Changes':'Add Attendance'?></button><?php if($edit):?><a href="/school/attendance.php" class="btn btn-outline-secondary ms-2">Cancel</a><?php endif;?></div>
+<div class="col-12"><button class="btn btn-primary"><i class="bi <?=$edit?'bi-save':'bi-plus-circle'?> me-1"></i><?=$edit?'Save Changes':'Add Attendance'?></button><?php if($edit||isset($_GET['add'])):?><a href="/school/attendance.php" class="btn btn-outline-secondary ms-2">Cancel</a><?php endif;?></div>
 </form></div></div>
 
+<?php endif;?>
 <div class="card stat-card"><div class="card-body"><div class="table-responsive"><table id="attendanceTable" class="table table-hover align-middle w-100"><thead><tr><th>Student</th><th>Month</th><th>Check In</th><th>Check Out</th><th>Credited</th><th>Status</th><th></th></tr></thead><tbody>
-<?php foreach($rows as $r):?><tr><td><strong><?=e((string)$r['full_name'])?></strong><br><span class="small text-secondary"><?=e((string)$r['student_number'])?></span></td><td><?=e((string)$r['attendance_month'])?></td><td><?=e((string)$r['check_in_at'])?></td><td><?=e((string)($r['check_out_at']??'-'))?></td><td><?=(int)$r['credited_minutes']?> min</td><td><?=e(ucfirst((string)$r['status']))?></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="/school/attendance.php?edit=<?=(int)$r['id']?>"><i class="bi bi-pencil-square"></i></a> <form method="post" class="d-inline" onsubmit="return confirm('Delete this attendance record?');"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><input type="hidden" name="crud_action" value="delete"><input type="hidden" name="id" value="<?=(int)$r['id']?>"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></td></tr><?php endforeach;?>
+<?php foreach($rows as $r):?><tr><td><strong><?=e((string)$r['full_name'])?></strong><br><span class="small text-secondary"><?=e((string)$r['student_number'])?></span></td><td><?=e((string)$r['attendance_month'])?></td><td><?=e((string)$r['check_in_at'])?></td><td><?=e((string)($r['check_out_at']??'-'))?></td><td><?=(int)$r['credited_minutes']?> min</td><td><?=e(ucfirst((string)$r['status']))?></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="/school/attendance.php?edit=<?=(int)$r['id']?>" aria-label="Edit record"><i class="bi bi-pencil-square" aria-hidden="true"></i></a> <form method="post" class="d-inline" onsubmit="return confirm('Delete this attendance record?');"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><input type="hidden" name="crud_action" value="delete"><input type="hidden" name="id" value="<?=(int)$r['id']?>"><button class="btn btn-sm btn-outline-danger" aria-label="Delete record"><i class="bi bi-trash"></i></button></form></td></tr><?php endforeach;?>
 </tbody></table></div></div></div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="https://cdn.datatables.net/2.3.3/js/dataTables.min.js"></script><script src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.min.js"></script>
 <script>document.addEventListener('DOMContentLoaded',()=>{if(window.jQuery&&jQuery.fn.DataTable)$('#attendanceTable').DataTable({pageLength:10,lengthChange:false,searching:true,ordering:true,info:true,order:[[2,'desc']],columnDefs:[{orderable:false,searchable:false,targets:-1}],language:{emptyTable:'No attendance records.'}});});</script>

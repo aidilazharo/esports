@@ -18,6 +18,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         verifyCsrf();$action=(string)($_POST['crud_action']??'');
         if(in_array($action,['create','update'],true)){
             $id=(int)($_POST['id']??0);$templateId=(int)($_POST['template_id']??0);$type=(string)($_POST['recipient_type']??'student');
+            if(!in_array($type,['student','teacher'],true))throw new RuntimeException('Invalid certificate recipient.');
             $studentId=$type==='student'?(int)($_POST['student_id']??0):null;$teacherId=$type==='teacher'?(int)($_POST['teacher_id']??0):null;
             if(!isset($templates[$templateId]))throw new RuntimeException('Select a valid certificate template.');
             if($type==='student'&&!isset($students[(int)$studentId]))throw new RuntimeException('Select a student from this school.');
@@ -38,7 +39,7 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $id=(int)($_POST['id']??0);if(!schoolCertOwned($pdo,$id,$schoolId))throw new RuntimeException('Certificate record not found.');
             $pdo->prepare('DELETE FROM issued_certificates WHERE id=?')->execute([$id]);setFlash('success','Certificate record deleted.');redirect('/school/certificates.php');
         }
-    }catch(Throwable $e){setFlash('danger',$e->getMessage());redirect('/school/certificates.php');}
+    }catch(Throwable $e){error_log('School operation failed: '.$e->getMessage());setFlash('danger','Unable to save the record. Check the details and try again.');redirect('/school/certificates.php');}
 }
 
 $edit=null;$editId=(int)($_GET['edit']??0);if($editId>0&&schoolCertOwned($pdo,$editId,$schoolId)){$q=$pdo->prepare('SELECT * FROM issued_certificates WHERE id=?');$q->execute([$editId]);$edit=$q->fetch()?:null;}
@@ -51,7 +52,8 @@ portalPageStart('school','certificates','Certificates');
 ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/2.3.3/css/dataTables.bootstrap5.min.css">
 <div class="row g-3 mb-4"><?php foreach([['Certificates',$total,'bi-award'],['Completed',$completed,'bi-patch-check'],['Draft',$draft,'bi-file-earmark-text'],['Revoked',$revoked,'bi-file-earmark-x']] as [$l,$v,$i]):?><div class="col-sm-6 col-xl-3"><div class="card stat-card h-100"><div class="card-body d-flex justify-content-between"><div><div class="small text-secondary"><?=e($l)?></div><div class="h3 mb-0"><?=number_format($v)?></div></div><i class="bi <?=e($i)?> fs-2 text-primary"></i></div></div></div><?php endforeach;?></div>
-<div class="card stat-card mb-4"><div class="card-header bg-white py-3"><h2 class="h5 mb-0"><?=$edit?'Edit Certificate':'Issue Certificate'?></h2></div><div class="card-body"><form method="post" class="row g-3">
+<div class="d-flex justify-content-end mb-3" data-mobile-icon-links="off"><?php if(!$edit&&!isset($_GET['add'])):?><a class="btn btn-primary btn-sm" href="/school/certificates.php?add=1"><i class="bi bi-plus-circle" aria-hidden="true"></i> Issue Certificate</a><?php endif;?></div>
+<?php if($edit||isset($_GET['add'])):?><div class="card stat-card mb-4"><div class="card-header bg-white py-3"><h2 class="h5 mb-0"><?=$edit?'Edit Certificate':'Issue Certificate'?></h2></div><div class="card-body"><form method="post" class="row g-3">
 <input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><input type="hidden" name="crud_action" value="<?=$edit?'update':'create'?>"><?php if($edit):?><input type="hidden" name="id" value="<?=(int)$edit['id']?>"><?php endif;?>
 <div class="col-md-5"><label class="form-label">Template *</label><select class="form-select" name="template_id" required><option value="">Select</option><?php foreach($templates as $id=>$label):?><option value="<?=$id?>" <?=((int)($edit['template_id']??0)===$id?'selected':'')?>><?=e($label)?></option><?php endforeach;?></select></div>
 <div class="col-md-2"><label class="form-label">Recipient Type</label><select class="form-select" name="recipient_type" id="recipientType"><option value="student" <?=($edit['recipient_type']??'student')==='student'?'selected':''?>>Student</option><option value="teacher" <?=($edit['recipient_type']??'')==='teacher'?'selected':''?>>Teacher</option></select></div>
@@ -60,10 +62,11 @@ portalPageStart('school','certificates','Certificates');
 <div class="col-md-3"><label class="form-label">Completion Date</label><input type="date" class="form-control" name="completion_date" value="<?=e((string)($edit['completion_date']??date('Y-m-d')))?>"></div>
 <div class="col-md-3"><label class="form-label">Status</label><select class="form-select" name="status"><option value="draft" <?=($edit['status']??'draft')==='draft'?'selected':''?>>Draft</option><option value="completed" <?=($edit['status']??'')==='completed'?'selected':''?>>Completed</option><option value="revoked" <?=($edit['status']??'')==='revoked'?'selected':''?>>Revoked</option></select></div>
 <div class="col-md-6"><label class="form-label">Notes</label><input class="form-control" name="notes" value="<?=e((string)($edit['notes']??''))?>"></div>
-<div class="col-12"><button class="btn btn-primary"><i class="bi <?=$edit?'bi-save':'bi-plus-circle'?> me-1"></i><?=$edit?'Save Changes':'Issue Certificate'?></button><?php if($edit):?><a class="btn btn-outline-secondary ms-2" href="/school/certificates.php">Cancel</a><?php endif;?></div>
+<div class="col-12"><button class="btn btn-primary"><i class="bi <?=$edit?'bi-save':'bi-plus-circle'?> me-1"></i><?=$edit?'Save Changes':'Issue Certificate'?></button><?php if($edit||isset($_GET['add'])):?><a class="btn btn-outline-secondary ms-2" href="/school/certificates.php">Cancel</a><?php endif;?></div>
 </form></div></div>
+<?php endif;?>
 <div class="card stat-card"><div class="card-body"><div class="table-responsive"><table id="certTable" class="table table-hover align-middle w-100"><thead><tr><th>Certificate</th><th>Recipient</th><th>Template</th><th>Date</th><th>Status</th><th></th></tr></thead><tbody>
-<?php foreach($rows as $r):?><tr><td><?=e((string)$r['certificate_number'])?></td><td><?=e((string)$r['recipient_name'])?><br><span class="small text-secondary"><?=e((string)$r['recipient_number'])?></span></td><td><?=e((string)$r['template_name'])?></td><td><?=e((string)($r['completion_date']??'-'))?></td><td><?=e(ucfirst((string)$r['status']))?></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="/school/certificates.php?edit=<?=(int)$r['id']?>"><i class="bi bi-pencil-square"></i></a> <form class="d-inline" method="post" onsubmit="return confirm('Delete this certificate record?');"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><input type="hidden" name="crud_action" value="delete"><input type="hidden" name="id" value="<?=(int)$r['id']?>"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button></form></td></tr><?php endforeach;?>
+<?php foreach($rows as $r):?><tr><td><?=e((string)$r['certificate_number'])?></td><td><?=e((string)$r['recipient_name'])?><br><span class="small text-secondary"><?=e((string)$r['recipient_number'])?></span></td><td><?=e((string)$r['template_name'])?></td><td><?=e((string)($r['completion_date']??'-'))?></td><td><?=e(ucfirst((string)$r['status']))?></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="/school/certificates.php?edit=<?=(int)$r['id']?>" aria-label="Edit record"><i class="bi bi-pencil-square" aria-hidden="true"></i></a> <form class="d-inline" method="post" onsubmit="return confirm('Delete this certificate record?');"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><input type="hidden" name="crud_action" value="delete"><input type="hidden" name="id" value="<?=(int)$r['id']?>"><button class="btn btn-sm btn-outline-danger" aria-label="Delete record"><i class="bi bi-trash"></i></button></form></td></tr><?php endforeach;?>
 </tbody></table></div></div></div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="https://cdn.datatables.net/2.3.3/js/dataTables.min.js"></script><script src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.min.js"></script>
 <script>

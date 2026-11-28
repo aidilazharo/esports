@@ -67,6 +67,40 @@ function portalLayoutMenu(string $role): array
     return $menu;
 }
 
+function portalLayoutGroups(string $role): array
+{
+    return match($role) {
+        'school'=>['Overview'=>['dashboard'],'People'=>['students','teachers','parents'],'Programme'=>['attendance','learning_modules','certificates'],'Events'=>['events'],'Equipment'=>['equipment','psn_accounts'],'Reports'=>['reports'],'Profile'=>['profile']],
+        'admin'=>['Overview'=>['dashboard'],'People'=>['schools','teachers','students','parents'],'Programme'=>['attendance','learning_modules','certificates'],'Events'=>['events','competitions'],'Equipment'=>['psn_accounts'],'Finance'=>['payments','coupons'],'Reports'=>['reports'],'Settings'=>['settings','test_roles']],
+        'teacher'=>['Overview'=>['dashboard'],'People'=>['students'],'Programme'=>['attendance','learning_modules','certificates'],'Events'=>['events','competitions'],'Equipment'=>['equipment'],'Profile'=>['profile']],
+        'parent'=>['Overview'=>['dashboard'],'People'=>['children'],'Programme'=>['attendance','learning_progress','certificates'],'Events'=>['events'],'Finance'=>['membership','payments'],'Profile'=>['profile']],
+        default=>[],
+    };
+}
+
+function portalSchoolMobileNavigation(array $menu,string $activeKey): string {
+    $e=static fn($v)=>htmlspecialchars((string)$v,ENT_QUOTES|ENT_SUBSTITUTE,'UTF-8');
+    $groups=['Home'=>['bi-house',['dashboard']],'People'=>['bi-people',['students','teachers','parents']],'Programme'=>['bi-journal-text',['attendance','learning_modules','certificates']],'Equipment'=>['bi-tools',['equipment','psn_accounts']],'More'=>['bi-three-dots',['events','reports','profile']]];
+    $html='<nav class="portal-school-bottom" aria-label="'.$e(portalT('Primary navigation')).'" data-mobile-icon-links="off">';
+    foreach($groups as $label=>[$icon,$keys]){
+        $active=in_array($activeKey,$keys,true);
+        $content='<i class="bi '.$e($icon).'" aria-hidden="true"></i><span>'.$e(portalT($label)).'</span>';
+        if($label==='Home'){
+            $html.='<a class="school-bottom-item'.($active?' active':'').'" href="'.$e($menu['dashboard'][1]).'"'.($active?' aria-current="page"':'').'>'.$content.'</a>';
+            continue;
+        }
+        $html.='<details class="school-bottom-group"><summary class="school-bottom-item'.($active?' active':'').'">'.$content.'</summary><div class="school-bottom-panel">';
+        foreach($keys as $key){
+            if(!isset($menu[$key]))continue;
+            [$name,$href,$itemIcon]=$menu[$key];
+            $html.='<a href="'.$e($href).'"'.($key===$activeKey?' aria-current="page" class="active"':'').'><i class="bi '.$e($itemIcon).'" aria-hidden="true"></i> '.$e($name).'</a>';
+        }
+        if($label==='More')$html.='<a href="/login.php?logout=1">'.$e(portalT('Logout')).'</a>';
+        $html.='</div></details>';
+    }
+    return $html.'</nav>';
+}
+
 function portalLayoutTitleForRole(string $role): string
 {
     return portalT(match ($role) {'admin'=>'Administration','school'=>'School Portal','teacher'=>'Teacher Portal','parent'=>'Parent Portal',default=>'Portal'});
@@ -88,7 +122,7 @@ function portalPageStart(string $role, string $activeKey, string $title): void
     echo '<title>'.$e($title).' | '.$e($portalTitle).'</title>';
     echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"><link href="/assets/css/mobile-icon-links.css?v=2" rel="stylesheet"><link href="/assets/css/mobile-split-navigation.css?v=2" rel="stylesheet">';
     echo portalLanguageAssets();
-    echo '<link href="/assets/css/portal-design.css?v=1" rel="stylesheet"></head><body class="portal-shell">';
+    echo '<link href="/assets/css/portal-design.css?v=2" rel="stylesheet"></head><body class="portal-shell'.($role==='school'?' portal-school-shell':'').'">';
     // Keep all current role links; mobile only moves their presentation.
     $mobilePrimaryKeys = match ($role) {
         'admin' => ['dashboard', 'schools', 'students', 'events'],
@@ -104,9 +138,9 @@ function portalPageStart(string $role, string $activeKey, string $title): void
     $testLabel = (string)($_SESSION['admin_test_label'] ?? '');
     echo '<nav class="navbar navbar-dark bg-primary portal-role-navbar"><div class="container-fluid"><a class="navbar-brand fw-semibold" href="'.portalAuthDashboardForRole($role).'">'
         .'<span class="d-none d-md-inline">Metadata eSports · '.$e($portalTitle).'</span>'
-        .'<span class="d-inline d-md-none">Metadata</span></a>'
-        .mobileNavigationBar($mobileTopItems, 'Primary role navigation', 'top')
-        .portalLanguageSelector()
+        .'<span class="d-inline d-md-none">'.$e($role==='school'?$displayName:'Metadata').'</span></a>'
+        .($role==='school'?'':mobileNavigationBar($mobileTopItems, 'Primary role navigation', 'top'))
+        .($role==='school'?'':portalLanguageSelector())
         .'<div class="d-flex align-items-center gap-2 text-white"><span class="small d-none d-md-inline">'.$e($displayName).'</span>';
     if ($isAdminTest) {
         echo '<form method="post" action="/admin/stop_test.php" class="m-0 mobile-header-test-return"><input type="hidden" name="csrf_token" value="'.$e(csrfToken()).'"><button class="btn btn-sm btn-warning" type="submit"><i class="bi bi-arrow-return-left me-1"></i>'.$e(portalT('Return to Admin')).'</button></form>';
@@ -125,17 +159,23 @@ function portalPageStart(string $role, string $activeKey, string $title): void
             .'<button type="submit" class="mobile-nav-action" title="Return to Admin" aria-label="Return to Admin">'
             .'<i class="bi bi-arrow-return-left" aria-hidden="true"></i><span class="visually-hidden">Return to Admin</span></button></form>';
     }
-    $GLOBALS['portalMobileFooterNav'] = mobileNavigationBar(
+    $GLOBALS['portalMobileFooterNav'] = $role==='school' ? portalSchoolMobileNavigation($menu,$activeKey) : mobileNavigationBar(
         $mobileBottomItems, 'Secondary role navigation', 'bottom', $mobileExtraControls
     );
     echo '<div class="container-fluid"><div class="row"><aside class="col-lg-2 col-md-3 bg-white border-end portal-sidebar p-3"><div class="nav nav-pills flex-column gap-1">';
-    foreach ($menu as $key => $item) {
+    foreach (portalLayoutGroups($role) as $group=>$keys) {
+        echo '<div class="portal-nav-heading">'.$e(portalT($group)).'</div>';
+        foreach ($keys as $key) {
+        if (!isset($menu[$key])) continue;
+        $item=$menu[$key];
         $label=(string)($item[0]??'');
         $href=(string)($item[1]??'#');
         $icon=(string)($item[2]??'bi-circle');
         echo '<a class="nav-link'.($key===$activeKey?' active':'').'" href="'.$e($href).'"'.($key===$activeKey?' aria-current="page"':'').'><i class="bi '.$e($icon).'" aria-hidden="true"></i><span>'.$e($label).'</span></a>';
     }
+    }
     echo '</div></aside><main class="col-lg-10 col-md-9 p-3 p-lg-4" id="portal-main"><div class="mb-3"><h1 class="h4 mb-0">'.$e($title).'</h1></div>';
+    if ($role==='school' && $activeKey==='profile') echo '<section class="card stat-card mb-3"><div class="card-body"><h2 class="h6">'.$e(portalT('Language')).'</h2>'.portalLanguageSelector().'</div></section>';
     if (!empty($_SESSION['flash']) && is_array($_SESSION['flash'])) {
         $flash=$_SESSION['flash']; unset($_SESSION['flash']);
         $type=preg_replace('/[^a-z]/','',(string)($flash['type']??'info')) ?: 'info';
@@ -147,7 +187,7 @@ function portalPageEnd(): void
 {
     echo '</main></div></div>';
     echo '<footer class="mobile-navigation-footer">'.($GLOBALS['portalMobileFooterNav'] ?? '').'</footer>';
-    echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="/assets/js/mobile-icon-links.js?v=2"></script></body></html>';
+    echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script src="/assets/js/mobile-icon-links.js?v=2"></script><script src="/assets/js/portal-navigation.js?v=1"></script></body></html>';
 }
 
 function portalPlaceholder(string $message, ?string $link=null, ?string $label=null): void

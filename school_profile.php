@@ -4,6 +4,7 @@ declare(strict_types=1);
 require_once 'config.php';
 require_once __DIR__ . '/includes/profile_scoring.php';
 require_once __DIR__ . '/includes/video_gallery.php';
+require_once __DIR__ . '/includes/equipment_timeline.php';
 
 $schoolId = (int)($_GET['school_id'] ?? 0);
 
@@ -383,6 +384,7 @@ require 'includes/header.php';
 </div>
 
 <?php
+equipmentRenderTimeline($pdo, $schoolId);
 portalRenderVideoGallery(
     portalVideosForSchool($pdo, $schoolId),
     'School Videos',

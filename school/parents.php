@@ -31,8 +31,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             if($full===''||$identity===''||$phone===''||!filter_var($email,FILTER_VALIDATE_EMAIL)||!isset($studentOptions[$studentId])) throw new RuntimeException('Complete all required parent and student fields.');
 
             $pdo->beginTransaction();
-            $q=$pdo->prepare('SELECT id FROM guardians WHERE identity_number=? LIMIT 1 FOR UPDATE');
-            $q->execute([$identity]); $guardianId=(int)($q->fetchColumn()?:0);
+            $q=$pdo->prepare('SELECT id,email FROM guardians WHERE identity_number=? LIMIT 1 FOR UPDATE');
+            $q->execute([$identity]); $existing=$q->fetch(PDO::FETCH_ASSOC); $guardianId=(int)($existing['id']??0);
             if($guardianId<=0){
                 $i=$pdo->prepare('INSERT INTO guardians (guardian_number,full_name,identity_number,phone,email) VALUES (NULL,?,?,?,?)');
                 $i->execute([$full,$identity,$phone,$email]);
@@ -40,7 +40,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                 $number='PG-'.str_pad((string)$guardianId,6,'0',STR_PAD_LEFT);
                 $pdo->prepare('UPDATE guardians SET guardian_number=? WHERE id=?')->execute([$number,$guardianId]);
             }else{
-                $pdo->prepare('UPDATE guardians SET full_name=?,phone=?,email=?,email_verified_at=IF(LOWER(email)=LOWER(?),email_verified_at,NULL) WHERE id=?')->execute([$full,$phone,$email,$email,$guardianId]);
+                if (strcasecmp(trim((string)$existing['email']),$email)!==0) throw new RuntimeException('Existing guardian contact does not match.');
+                // Link only. Never overwrite another school or parent's shared account.
             }
             $link=$pdo->prepare('INSERT INTO student_guardians (student_id,guardian_id,relationship,is_primary) VALUES (?,?,?,1) ON DUPLICATE KEY UPDATE relationship=VALUES(relationship)');
             $link->execute([$studentId,$guardianId,$relationship?:'Guardian']);
@@ -56,7 +57,11 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
             $phone=trim((string)($_POST['phone']??''));
             $email=trim((string)($_POST['email']??''));
             if($full===''||$phone===''||!filter_var($email,FILTER_VALIDATE_EMAIL)) throw new RuntimeException('Name, phone and valid email are required.');
-            $pdo->prepare('UPDATE guardians SET full_name=?,phone=?,email=? WHERE id=?')->execute([$full,$phone,$email,$guardianId]);
+            $pdo->prepare('UPDATE guardians g SET g.full_name=?,g.phone=? WHERE g.id=? AND BINARY g.email=BINARY ? AND NOT EXISTS (SELECT 1 FROM student_guardians sg JOIN students st ON st.id=sg.student_id WHERE sg.guardian_id=g.id AND st.school_id<>?)')->execute([$full,$phone,$guardianId,$email,$schoolId]);
+            // Shared guardian contact changes and email changes require the parent/admin verification workflow.
+            $check=$pdo->prepare('SELECT COUNT(*) FROM guardians g WHERE g.id=? AND BINARY g.email=BINARY ? AND NOT EXISTS (SELECT 1 FROM student_guardians sg JOIN students st ON st.id=sg.student_id WHERE sg.guardian_id=g.id AND st.school_id<>?)');
+            $check->execute([$guardianId,$email,$schoolId]);
+            if(!(int)$check->fetchColumn())throw new RuntimeException('Shared account or email changes must be handled by the guardian or administrator.');
             setFlash('success','Parent / guardian updated.');
             redirect('/school/parents.php');
         }
@@ -71,7 +76,8 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         }
     }catch(Throwable $e){
         if($pdo->inTransaction())$pdo->rollBack();
-        setFlash('danger',$e->getMessage()); redirect('/school/parents.php');
+        error_log('School guardian operation failed: '.$e->getMessage());
+        setFlash('danger','Unable to save the guardian link or contact details. Check the details, or contact the administrator for shared account changes.'); redirect('/school/parents.php');
     }
 }
 
@@ -107,7 +113,8 @@ portalPageStart('school','parents','Parents');
 <?php endforeach;?>
 </div>
 
-<div class="card stat-card mb-4"><div class="card-header bg-white py-3"><h2 class="h5 mb-0"><?=$edit?'Edit Parent / Guardian':'Add Parent / Guardian'?></h2></div><div class="card-body">
+<div class="d-flex justify-content-end mb-3" data-mobile-icon-links="off"><?php if(!$edit&&!isset($_GET['add'])):?><a class="btn btn-primary btn-sm" href="/school/parents.php?add=1"><i class="bi bi-plus-circle" aria-hidden="true"></i> Add / Link Guardian</a><?php endif;?></div>
+<?php if($edit||isset($_GET['add'])):?><div class="card stat-card mb-4"><div class="card-header bg-white py-3"><h2 class="h5 mb-0"><?=$edit?'Edit Parent / Guardian':'Add Parent / Guardian'?></h2></div><div class="card-body">
 <form method="post" class="row g-3">
 <input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>">
 <input type="hidden" name="crud_action" value="<?=$edit?'update':'create'?>">
@@ -119,11 +126,12 @@ portalPageStart('school','parents','Parents');
 <?php endif;?>
 <div class="col-md-4"><label class="form-label">Full Name *</label><input class="form-control" name="full_name" value="<?=e((string)($edit['full_name']??''))?>" required></div>
 <div class="col-md-4"><label class="form-label">Phone *</label><input class="form-control" name="phone" value="<?=e((string)($edit['phone']??''))?>" required></div>
-<div class="col-md-4"><label class="form-label">Email *</label><input type="email" class="form-control" name="email" value="<?=e((string)($edit['email']??''))?>" required></div>
-<div class="col-12"><button class="btn btn-primary" type="submit"><i class="bi <?=$edit?'bi-save':'bi-plus-circle'?> me-1"></i><?=$edit?'Save Changes':'Add Parent'?></button><?php if($edit):?><a class="btn btn-outline-secondary ms-2" href="/school/parents.php">Cancel</a><?php endif;?></div>
+<div class="col-md-4"><label class="form-label">Email *</label><input type="email" class="form-control" name="email" value="<?=e((string)($edit['email']??''))?>" required <?=$edit?'readonly':''?>></div>
+<div class="col-12"><button class="btn btn-primary" type="submit"><i class="bi <?=$edit?'bi-save':'bi-plus-circle'?> me-1"></i><?=$edit?'Save Changes':'Add or Link Guardian'?></button><?php if($edit||isset($_GET['add'])):?><a class="btn btn-outline-secondary ms-2" href="/school/parents.php">Cancel</a><?php endif;?></div>
 </form>
 </div></div>
 
+<?php endif;?>
 <div class="card stat-card"><div class="card-header bg-white py-3"><h2 class="h5 mb-0">Parent / Student Links</h2></div><div class="card-body"><div class="table-responsive">
 <table id="parentsTable" class="table table-hover align-middle w-100"><thead><tr><th>Parent</th><th>Contact</th><th>Student</th><th>Relationship</th><th>Verified</th><th></th></tr></thead><tbody>
 <?php foreach($rows as $r):?><tr>
@@ -132,8 +140,8 @@ portalPageStart('school','parents','Parents');
 <td><?=e((string)$r['student_name'])?><br><span class="small text-secondary"><?=e((string)$r['student_number'])?></span></td>
 <td><?=e((string)$r['relationship'])?></td>
 <td><?=$r['email_verified_at']?'<span class="badge text-bg-success">Verified</span>':'<span class="badge text-bg-warning">Pending</span>'?></td>
-<td class="text-end text-nowrap"><a class="btn btn-sm btn-outline-primary" href="/school/parents.php?edit=<?=(int)$r['id']?>"><i class="bi bi-pencil-square"></i></a>
-<form method="post" class="d-inline" onsubmit="return confirm('Remove this parent link from the student?');"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><input type="hidden" name="crud_action" value="unlink"><input type="hidden" name="id" value="<?=(int)$r['id']?>"><input type="hidden" name="student_id" value="<?=(int)$r['student_id']?>"><button class="btn btn-sm btn-outline-danger"><i class="bi bi-link-45deg"></i></button></form></td>
+<td class="text-end text-nowrap"><a class="btn btn-sm btn-outline-primary" href="/school/parents.php?edit=<?=(int)$r['id']?>" aria-label="Edit record"><i class="bi bi-pencil-square" aria-hidden="true"></i></a>
+<form method="post" class="d-inline" onsubmit="return confirm('Remove this parent link from the student?');"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><input type="hidden" name="crud_action" value="unlink"><input type="hidden" name="id" value="<?=(int)$r['id']?>"><input type="hidden" name="student_id" value="<?=(int)$r['student_id']?>"><button class="btn btn-sm btn-outline-danger" aria-label="Remove guardian link"><i class="bi bi-link-45deg"></i></button></form></td>
 </tr><?php endforeach;?>
 </tbody></table></div></div></div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="https://cdn.datatables.net/2.3.3/js/dataTables.min.js"></script><script src="https://cdn.datatables.net/2.3.3/js/dataTables.bootstrap5.min.js"></script>

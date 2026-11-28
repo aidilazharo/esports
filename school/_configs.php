@@ -132,59 +132,10 @@ function schoolPortalConfig(PDO $pdo, string $key, int $schoolId): array
         'order'=>[[5,'desc']],
     ];
 
-    $configs['events'] = [
-        'key'=>'events','title'=>'Events','singular'=>'Event Application','table'=>'programme_applications','pk'=>'id','page'=>'/school/events.php',
-        'intro'=>'Manage this school’s programme and competition applications.',
-        'fields'=>[
-            'event_id'=>['label'=>'Event / Competition','type'=>'select','required'=>true,'options'=>schoolCrudOptions(
-                $pdo,
-                "SELECT id,CONCAT(event_code,' — ',title,' — ',UPPER(event_type)) AS label
-                 FROM programme_events WHERE status IN ('open','draft') ORDER BY start_at DESC,title"
-            ),'col'=>'col-md-6'],
-            'status'=>['label'=>'Application Status','type'=>'select','required'=>true,'options'=>[
-                'applied'=>'Applied','approved'=>'Approved','rejected'=>'Rejected','withdrawn'=>'Withdrawn'
-            ],'default'=>'applied','col'=>'col-md-3'],
-            'payment_status'=>['label'=>'Payment Status','type'=>'select','required'=>true,'options'=>[
-                'unpaid'=>'Unpaid','paid'=>'Paid','refunded'=>'Refunded','waived'=>'Waived'
-            ],'default'=>'unpaid','col'=>'col-md-3'],
-            'fee_paid_minor'=>['label'=>'Fee Paid (sen)','type'=>'number','integer'=>true,'required'=>true,'default'=>0,'min'=>0,'col'=>'col-md-4'],
-            'paid_at'=>['label'=>'Paid At','type'=>'datetime-local','col'=>'col-md-4'],
-            'notes'=>['label'=>'Notes','type'=>'textarea','rows'=>2,'col'=>'col-12'],
-        ],
-        'fixed_values'=>['applicant_type'=>'school'],
-        'create_defaults'=>function(array $data, int $schoolId): array {
-            $data['application_code']='SCH-'.$schoolId.'-'.strtoupper(bin2hex(random_bytes(4)));
-            $data['applicant_key']='school:'.$schoolId;
-            $data['withdraw_token']=bin2hex(random_bytes(32));
-            return $data;
-        },
-        'stats'=>[
-            ['label'=>'Applications','sql'=>"SELECT COUNT(*) FROM programme_applications WHERE school_id=? AND applicant_type='school'",'school_param_count'=>1,'icon'=>'bi-calendar-event'],
-            ['label'=>'Approved','sql'=>"SELECT COUNT(*) FROM programme_applications WHERE school_id=? AND applicant_type='school' AND status='approved'",'school_param_count'=>1,'icon'=>'bi-check2-circle'],
-            ['label'=>'Pending','sql'=>"SELECT COUNT(*) FROM programme_applications WHERE school_id=? AND applicant_type='school' AND status='applied'",'school_param_count'=>1,'icon'=>'bi-hourglass-split'],
-            ['label'=>'Unpaid','sql'=>"SELECT COUNT(*) FROM programme_applications WHERE school_id=? AND applicant_type='school' AND payment_status='unpaid'",'school_param_count'=>1,'icon'=>'bi-credit-card'],
-        ],
-        'list_sql'=>"SELECT pa.id,pa.application_code,pe.event_code,pe.title,pe.event_type,pa.status,pa.payment_status,pa.applied_at
-                    FROM programme_applications pa
-                    JOIN programme_events pe ON pe.id=pa.event_id
-                    WHERE pa.school_id=? AND pa.applicant_type='school'
-                    ORDER BY pa.applied_at DESC",
-        'list_params'=>['__SCHOOL_ID__'],
-        'columns'=>[
-            ['key'=>'application_code','label'=>'Application'],
-            ['key'=>'event_code','label'=>'Event Code'],
-            ['key'=>'title','label'=>'Event / Competition'],
-            ['key'=>'event_type','label'=>'Type'],
-            ['key'=>'status','label'=>'Status'],
-            ['key'=>'payment_status','label'=>'Payment'],
-            ['key'=>'applied_at','label'=>'Applied','format'=>fn($v)=>$v?date('d M Y H:i',strtotime((string)$v)):'-'],
-        ],
-        'order'=>[[6,'desc']],
-    ];
-
     $configs['reports'] = [
         'key'=>'reports','title'=>'Reports','singular'=>'School Report','table'=>'school_reports','pk'=>'id','page'=>'/school/reports.php',
         'intro'=>'Create internal school programme reports and notes.',
+        'list_first'=>true,
         'fields'=>[
             'report_code'=>['label'=>'Report Code','type'=>'text','required'=>true,'default'=>'RPT-'.date('Ymd-His'),'col'=>'col-md-3'],
             'title'=>['label'=>'Title','type'=>'text','required'=>true,'col'=>'col-md-6'],

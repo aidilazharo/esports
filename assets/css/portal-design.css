@@ -14,3 +14,24 @@
   .portal-shell main .btn { min-height:44px; }
   .portal-shell main .form-control, .portal-shell main .form-select { min-height:44px; }
 }
+
+.portal-nav-heading{font-size:.72rem;font-weight:700;color:#475569;text-transform:uppercase;margin:.75rem .75rem .15rem;letter-spacing:.035em}
+.portal-school-bottom{display:none}
+@media(max-width:767.98px){
+.portal-school-shell{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+.portal-school-shell .portal-role-navbar .navbar-brand{white-space:normal;overflow-wrap:anywhere}
+.portal-school-bottom{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));position:fixed;z-index:1030;bottom:0;left:0;right:0;background:#0d6efd;color:#fff;padding:5px 4px calc(5px + env(safe-area-inset-bottom,0px));box-shadow:0 -1px 5px #0002}
+.school-bottom-item{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50px;color:#fff;text-decoration:none;font-size:.72rem;border-radius:6px;cursor:pointer;text-align:center;list-style:none}
+.school-bottom-item::-webkit-details-marker{display:none}
+.school-bottom-item .bi{font-size:1.2rem}.school-bottom-item.active,.school-bottom-item:hover,.school-bottom-group[open] summary{background:#084298;color:#fff}
+.school-bottom-panel{position:absolute;bottom:calc(62px + env(safe-area-inset-bottom,0px));left:8px;right:8px;padding:8px;background:#fff;border:1px solid #dee2e6;border-radius:10px;box-shadow:0 -5px 20px #0002;max-height:60vh;overflow:auto}
+.school-bottom-panel a{display:flex;align-items:center;gap:10px;min-height:44px;color:#1f2937;padding:8px;text-decoration:none;border-radius:6px}.school-bottom-panel a.active{background:#e7f1ff;color:#084298;font-weight:600}
+}
+@media print{.portal-school-bottom{display:none!important}}
+
+.portal-shell .form-label{font-weight:500}
+.portal-shell .table-responsive{overscroll-behavior-inline:contain}
+.portal-shell .card-header{padding:.8rem 1rem}
+.portal-shell .alert{overflow-wrap:anywhere}
+.portal-shell .school-bottom-item:focus-visible{outline-color:#fff}
+@media(max-width:767.98px){.portal-shell .stat-card .card-body{padding:1rem}.portal-shell .table td,.portal-shell .table th{font-size:.85rem}}

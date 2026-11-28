@@ -1,0 +1,15 @@
+.equipment-timeline{border:1px solid #e1e6ee;border-radius:12px;background:#fff}
+.equipment-counts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.equipment-counts>div{background:#f5f7fb;border-radius:8px;padding:10px 12px}
+.equipment-counts span{display:block;font-size:.82rem;color:#475569}
+.equipment-counts strong{font-size:1.35rem;color:#1f2937}
+.equipment-milestones{list-style:none;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:16px 0}
+.equipment-milestones li{text-align:center;position:relative;border-top:3px solid #cbd5e1;padding:8px 4px;min-width:0}
+.equipment-milestones li.milestone-achieved{border-color:#198754}
+.equipment-milestones li.milestone-target{border-color:#0d6efd;background:#eef5ff;border-radius:6px}
+.milestone-number{font-weight:700;color:#334155}.milestone-icons{font-size:1.35rem;display:flex;flex-wrap:wrap;justify-content:center;gap:4px;color:#475569}
+.milestone-achieved .milestone-icons,.milestone-achieved .milestone-state{color:#146c43}
+.milestone-target .milestone-icons,.milestone-target .milestone-state{color:#084298}
+.milestone-name{font-size:.8rem;overflow-wrap:anywhere}.milestone-state{font-size:.72rem;font-weight:600;color:#475569}
+@media(max-width:767.98px){.equipment-counts{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.equipment-milestones{display:flex;flex-direction:column;gap:0}.equipment-milestones li{display:grid;grid-template-columns:32px 72px minmax(0,1fr) 82px;align-items:center;text-align:left;border-top:0;border-left:3px solid #cbd5e1;gap:5px;padding:9px 6px}.milestone-icons{font-size:1rem}.milestone-state{text-align:right}}
+@media(max-width:359px){.equipment-milestones li{grid-template-columns:24px 44px minmax(0,1fr) 65px}.milestone-state{font-size:.68rem}}
